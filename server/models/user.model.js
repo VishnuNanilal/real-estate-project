@@ -16,6 +16,10 @@ const userModel = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    seller_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "sellers"
     }
     //more to add
 });
