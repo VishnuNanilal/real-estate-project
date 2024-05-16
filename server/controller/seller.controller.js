@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
 const createSeller = async (req, res) => {
-    const { user_id, name } = req.body;
+    const { seller_id, name } = req.body;
     try {
         const response = await Seller.create({
-            user_id,
+            seller_id,
             name,
             properties: []
         })
@@ -29,19 +29,19 @@ const createSeller = async (req, res) => {
     catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Failed to create property from seller',
+            message: 'Internal server error.',
             error: err.message
         });
     }
 }
 
 const getSeller = async (req, res) => {
-    const { seller_id, name } = req.body;
+    const { seller_id } = req.body;
     try {
         const response = await Seller.findById(seller_id)
 
         if (response) {
-            return res.status(201).send({
+            return res.status(200).send({
                 success: true,
                 data: response,
                 message: "Seller fetched."
@@ -58,7 +58,7 @@ const getSeller = async (req, res) => {
     catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Failed to fetch seller',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -66,19 +66,20 @@ const getSeller = async (req, res) => {
 
 const updateSeller = async (req, res) => {
     try {
-        const response = await Seller.findByIdAndUpdate(req.body.id, req.body, { new: true })
+        const {seller_id} = req.params;
+        const response = await Seller.findByIdAndUpdate(seller_id, req.body, { new: true })
 
         if (response) {
             return res.status(201).send({
                 success: true,
                 data: response,
-                message: "Seller created."
+                message: "Seller updated."
             })
         }
         else {
             return res.status(400).send({
                 success: false,
-                error: "Seller creation failed on DB."
+                error: "Seller updation failed."
             })
         }
 
@@ -86,7 +87,7 @@ const updateSeller = async (req, res) => {
     catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Failed to update seller',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -94,9 +95,9 @@ const updateSeller = async (req, res) => {
 
 const addProperty = async (req, res) => {
     try {
-        const user_id = req.body.id;
+        const {seller_id} = req.params;
 
-        const seller = await Seller.findOne({ user_id })
+        const seller = await Seller.findOne({ seller_id })
         if (!seller) {
             return res.status(404).send({
                 success: false,
@@ -122,7 +123,7 @@ const addProperty = async (req, res) => {
     catch (err) {
         return res.status(500).json({
             success: false,
-            message: 'Failed to add property from seller',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -131,10 +132,9 @@ const addProperty = async (req, res) => {
 // Controller function for removing a property from a seller's properties array and update on Property DB.
 const removeProperty = async (req, res) => {
     try {
-        const user_id = req.body.id;
-        const { property_id } = req.params;
+        const { seller_id, property_id } = req.params;
 
-        const seller = await Seller.findOne({ user_id });
+        const seller = await Seller.findOne({ seller_id });
 
         if (!seller) {
             return res.status(404).json({
@@ -166,7 +166,7 @@ const removeProperty = async (req, res) => {
         console.error('Error removing property from seller:', error);
         return res.status(500).json({
             success: false,
-            message: 'Failed to remove property from seller',
+            message: 'Internal server error.',
             error: err.message
         });
     }

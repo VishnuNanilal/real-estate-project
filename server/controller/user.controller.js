@@ -42,7 +42,7 @@ const register = async (req, res)=>{
     catch(err){
         return res.status(500).json({
             success: false,
-            message: 'Failed to register user.',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -90,7 +90,7 @@ const signIn = async (req, res)=>{
     catch(err){
         return res.status(500).json({
             success: false,
-            message: 'Failed to sign in user.',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -98,7 +98,11 @@ const signIn = async (req, res)=>{
 
 const getUser = async (req, res)=>{
     try{
-        const response = await User.findById(req.body.id).select("-password");
+        const response = await User.findById(req.body.id)
+        .select("-password")
+        .populate('seller_id')
+        .exec();
+        
         if(response){
             return res.status(200).send({
                 success: true,
@@ -117,7 +121,7 @@ const getUser = async (req, res)=>{
     catch(err){
         return res.status(500).json({
             success: false,
-            message: 'Failed to fetch user.',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -144,7 +148,7 @@ const updateUser = async (req, res)=>{
     catch(err){
         return res.status(500).json({
             success: false,
-            message: 'Failed to update user.',
+            message: 'Internal server error.',
             error: err.message
         });
     }
@@ -170,7 +174,7 @@ const deleteUser = async (req, res)=>{
     catch(err){
         return res.status(500).json({
             success: false,
-            message: 'Failed to delete user.',
+            message: 'Internal server error.',
             error: err.message
         });
     }

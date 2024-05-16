@@ -5,14 +5,16 @@ const {JWTAuth} = require('../Middlewares/jwtAuthMW')
 //register seller
 router.post('/register', sellerCtrl.createSeller); 
 
-//get user
-router.get('/get', JWTAuth, sellerCtrl.getSeller)
+//get seller
+router.get('/:seller_id', JWTAuth, sellerCtrl.getSeller)
 
-//update user
-router.patch('/update', JWTAuth, sellerCtrl.updateSeller)
+//update seller
+router.patch('/:seller_id', JWTAuth, sellerCtrl.updateSeller)
 
-router.patch('/add-property', JWTAuth, sellerCtrl.addProperty)
+//add property to seller
+router.patch('/:seller_id/add-property ', JWTAuth, sellerCtrl.addProperty)
 
-router.patch('/remove-property', JWTAuth, sellerCtrl.removeProperty)
+//remove property from seller
+router.patch('/:seller_id/remove-property/:property_id', JWTAuth, sellerCtrl.removeProperty)
 
 module.exports=router;
