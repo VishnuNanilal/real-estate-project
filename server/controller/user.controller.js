@@ -1,4 +1,4 @@
-const User = require('../models/userModel');
+const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
@@ -40,7 +40,11 @@ const register = async (req, res)=>{
         
     }    
     catch(err){
-        console.log("Error: ", err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to register user.',
+            error: err.message
+        });
     }
 }
 
@@ -84,7 +88,11 @@ const signIn = async (req, res)=>{
         
     }    
     catch(err){
-        console.log("Error: ", err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to sign in user.',
+            error: err.message
+        });
     }
 }
 
@@ -107,7 +115,11 @@ const getUser = async (req, res)=>{
         
     }    
     catch(err){
-        console.log("Error: ", err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch user.',
+            error: err.message
+        });
     }
 }
 
@@ -130,7 +142,11 @@ const updateUser = async (req, res)=>{
         
     }    
     catch(err){
-        console.log("Error: ", err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to update user.',
+            error: err.message
+        });
     }
 }
 
@@ -152,7 +168,11 @@ const deleteUser = async (req, res)=>{
         
     }    
     catch(err){
-        console.log("Error: ", err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to delete user.',
+            error: err.message
+        });
     }
 }
 
