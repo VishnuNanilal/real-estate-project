@@ -1,12 +1,12 @@
 const Seller = require('../models/seller.model');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const Property = require('../models/property.model')
 
 const createSeller = async (req, res) => {
-    const { seller_id, name } = req.body;
+    const { id, name } = req.body;
+    console.log(id, name);
     try {
         const response = await Seller.create({
-            seller_id,
+            user_id:id,
             name,
             properties: []
         })
@@ -36,9 +36,9 @@ const createSeller = async (req, res) => {
 }
 
 const getSeller = async (req, res) => {
-    const { seller_id } = req.body;
+    const { id } = req.body;
     try {
-        const response = await Seller.findById(seller_id)
+        const response = await Seller.findOne({user_id: id})
 
         if (response) {
             return res.status(200).send({
@@ -65,9 +65,12 @@ const getSeller = async (req, res) => {
 }
 
 const updateSeller = async (req, res) => {
+    console.log(">>>", req.body)
     try {
         const {seller_id} = req.params;
-        const response = await Seller.findByIdAndUpdate(seller_id, req.body, { new: true })
+        const response = await Seller.findByIdAndUpdate(seller_id, {
+            name: req.body.name
+        }, { new: true })
 
         if (response) {
             return res.status(201).send({
@@ -94,10 +97,11 @@ const updateSeller = async (req, res) => {
 }
 
 const addProperty = async (req, res) => {
+    console.log("reached")
     try {
         const {seller_id} = req.params;
 
-        const seller = await Seller.findOne({ seller_id })
+        const seller = await Seller.findById(seller_id)
         if (!seller) {
             return res.status(404).send({
                 success: false,
@@ -108,6 +112,7 @@ const addProperty = async (req, res) => {
         let propertyResponse = await Property.create({
             name: req.body.name,
             price: req.body.price,
+            area: req.body.area
             //add boundary points for property.
         })
 
@@ -133,8 +138,7 @@ const addProperty = async (req, res) => {
 const removeProperty = async (req, res) => {
     try {
         const { seller_id, property_id } = req.params;
-
-        const seller = await Seller.findOne({ seller_id });
+        const seller = await Seller.findById(seller_id );
 
         if (!seller) {
             return res.status(404).json({
