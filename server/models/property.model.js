@@ -1,26 +1,48 @@
 const mongoose = require('mongoose');
 
-const propertyModel = new mongoose.Schema({
+const propertySchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-    },
-    seller_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "sellers"
+        required: true
     },
     price: {
         type: Number,
-        required: true,
+        required: true
     },
+    description: {
+        type: String
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    boundary_points: [{
+        latitude: {
+            Type: Number,
+            required: true
+        },
+        longitude: {
+            Type: Number,
+            required: true
+        } 
+    }], 
     area: {
         type: Number,
-        required: true,
+        required: true
     },
-    //boundary_points: [{
-    //}] 
-    
-    //more to add
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Seller',
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
-module.exports = mongoose.model('properties', propertyModel);
+module.exports = mongoose.model('properties', propertySchema);

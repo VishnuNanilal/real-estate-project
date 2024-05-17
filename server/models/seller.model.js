@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const sellerModel = new mongoose.Schema({
+const sellerSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
@@ -18,4 +18,4 @@ const sellerModel = new mongoose.Schema({
     //more to add
 });
 
-module.exports = mongoose.model('sellers', sellerModel);
+module.exports = mongoose.model('sellers', sellerSchema);
