@@ -1,7 +1,9 @@
 const Seller = require('../models/seller.model');
 const Property = require('../models/property.model')
+const {createProperty, deleteProperty}  = require('../controller/property.controller')
 
 const createSeller = async (req, res) => {
+    // console.log("reached: ", id, name)
     const { id, name } = req.body;
     console.log(id, name);
     try {
@@ -96,7 +98,7 @@ const updateSeller = async (req, res) => {
     }
 }
 
-const addProperty = async (req, res) => {
+const updateSellerAddProperty = async (req, res) => {
     console.log("reached")
     try {
         const {seller_id} = req.params;
@@ -109,12 +111,7 @@ const addProperty = async (req, res) => {
             })
         }
         // Add the property ID to the seller's properties array
-        let propertyResponse = await Property.create({
-            name: req.body.name,
-            price: req.body.price,
-            area: req.body.area
-            //add boundary points for property.
-        })
+        let propertyResponse = await createProperty(req.body)
 
         seller.properties.push(propertyResponse._id)
         await seller.save();
@@ -135,7 +132,7 @@ const addProperty = async (req, res) => {
 }
 
 // Controller function for removing a property from a seller's properties array and update on Property DB.
-const removeProperty = async (req, res) => {
+const updateSellerRemoveProperty = async (req, res) => {
     try {
         const { seller_id, property_id } = req.params;
         const seller = await Seller.findById(seller_id );
@@ -152,7 +149,7 @@ const removeProperty = async (req, res) => {
         if (index !== -1) {
             seller.properties.splice(index, 1);
             await seller.save();
-            await Property.findByIdAndDelete(property_id);   
+            await deleteProperty(property_id);
             
             return res.status(200).json({
                 success: true,
@@ -180,6 +177,6 @@ module.exports = {
     createSeller,
     getSeller,
     updateSeller,
-    addProperty,
-    removeProperty
+    updateSellerAddProperty,
+    updateSellerRemoveProperty
 }

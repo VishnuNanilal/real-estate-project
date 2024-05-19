@@ -2,11 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import {updateSellerAddProperty, updateSellerRemoveProperty} from '../api/seller.api'
+import { getAllPropertiesAPI } from '../api/property.api';
+
 const Map = () => {
   const mapRef = useRef(null);
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
+
+  useEffect(()=>{
+    async function getAllPropertiesAPIAux(){
+      const response = await getAllPropertiesAPI()
+      console.log("get all props resp: ", response)
+    }
+    getAllPropertiesAPIAux();
+  }, [])
+  
   useEffect(() => {
     // Initialize the map
     const map = L.map('map').setView([51.505, -0.09], 13);
@@ -43,13 +55,24 @@ const Map = () => {
     }
   }, [points]);
 
-  function handlePolyReset(){
+  function handlePolyReset() {
     setPoints([]);
   }
 
-  
-  const handleSaveProperty = ()=>{
-    if (points.length>2) {
+  useEffect(()=>{
+    let response = getAllPropertiesAPI()
+    console.log(">>>", response)
+    
+    // for(let polygonPoints of polygonPointsArr){
+    //   const newPolygon = L.polygon(polygonPoints, { color: 'blue' }).addTo(mapRef.current);
+    // }
+  }, [])
+
+  const handleMarkProperty = () => {
+    if (points.length < 2) {
+      alert("Mark atleast 3 points.")
+    }
+    else {
       // Close the polygon by connecting the last point to the first
       const polygonPoints = [...points, points[0]];
       // Remove previous polygon if it exists
@@ -67,11 +90,29 @@ const Map = () => {
     }
   };
 
+  const handleSaveProperty = async () => {
+    if (polygon) {
+      const polygonPoints = polygon.getLatLngs()[0].map(latlng => [latlng.lat, latlng.lng]);
+      try {
+        const response = await updateSellerAddProperty({ points: polygonPoints });
+        if (response.data.success) {
+          alert('Property saved successfully!');
+        } else {
+          alert('Failed to save property.');
+        }
+      } catch (error) {
+        console.error('Error saving property:', error);
+        alert('Error saving property.');
+      }
+    }
+  };
+
   return (
     <>
       <div id="map" style={{ width: '100%', height: '400px' }}>
       </div>
       <button onClick={handlePolyReset}>RESET</button>
+      <button onClick={handleMarkProperty}>MARK PROPERTY</button>
       <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
     </>
   )
