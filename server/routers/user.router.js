@@ -5,7 +5,7 @@ const {JWTAuth} = require('../Middlewares/jwtAuthMW')
 router.post('/register', userCtrl.register); 
 
 //sign-in user
-router.get('/sign-in', userCtrl.signIn);
+router.post('/sign-in', userCtrl.signIn);
 
 //get user
 router.get('/me', JWTAuth, userCtrl.getUser)

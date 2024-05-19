@@ -37,7 +37,7 @@ const getProperty = async (req, res)=>{
         }
     }
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -63,7 +63,7 @@ const getAllProperties = async (req, res)=>{
         }
     }
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message

@@ -41,7 +41,7 @@ const register = async (req, res)=>{
         
     }    
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -52,10 +52,17 @@ const register = async (req, res)=>{
 const signIn = async (req, res)=>{
     const {data, password} = req.body;
     try{
-        const emailPresent = await User.findOne({email: data});
-        const phonePresent = await User.findOne({phone_num: data});
+        let phonePresent=null;
+        let emailPresent=null;
+        if(typeof data === "Number"){
+            phonePresent = await User.findOne({phone_num: data});
+        }
+        else{
+            emailPresent = await User.findOne({email: data});
+        }
 
         let response = emailPresent || phonePresent;
+        console.log(response)
         if(!response){
             return res.status(401).send({
                 success: false,
@@ -89,7 +96,7 @@ const signIn = async (req, res)=>{
         
     }    
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -120,7 +127,7 @@ const getUser = async (req, res)=>{
         
     }    
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -147,7 +154,7 @@ const updateUser = async (req, res)=>{
         
     }    
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -173,7 +180,7 @@ const deleteUser = async (req, res)=>{
         
     }    
     catch(err){
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message

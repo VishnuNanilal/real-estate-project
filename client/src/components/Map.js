@@ -59,15 +59,6 @@ const Map = () => {
     setPoints([]);
   }
 
-  useEffect(()=>{
-    let response = getAllPropertiesAPI()
-    console.log(">>>", response)
-    
-    // for(let polygonPoints of polygonPointsArr){
-    //   const newPolygon = L.polygon(polygonPoints, { color: 'blue' }).addTo(mapRef.current);
-    // }
-  }, [])
-
   const handleMarkProperty = () => {
     if (points.length < 2) {
       alert("Mark atleast 3 points.")

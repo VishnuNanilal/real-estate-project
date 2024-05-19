@@ -29,7 +29,7 @@ const createSeller = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -58,7 +58,7 @@ const getSeller = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -90,7 +90,7 @@ const updateSeller = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -123,7 +123,7 @@ const updateSellerAddProperty = async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
@@ -151,21 +151,21 @@ const updateSellerRemoveProperty = async (req, res) => {
             await seller.save();
             await deleteProperty(property_id);
             
-            return res.status(200).json({
+            return res.status(200).send({
                 success: true,
                 message: 'Property removed from seller',
                 seller: seller
             });
         }
         else{
-            return res.status(400).json({
+            return res.status(400).send({
                 success: false,
                 message: 'Property removal failed.',
             });
         }
     } catch (error) {
         console.error('Error removing property from seller:', error);
-        return res.status(500).json({
+        return res.status(500).send({
             success: false,
             message: 'Internal server error.',
             error: err.message
