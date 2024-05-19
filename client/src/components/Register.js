@@ -1,5 +1,5 @@
 import {React, useState} from 'react'
-import { registerUser } from '../api/user.api';
+import { registerUserAPI } from '../api/user.api';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ function Register() {
 
     async function handleSubmit(e){
         e.preventDefault();
-        let response = await registerUser(formData);
+        let response = await registerUserAPI(formData);
         console.log(response)
     }
 

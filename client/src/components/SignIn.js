@@ -1,7 +1,11 @@
 import {React, useState} from 'react'
-import { signInUser } from '../api/user.api';
+import { getUserAPI, signInUserAPI } from '../api/user.api';
+import { SetUser, RemoveUser } from '../redux/user.slice';
+import {useSelector, UseDispatch, useDispatch} from 'react-redux'
 
 function SignIn() {
+    const user = useSelector(state=>state.user)
+    const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         data: "",
         password: ""
@@ -21,15 +25,25 @@ function SignIn() {
 
     async function handleSubmit(e){
         e.preventDefault();
-        let response = await signInUser(formData);
+        let response = await signInUserAPI(formData);
         if(response.success){
-            localStorage.setItem('jwt', response.data)
+            localStorage.setItem('jwt', response.data) 
+
+            const userResponse = await getUserAPI(response.data)
+            if(userResponse.success){
+                console.log("user fetched: ", userResponse.data)
+                dispatch(SetUser(userResponse.data))
+            }
+            console.log(userResponse.message);
         }
         console.log(response.message)
     }
 
     return (
-        <div class='SignIn-modal'>
+        <div className='SignIn-modal'>
+            {
+                `user name: ${user.name}`
+            }
             <form onSubmit={handleSubmit}>
                 <input type='text' name='data' placeholder='Email or Phone No.' value={formData.name} onChange={handleChange}/>
                 <input type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange}/>

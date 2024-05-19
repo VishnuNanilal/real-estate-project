@@ -1,6 +1,6 @@
 import axiosInstance from ".";
 
-export const registerUser = async (payload)=>{
+export const registerUserAPI = async (payload)=>{
     try{
         const response = await axiosInstance.post('/user/register', payload)
         return response.data
@@ -10,7 +10,7 @@ export const registerUser = async (payload)=>{
     }
 }
 
-export const signInUser = async (payload)=>{
+export const signInUserAPI = async (payload)=>{
     try{
         const response = await axiosInstance.post('/user/sign-in', payload)
         return response.data
@@ -20,9 +20,9 @@ export const signInUser = async (payload)=>{
     }
 }
 
-export const getUser = async (user_id)=>{
+export const getUserAPI = async (user_id)=>{
     try{
-        const response = await axiosInstance.get(`/user/${user_id}`)
+        const response = await axiosInstance.get(`/user/me`)
         return response.data
     }
     catch(err){
@@ -30,7 +30,7 @@ export const getUser = async (user_id)=>{
     }
 }
 
-export const updateUser = async (seller_id, payload)=>{
+export const updateUserAPI = async (seller_id, payload)=>{
     try{
         const response = await axiosInstance.patch(`seller/${seller_id}`, payload)
         return response.data
