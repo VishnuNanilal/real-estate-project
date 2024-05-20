@@ -5,44 +5,37 @@ const propertySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // price: {
-    //     type: Number,
-    //     required: true
-    // },
-    // description: {
-    //     type: String
-    // },
-    // location: {
-    //     type: String,
-    //     required: true
-    // },
-    // boundary_points: [{
-    //     latitude: {
-    //         Type: Number,
-    //         required: true
-    //     },
-    //     longitude: {
-    //         Type: Number,
-    //         required: true
-    //     } 
-    // }], 
-    // area: {
-    //     type: Number,
-    //     required: true
-    // },
-    // seller: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Seller',
-    //     required: true
-    // },
-    // createdAt: {
-    //     type: Date,
-    //     default: Date.now
-    // },
-    // updatedAt: {
-    //     type: Date,
-    //     default: Date.now
-    // }
+    price: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    boundary_points: {
+        type: [[Number]]
+    }, 
+    area: {
+        type: Number,
+        required: true
+    },
+    seller_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'sellers',
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now()
+    }
 });
 
 module.exports = mongoose.model('properties', propertySchema);

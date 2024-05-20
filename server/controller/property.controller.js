@@ -1,10 +1,10 @@
-const Seller = require('../models/seller.model');
 const Property = require('../models/property.model')
 
 const createProperty = async (payload) => {
+    console.log("...",payload)
     try {
         const response = await Property.create(payload)
-
+        console.log("response: ", response)
         if (response) {
             return response;
         }

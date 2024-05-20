@@ -99,7 +99,7 @@ const updateSeller = async (req, res) => {
 }
 
 const updateSellerAddProperty = async (req, res) => {
-    console.log("reached")
+    console.log("updateSellerAddProperty reached")
     try {
         const {seller_id} = req.params;
 
@@ -111,6 +111,7 @@ const updateSellerAddProperty = async (req, res) => {
             })
         }
         // Add the property ID to the seller's properties array
+        console.log("current seller: ", seller)
         let propertyResponse = await createProperty(req.body)
 
         seller.properties.push(propertyResponse._id)

@@ -15,8 +15,8 @@ function App() {
         <Header />
         <Location />
         <Register />
-        <SellerRegister />
         <SignIn />
+        <SellerRegister />
         <Map />
       </div>
     </Provider>

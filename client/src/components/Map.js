@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import {updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI} from '../api/seller.api'
+import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
 import { getAllPropertiesAPI } from '../api/property.api';
 import { useSelector } from 'react-redux';
 
@@ -11,16 +11,21 @@ const Map = () => {
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
-  const user = useSelector(state=>state.user)
+  const user = useSelector(state => state.user)
 
-  useEffect(()=>{
-    async function getAllPropertiesAPIAux(){
-      const response = await getAllPropertiesAPI()
-      console.log("get all props resp: ", response)
-    }
-    getAllPropertiesAPIAux();
-  }, [])
-  
+  const [formData, setFormData] = useState({
+    name: "",
+    price: 0,
+    description: "",
+    location: "",
+    boundary_points: [],
+    area: "",
+    seller_id: "",
+    createdAt: "",
+    updatedAt: ""
+  })
+
+  //Initialize map
   useEffect(() => {
     // Initialize the map
     const map = L.map('map').setView([51.505, -0.09], 13);
@@ -45,6 +50,27 @@ const Map = () => {
       mapRef.current.remove();
     };
   }, []);
+
+  //fetch all properties
+  useEffect(() => {
+    async function getAllPropertiesAPIAux() {
+      const response = await getAllPropertiesAPI()
+      if(response.success){
+        for(let property of response.data){
+          console.log(property.boundary_points)
+          L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+          // if(property.seller_id+""===user.seller_id+""){
+          //   L.polygon(property.boundary_points, { color: 'green', weight: 3, opacity: .5, lineCap: 'square' }).addTo(mapRef.current);
+          // }
+          // else{
+          //   L.polygon(property.boundary_points, { color: 'blue', weight: 3, opacity: .5, lineCap: 'square' }).addTo(mapRef.current);
+          // }
+        }
+      }
+    }
+    getAllPropertiesAPIAux();
+  }, [])
+
 
   useEffect(() => {
     if (points.length > 1) {
@@ -86,9 +112,16 @@ const Map = () => {
   const handleSaveProperty = async () => {
     if (polygon) {
       const polygonPoints = polygon.getLatLngs()[0].map(latlng => [latlng.lat, latlng.lng]);
+      
+      //add extra data to the formData before sending
+      formData.boundary_points=polygonPoints;
+      formData.seller_id=user.seller_id
+      formData.createdAt=Date.now()
+
+      console.log("Map data before sending: ", formData)
       try {
-        const response = await updateSellerAddPropertyAPI({ points: polygonPoints });
-        if (response.data.success) {
+        const response = await updateSellerAddPropertyAPI(user.seller_id, formData);
+        if (response.success) {
           alert('Property saved successfully!');
         } else {
           alert('Failed to save property.');
@@ -100,16 +133,36 @@ const Map = () => {
     }
   };
 
+  function handleChange(e) {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <>
-      <div id="map" style={{ width: '100%', height: '400px' }}>
-      </div>
-      <button onClick={handlePolyReset}>RESET</button>
-      <button onClick={handleMarkProperty}>MARK PROPERTY</button>
-      {
-        user.seller_id &&
-        <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
-      }
+      <div id="map" style={{ width: '100%', height: '400px' }} />
+        {
+          user.seller_id &&
+          <div>
+            <form onSubmit={handleSubmit}>
+              <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
+              <input type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
+              <input type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
+              <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
+              <input type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
+              <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
+            </form>
+            <button onClick={handleMarkProperty}>MARK PROPERTY</button>
+          </div>
+        }
+        <button onClick={handlePolyReset}>RESET</button>
     </>
   )
 };
