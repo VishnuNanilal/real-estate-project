@@ -4,10 +4,8 @@ const jwt = require('jsonwebtoken')
 
 const register = async (req, res)=>{
     const {name, email, phone_num, password} = req.body;
-    console.log("Reached: ", name, email, phone_num, password)
     try{
         const emailPresent = await User.findOne({email});
-        console.log(emailPresent)
         if(emailPresent) 
             return res.status(409).send({
                 success: false,
@@ -62,7 +60,6 @@ const signIn = async (req, res)=>{
         }
 
         let response = emailPresent || phonePresent;
-        console.log(response)
         if(!response){
             return res.status(401).send({
                 success: false,
@@ -70,7 +67,6 @@ const signIn = async (req, res)=>{
             })
         }
 
-        console.log(">>>", response)
         const isVerified = await bcrypt.compare(req.body.password, response.password);
         if(!isVerified){
             return res.status(401).send({
@@ -78,8 +74,10 @@ const signIn = async (req, res)=>{
                 message: "Wrong credentials."
             })
         }
-
-        const token = jwt.sign({id: response._id}, process.env.jwt_secret);
+        // console.log("User fetched with current data ", response);
+        // console.log("Sign in data, response.id: ", response.id)
+        const token = jwt.sign({id: response.id}, process.env.jwt_secret);
+        // console.log("Token: ", token)
         if(token){
             return res.status(201).send({
                 success: true,
@@ -108,9 +106,7 @@ const getUser = async (req, res)=>{
     try{
         const response = await User.findById(req.body.id)
         .select("-password")
-        .populate('seller_id')
         .exec();
-        
         if(response){
             return res.status(200).send({
                 success: true,
@@ -137,7 +133,8 @@ const getUser = async (req, res)=>{
 
 const updateUser = async (req, res)=>{
     try{
-        const response = await User.findByIdAndUpdate(req.body.id, req.body, {new:true});
+        const response = await User.findByIdAndUpdate(req.body.id, req.body, {new:true})
+                        .populate("seller_id").exec();
         if(response){
             return res.status(200).send({
                 success: true,

@@ -27,9 +27,9 @@ function SignIn() {
         e.preventDefault();
         let response = await signInUserAPI(formData);
         if(response.success){
-            localStorage.setItem('jwt', response.data) 
-
-            const userResponse = await getUserAPI(response.data)
+            localStorage.setItem('jwt', response.data)  
+            const userResponse = await getUserAPI()
+            
             if(userResponse.success){
                 console.log("user fetched: ", userResponse.data)
                 dispatch(SetUser(userResponse.data))
@@ -45,7 +45,7 @@ function SignIn() {
                 `user name: ${user.name}`
             }
             <form onSubmit={handleSubmit}>
-                <input type='text' name='data' placeholder='Email or Phone No.' value={formData.name} onChange={handleChange}/>
+                <input type='text' name='data' placeholder='Email or Phone No.' value={formData.data} onChange={handleChange}/>
                 <input type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange}/>
                 <button>Submit</button>
             </form>

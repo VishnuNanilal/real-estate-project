@@ -20,7 +20,7 @@ export const signInUserAPI = async (payload)=>{
     }
 }
 
-export const getUserAPI = async (user_id)=>{
+export const getUserAPI = async ()=>{
     try{
         const response = await axiosInstance.get(`/user/me`)
         return response.data
@@ -30,9 +30,9 @@ export const getUserAPI = async (user_id)=>{
     }
 }
 
-export const updateUserAPI = async (seller_id, payload)=>{
+export const updateUserAPI = async (payload)=>{
     try{
-        const response = await axiosInstance.patch(`seller/${seller_id}`, payload)
+        const response = await axiosInstance.patch(`/user/me`, payload)
         return response.data
     }
     catch(err){

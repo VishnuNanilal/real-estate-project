@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import {updateSellerAddProperty, updateSellerRemoveProperty} from '../api/seller.api'
+import {updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI} from '../api/seller.api'
 import { getAllPropertiesAPI } from '../api/property.api';
+import { useSelector } from 'react-redux';
 
 const Map = () => {
   const mapRef = useRef(null);
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
+  const user = useSelector(state=>state.user)
 
   useEffect(()=>{
     async function getAllPropertiesAPIAux(){
@@ -85,7 +87,7 @@ const Map = () => {
     if (polygon) {
       const polygonPoints = polygon.getLatLngs()[0].map(latlng => [latlng.lat, latlng.lng]);
       try {
-        const response = await updateSellerAddProperty({ points: polygonPoints });
+        const response = await updateSellerAddPropertyAPI({ points: polygonPoints });
         if (response.data.success) {
           alert('Property saved successfully!');
         } else {
@@ -104,7 +106,10 @@ const Map = () => {
       </div>
       <button onClick={handlePolyReset}>RESET</button>
       <button onClick={handleMarkProperty}>MARK PROPERTY</button>
-      <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
+      {
+        user.seller_id &&
+        <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
+      }
     </>
   )
 };
