@@ -5,6 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
 import { getAllPropertiesAPI } from '../api/property.api';
 import { useSelector } from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+
+import markerImg from '../assets/marker.png'
 
 const Map = () => {
   const mapRef = useRef(null);
@@ -12,6 +15,7 @@ const Map = () => {
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
   const user = useSelector(state => state.user)
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,6 +28,13 @@ const Map = () => {
     createdAt: "",
     updatedAt: ""
   })
+
+  const customIcon = L.icon({
+    iconUrl: markerImg,
+    iconSize: [32, 32], // Size of the icon
+    iconAnchor: [16, 32], // Anchor point of the icon
+    popupAnchor: [0, -32] // Popup anchor point
+  });
 
   //Initialize map
   useEffect(() => {
@@ -41,6 +52,7 @@ const Map = () => {
     function handleMapClick(e) {
       const { lat, lng } = e.latlng;
       const newPoint = [lat, lng];
+      const marker = L.marker(newPoint).addTo(mapRef.current);
       // Update points state
       setPoints((prevPoints) => [...prevPoints, newPoint]);
     }
@@ -58,24 +70,31 @@ const Map = () => {
       if(response.success){
         for(let property of response.data){
           console.log(property.boundary_points)
-          L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
-          // if(property.seller_id+""===user.seller_id+""){
-          //   L.polygon(property.boundary_points, { color: 'green', weight: 3, opacity: .5, lineCap: 'square' }).addTo(mapRef.current);
-          // }
-          // else{
-          //   L.polygon(property.boundary_points, { color: 'blue', weight: 3, opacity: .5, lineCap: 'square' }).addTo(mapRef.current);
-          // }
+          const polygon = L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+          polygon.on('mouseover', function (e) {
+            this.bindPopup(`<div>
+                              <h4>${property.name}</h4>
+                              <p>Area: ${property.area}</p>
+                              <p>Price: ${property.price}</p>
+                              <p>Location: ${property.location}</p>
+                            </div>`).openPopup();
+          })
+          .on('mouseout', function () {
+            this.closePopup();
+          })
+          .on('click', function () {
+            navigate(`/bidder/${property._id}`);
+          });
         }
       }
     }
     getAllPropertiesAPIAux();
   }, [])
 
-
+  //to draw poly line
   useEffect(() => {
     if (points.length > 1) {
       const polyline = L.polyline(points, { color: 'blue' }).addTo(mapRef.current);
-
       // Cleanup function to remove the polyline on component unmount
       return () => {
         mapRef.current.removeLayer(polyline);

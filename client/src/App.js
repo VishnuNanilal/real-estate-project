@@ -1,24 +1,23 @@
 import { Provider } from 'react-redux';
 import './App.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Header from './components/Header'
 import Location from './components/Location'
-import Map from './components/Map'
-import Register from './components/Register';
-import SignIn from './components/SignIn';
-import SellerRegister from './components/SellerRegister';
 import store from './redux/store';
+import Home from './components/Home';
+import Bidder from './components/Bidder';
 
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
         <Header />
         <Location />
-        <Register />
-        <SignIn />
-        <SellerRegister />
-        <Map />
-      </div>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/bidder/:property_id' element={<Bidder />} />
+      </Routes> 
+      </BrowserRouter>
     </Provider>
   );
 }
