@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
 import { getAllPropertiesAPI } from '../api/property.api';
 import { useSelector } from 'react-redux';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import markerImg from '../assets/marker.png'
 
@@ -14,6 +14,7 @@ const Map = () => {
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
+
   const user = useSelector(state => state.user)
   const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ const Map = () => {
   //Initialize map
   useEffect(() => {
     // Initialize the map
-    const map = L.map('map').setView([51.505, -0.09], 13);
+    const map = L.map('map').setView([8.5241, 76.9366], 13);
     mapRef.current = map;
 
     // Add OpenStreetMap tile layer
@@ -52,7 +53,6 @@ const Map = () => {
     function handleMapClick(e) {
       const { lat, lng } = e.latlng;
       const newPoint = [lat, lng];
-      const marker = L.marker(newPoint).addTo(mapRef.current);
       // Update points state
       setPoints((prevPoints) => [...prevPoints, newPoint]);
     }
@@ -67,29 +67,47 @@ const Map = () => {
   useEffect(() => {
     async function getAllPropertiesAPIAux() {
       const response = await getAllPropertiesAPI()
-      if(response.success){
-        for(let property of response.data){
+      if (response.success) {
+        for (let property of response.data) {
           console.log(property.boundary_points)
           const polygon = L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+          let popupTimeout;
           polygon.on('mouseover', function (e) {
-            this.bindPopup(`<div>
-                              <h4>${property.name}</h4>
-                              <p>Area: ${property.area}</p>
-                              <p>Price: ${property.price}</p>
-                              <p>Location: ${property.location}</p>
-                            </div>`).openPopup();
+            popupTimeout = setTimeout(() => {
+              this.bindPopup(`<div>
+                                <h4>${property.name}</h4>
+                                <p>Area: ${property.area}</p>
+                                <p>Price: ${property.price}</p>
+                                <p>Location: ${property.location}</p>
+                              </div>`).openPopup();
+            }, 300);
           })
-          .on('mouseout', function () {
-            this.closePopup();
-          })
-          .on('click', function () {
-            navigate(`/bidder/${property._id}`);
-          });
+            .on('mouseout', function () {
+              clearTimeout(popupTimeout)
+              this.closePopup();
+            })
+            .on('click', function () {
+              navigate(`/bidder/${property._id}`);
+            });
         }
       }
     }
     getAllPropertiesAPIAux();
   }, [])
+
+  //to draw markers
+  useEffect(() => {
+    if (points.length === 0) {
+      // points.forEach(marker=>{
+      //   mapRef.current.removeLayer(marker)
+      // })
+    }
+    else {
+      const newMarker = L.marker([points[points.length - 1][0], points[points.length - 1][1]], 
+        {icon: customIcon})
+        .addTo(mapRef.current);
+    }
+  }, [points]);
 
   //to draw poly line
   useEffect(() => {
@@ -131,11 +149,11 @@ const Map = () => {
   const handleSaveProperty = async () => {
     if (polygon) {
       const polygonPoints = polygon.getLatLngs()[0].map(latlng => [latlng.lat, latlng.lng]);
-      
+
       //add extra data to the formData before sending
-      formData.boundary_points=polygonPoints;
-      formData.seller_id=user.seller_id
-      formData.createdAt=Date.now()
+      formData.boundary_points = polygonPoints;
+      formData.seller_id = user.seller_id
+      formData.createdAt = Date.now()
 
       console.log("Map data before sending: ", formData)
       try {
@@ -167,21 +185,21 @@ const Map = () => {
   return (
     <>
       <div id="map" style={{ width: '100%', height: '400px' }} />
-        {
-          user.seller_id &&
-          <div>
-            <form onSubmit={handleSubmit}>
-              <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
-              <input type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
-              <input type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
-              <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
-              <input type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
-              <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
-            </form>
-            <button onClick={handleMarkProperty}>MARK PROPERTY</button>
-          </div>
-        }
-        <button onClick={handlePolyReset}>RESET</button>
+      {
+        user.seller_id &&
+        <div>
+          <form onSubmit={handleSubmit}>
+            <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
+            <input type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
+            <input type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
+            <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
+            <input type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
+            <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
+          </form>
+          <button onClick={handleMarkProperty}>MARK PROPERTY</button>
+        </div>
+      }
+      <button onClick={handlePolyReset}>RESET</button>
     </>
   )
 };
