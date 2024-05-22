@@ -98,7 +98,6 @@ const Map = () => {
       }
     }
   }
-
   //to draw markers
   useEffect(() => {
     //remove all set markers if markers list is empty.
@@ -123,10 +122,13 @@ const Map = () => {
   }, [points]);
 
   function handlePolyReset() {
-    markers.forEach(marker => {
-      mapRef.current.removeLayer(marker);
-    })
-    mapRef.current.removeLayer(polygon);
+    if(markers){
+      markers.forEach(marker => {
+        mapRef.current.removeLayer(marker);
+      })
+    }
+    if(polygon) 
+      mapRef.current.removeLayer(polygon);
     setPoints([]);
     setMarkers([])
     setPolygon(null)

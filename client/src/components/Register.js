@@ -1,7 +1,9 @@
 import {React, useState} from 'react'
 import { registerUserAPI } from '../api/user.api';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -10,7 +12,7 @@ function Register() {
     });
 
     function handleNavigate(){
-        alert("Navigated to Sign in.")
+        navigate('/sign-in')
     }
 
     function handleChange(e){

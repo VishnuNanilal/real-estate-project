@@ -2,6 +2,12 @@
   box-sizing: border-box;
 }
 
+.main-cont {
+  padding: 5rem 0;
+  display: flex;
+  justify-content: center;
+}
+
 header{
   width: 100 vw;
   height: 5rem;

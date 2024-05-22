@@ -2,17 +2,19 @@ import {React, useState} from 'react'
 import { getUserAPI, signInUserAPI } from '../api/user.api';
 import { SetUser, RemoveUser } from '../redux/user.slice';
 import {useSelector, UseDispatch, useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
     const user = useSelector(state=>state.user)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         data: "",
         password: ""
     });
 
     function handleNavigate(){
-        alert("Navigated to Register.")
+        navigate('/register')
     }
 
     function handleChange(e){
@@ -33,6 +35,7 @@ function SignIn() {
             if(userResponse.success){
                 console.log("user fetched: ", userResponse.data)
                 dispatch(SetUser(userResponse.data))
+                navigate('/')
             }
             console.log(userResponse.message);
         }
@@ -49,7 +52,7 @@ function SignIn() {
                 <input type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange}/>
                 <button>Submit</button>
             </form>
-            <div>Already have an account? <span onClick={handleNavigate}>Sign in</span></div>
+            <div>Create New Account <span onClick={handleNavigate}>Register</span></div>
         </div>
     )
 }
