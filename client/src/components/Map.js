@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
+import L, { marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
@@ -14,6 +14,7 @@ const Map = () => {
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   const user = useSelector(state => state.user)
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const Map = () => {
     area: "",
     seller_id: "",
     createdAt: "",
-    updatedAt: ""
+    updatedAt: "",
+    minimum_increment: 1000
   })
 
   const customIcon = L.icon({
@@ -65,47 +67,47 @@ const Map = () => {
 
   //fetch all properties
   useEffect(() => {
-    async function getAllPropertiesAPIAux() {
-      const response = await getAllPropertiesAPI()
-      if (response.success) {
-        for (let property of response.data) {
-          console.log(property.boundary_points)
-          const polygon = L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
-          let popupTimeout;
-          polygon.on('mouseover', function (e) {
-            popupTimeout = setTimeout(() => {
-              this.bindPopup(`<div>
-                                <h4>${property.name}</h4>
-                                <p>Area: ${property.area}</p>
-                                <p>Price: ${property.price}</p>
-                                <p>Location: ${property.location}</p>
-                              </div>`).openPopup();
-            }, 300);
-          })
-            .on('mouseout', function () {
-              clearTimeout(popupTimeout)
-              this.closePopup();
-            })
-            .on('click', function () {
-              navigate(`/bidder/${property._id}`);
-            });
-        }
-      }
-    }
     getAllPropertiesAPIAux();
   }, [])
 
+  async function getAllPropertiesAPIAux() {
+    const response = await getAllPropertiesAPI()
+    console.log(response)
+    if (response.success) {
+      for (let property of response.data) {
+        console.log(property.boundary_points)
+        const polygon = L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+        let popupTimeout;
+        polygon.on('mouseover', function (e) {
+          popupTimeout = setTimeout(() => {
+            this.bindPopup(`<div>
+                              <h4>${property.name}</h4>
+                              <p>Area: ${property.area}</p>
+                              <p>Price: ${property.price}</p>
+                              <p>Location: ${property.location}</p>
+                            </div>`).openPopup();
+          }, 300);
+        })
+          .on('mouseout', function () {
+            clearTimeout(popupTimeout)
+            this.closePopup();
+          })
+          .on('click', function () {
+            navigate(`/bidder/${property._id}`);
+          });
+      }
+    }
+  }
+
   //to draw markers
   useEffect(() => {
-    if (points.length === 0) {
-      // points.forEach(marker=>{
-      //   mapRef.current.removeLayer(marker)
-      // })
-    }
-    else {
-      const newMarker = L.marker([points[points.length - 1][0], points[points.length - 1][1]], 
-        {icon: customIcon})
+    //remove all set markers if markers list is empty.
+    if (points.length > 0) {
+      const newMarker = L.marker([points[points.length - 1][0], points[points.length - 1][1]],
+        { icon: customIcon })
         .addTo(mapRef.current);
+
+      setMarkers(prev => [...prev, newMarker])
     }
   }, [points]);
 
@@ -121,7 +123,13 @@ const Map = () => {
   }, [points]);
 
   function handlePolyReset() {
+    markers.forEach(marker => {
+      mapRef.current.removeLayer(marker);
+    })
+    mapRef.current.removeLayer(polygon);
     setPoints([]);
+    setMarkers([])
+    setPolygon(null)
   }
 
   const handleMarkProperty = () => {
@@ -160,6 +168,8 @@ const Map = () => {
         const response = await updateSellerAddPropertyAPI(user.seller_id, formData);
         if (response.success) {
           alert('Property saved successfully!');
+          getAllPropertiesAPIAux()
+          handlePolyReset()
         } else {
           alert('Failed to save property.');
         }
@@ -194,6 +204,7 @@ const Map = () => {
             <input type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
             <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
             <input type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
+            <input type='number' name='minimum_increment' placeholder='Minimum Increment' value={formData.minimum_increment} onChange={handleChange} />
             <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
           </form>
           <button onClick={handleMarkProperty}>MARK PROPERTY</button>

@@ -35,6 +35,10 @@ const propertySchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now()
+    },
+    minimum_increment: {
+        type: Number,
+        default: 1000
     }
 });
 
