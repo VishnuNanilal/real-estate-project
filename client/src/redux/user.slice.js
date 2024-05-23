@@ -21,7 +21,13 @@ const userSlice = createSlice({
             })
         },
         RemoveUser: (state) => {
-            return null;
+            return ({
+                id : "",
+                name : "",
+                email : "",
+                phone_num: "",
+                seller_id: ""
+            });
         }
     }
 })

@@ -91,12 +91,12 @@ const getAllProperties = async (req, res) => {
 
 const updatePropertySetNewBuyer = async (req, res) => {
     console.log("reached")
-    
+
     const { property_id } = req.params;
-    const {buyer_id} = req.body
+    const {buyer_id, buyPrice} = req.body
     console.log("Reached with: ",property_id, buyer_id)
     try {
-        const response = await Property.findByIdAndUpdate(property_id, {buyer_id}, {new: true})
+        const response = await Property.findByIdAndUpdate(property_id, {buyer_id, price: buyPrice}, {new: true})
 
         if (response) {
             return res.status(200).send({

@@ -13,19 +13,19 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <Provider store={store}>
-      <Header />
-      <Location />
-      <div className='main-cont'>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Header />
+        <Location />
+        <div className='main-cont'>
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/sign-in' element={<SignIn />} />
             <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
             <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidder /></ProtectedRoute>} />
           </Routes>
-        </BrowserRouter>
-      </div>
-    </Provider>
+        </div>
+      </BrowserRouter>
+    </Provider >
   );
 }
 

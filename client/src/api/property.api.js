@@ -35,10 +35,10 @@ export const updatePropertyAPI = async (property_id, payload)=>{
     }
 }
 
-export const updatePropertySetBuyerAPI = async (property_id, seller_id)=>{
+export const updatePropertySetBuyerAPI = async (property_id, payload)=>{
 
     try{
-        const response = await axiosInstance.patch(`/property/set-buyer/${property_id}`, {buyer_id: seller_id})
+        const response = await axiosInstance.patch(`/property/set-buyer/${property_id}`, payload)
         return response.data
     }
     catch(err){

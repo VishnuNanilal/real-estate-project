@@ -42,7 +42,7 @@ function Bidder() {
             alert(`Price should be higher than ${minimum_bid}`)
         
         // console.log(typeof property_id, typeof user.id)
-        let response = await updatePropertySetBuyerAPI(property_id, user.id)
+        let response = await updatePropertySetBuyerAPI(property_id, {buyer_id: user.id, buyPrice})
         if(response){
             console.log(response.message)
         }

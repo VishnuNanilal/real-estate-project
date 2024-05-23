@@ -26,7 +26,10 @@ function Register() {
     async function handleSubmit(e){
         e.preventDefault();
         let response = await registerUserAPI(formData);
-        console.log(response)
+        if(response.success){
+            navigate('/sign-in')
+        }
+        console.log(response.message)
     }
 
     return (
