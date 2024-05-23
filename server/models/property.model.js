@@ -39,6 +39,10 @@ const propertySchema = new mongoose.Schema({
     minimum_increment: {
         type: Number,
         default: 1000
+    },
+    buyer_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"users"
     }
 });
 

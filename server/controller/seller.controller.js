@@ -112,7 +112,24 @@ const updateSellerAddProperty = async (req, res) => {
         }
         // Add the property ID to the seller's properties array
         console.log("current seller: ", seller)
-        let propertyResponse = await createProperty(req.body)
+        // let propertyResponse = await createProperty(req.body)
+
+
+        try {
+            const response = await Property.findByIdAndUpdate(payload.id, payload)
+    
+            if (response) {
+                return response;
+            }
+            else {
+                return null;
+            }
+    
+        }
+        catch (err) {
+            return null;
+        }
+
 
         seller.properties.push(propertyResponse._id)
         await seller.save();

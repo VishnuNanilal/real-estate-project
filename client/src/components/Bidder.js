@@ -1,9 +1,11 @@
 import { React, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getPropertyAPI } from '../api/property.api'
+import {useSelector} from 'react-redux';
+import { getPropertyAPI, updatePropertyAPI, updatePropertySetBuyerAPI } from '../api/property.api'
 import './css/Bidder.css'
 
 function Bidder() {
+    const user = useSelector(state=>state.user)
     const { property_id } = useParams()
     const [property, setProperty] = useState({
         id: "",
@@ -13,6 +15,8 @@ function Bidder() {
         price: 0,
         area: 0,
     })
+    let minimum_bid = !property.price ? 0 :property.price+property.minimum_increment;
+    const [buyPrice, setBuyPrice] = useState(minimum_bid)
 
     useEffect(() => {
         async function getPropertyAPIAux() {
@@ -20,7 +24,7 @@ function Bidder() {
                 let propertyResponse = await getPropertyAPI(property_id)
                 console.log("response", propertyResponse)
                 if (propertyResponse.success) {
-                    console.log(propertyResponse.data)
+                    // console.log(propertyResponse.data)
                     setProperty(propertyResponse.data);
                 }
                 console.log(propertyResponse.message)
@@ -32,7 +36,18 @@ function Bidder() {
         getPropertyAPIAux()
     }, [])
 
-    let minimum_bid = property.price+property.minimum_increment;
+    async function handleSubmitBuyPrice(e){
+        e.preventDefault();
+        if(buyPrice<minimum_bid)
+            alert(`Price should be higher than ${minimum_bid}`)
+        
+        // console.log(typeof property_id, typeof user.id)
+        let response = await updatePropertySetBuyerAPI(property_id, user.id)
+        if(response){
+            console.log(response.message)
+        }
+    }
+    
     return (
         <div className="property-container">
             <div>Current bid amount: <strong>property.name</strong></div>
@@ -43,10 +58,10 @@ function Bidder() {
                 <p><strong>Price:</strong> ${property.price}</p>
                 <p><strong>Area:</strong> {property.area} sq ft</p>
             </div>
-            <div>
-                <input type="number" default={minimum_bid} min={minimum_bid} />
+            <form onSubmit={handleSubmitBuyPrice}>
+                <input type="number" min={minimum_bid} onChange={(e)=>setBuyPrice(e.target.value)} value={buyPrice}/>
                 <button>Save</button>
-            </div>
+            </form>
             <div style={{height: "2px", background: "lightgrey", width: "100vw"}}></div>
         </div>
     )
