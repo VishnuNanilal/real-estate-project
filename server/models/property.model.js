@@ -43,6 +43,10 @@ const propertySchema = new mongoose.Schema({
     buyer_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref:"users"
+    },
+    closing_time: {
+        type: String,
+        required: true
     }
 });
 

@@ -29,7 +29,9 @@ const Map = () => {
     seller_id: "",
     createdAt: "",
     updatedAt: "",
-    minimum_increment: 1000
+    minimum_increment: 1000,
+    closing_time: 0,
+    closing_date: Date.now()
   })
 
   const customIcon = L.icon({
@@ -157,17 +159,24 @@ const Map = () => {
   };
 
   const handleSaveProperty = async () => {
+    
+    //restructure data to be send to BE.
+    let newFormData = {...formData}
+    newFormData.closing_time=formData.closing_time+" "+formData.closing_date;
+    // console.log(newFormData.closing_time)
+    delete newFormData.closing_date;
+
     if (polygon) {
       const polygonPoints = polygon.getLatLngs()[0].map(latlng => [latlng.lat, latlng.lng]);
 
       //add extra data to the formData before sending
-      formData.boundary_points = polygonPoints;
-      formData.seller_id = user.seller_id
-      formData.createdAt = Date.now()
+      newFormData.boundary_points = polygonPoints;
+      newFormData.seller_id = user.seller_id
+      newFormData.createdAt = Date.now()
 
-      console.log("Map data before sending: ", formData)
+      console.log("Map data before sending: ", newFormData)
       try {
-        const response = await updateSellerAddPropertyAPI(user.seller_id, formData);
+        const response = await updateSellerAddPropertyAPI(user.seller_id, newFormData);
         if (response.success) {
           alert('Property saved successfully!');
           getAllPropertiesAPIAux()
@@ -207,6 +216,8 @@ const Map = () => {
             <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
             <input type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
             <input type='number' name='minimum_increment' placeholder='Minimum Increment' value={formData.minimum_increment} onChange={handleChange} />
+            <input type='time' name='closing_time' placeholder='Closing time' value={formData.closing_time} onChange={handleChange} />
+            <input type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} />
             <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
           </form>
           <button onClick={handleMarkProperty}>MARK PROPERTY</button>

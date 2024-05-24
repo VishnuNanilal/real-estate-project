@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {useSelector} from 'react-redux';
 import { getPropertyAPI, updatePropertyAPI, updatePropertySetBuyerAPI } from '../api/property.api'
+import dayjs from 'dayjs'
 import './css/Bidder.css'
 
 function Bidder() {
@@ -14,9 +15,11 @@ function Bidder() {
         location: 0,
         price: 0,
         area: 0,
+        closing_time: 0
     })
     let minimum_bid = !property.price ? 0 :property.price+property.minimum_increment;
     const [buyPrice, setBuyPrice] = useState(minimum_bid)
+    const [timeRemaining, setTimeRemaining] = useState(0);
 
     useEffect(() => {
         async function getPropertyAPIAux() {
@@ -36,7 +39,33 @@ function Bidder() {
         getPropertyAPIAux()
     }, [])
 
-    async function handleSubmitBuyPrice(e){
+    useEffect(() => {
+        if (!property) return;
+        const calculateRemainingTime = () => {
+          const closing_time = dayjs(property.closing_time, 'HH:mm YYYY-MM-DD');
+          const now = dayjs();
+          const diff = closing_time.diff(now);
+          console.log("diff: ", diff)
+    
+          if (diff <= 0) {
+            setTimeRemaining('Expired');
+            return;
+          }
+          
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    
+          setTimeRemaining(`${days}d ${hours}h ${minutes}m`);
+        };
+        
+        calculateRemainingTime(); // Initial calculation
+        // const intervalId = setInterval(calculateRemainingTime, 60000); // Update every minute
+          
+        // return () => clearInterval(intervalId);
+    }, [property]);
+
+    async function handleBuy(e){
         e.preventDefault();
         if(buyPrice<minimum_bid)
             alert(`Price should be higher than ${minimum_bid}`)
@@ -51,6 +80,7 @@ function Bidder() {
     return (
         <div className="property-container">
             <div>Current bid amount: <strong>property.name</strong></div>
+            <div>Time Remaining: {timeRemaining}</div>
             <div className="property-card">
                 <h2>{property.name}</h2>
                 <p><strong>Description:</strong> {property.description}</p>
@@ -58,7 +88,7 @@ function Bidder() {
                 <p><strong>Price:</strong> ${property.price}</p>
                 <p><strong>Area:</strong> {property.area} sq ft</p>
             </div>
-            <form onSubmit={handleSubmitBuyPrice}>
+            <form onSubmit={handleBuy}>
                 <input type="number" min={minimum_bid} onChange={(e)=>setBuyPrice(e.target.value)} value={buyPrice}/>
                 <button>Save</button>
             </form>
