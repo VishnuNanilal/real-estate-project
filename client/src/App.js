@@ -9,6 +9,7 @@ import Bidder from './components/Bidder';
 import Register from './components/Register';
 import SignIn from './components/SignIn';
 import ProtectedRoute from './components/ProtectedRoute';
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/sign-in' element={<SignIn />} />
+            <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
             <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
             <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidder /></ProtectedRoute>} />
           </Routes>

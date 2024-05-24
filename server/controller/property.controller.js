@@ -71,23 +71,36 @@ const getAllProperties = async (req, res) => {
     }
 }
 
-// const updateProperty = async (payload) => {
-//     const {seller_id} = 
-//     try {
-//         const response = await Property.findByIdAndUpdate(payload.id, payload)
+const updateProperty = async (req, res) => {
+    const {property_id} = req.params
+    const {payload} = req.body; 
+    try {
+        const response = await Property.findByIdAndUpdate(property_id, payload, {new: true})
 
-//         if (response) {
-//             return response;
-//         }
-//         else {
-//             return null;
-//         }
+        if (response) {
+            return res.status(200).send(
+                {
+                success: true,
+                message: "Property updation successful.",
+                data: response
+            });
+        }
+        else {
+            return res.status(400).send({
+                success: false,
+                message: "Property updation failed.",
+            });
+        }
 
-//     }
-//     catch (err) {
-//         return null;
-//     }
-// }
+    }
+    catch (err) {
+        return res.status(500).send({
+            success: false,
+            message: 'Internal server error.',
+            error: err.message
+        });
+    }
+}
 
 const updatePropertySetNewBuyer = async (req, res) => {
     console.log("reached")
@@ -143,7 +156,7 @@ module.exports = {
     createProperty,
     getProperty,
     getAllProperties,
-    // updateProperty,
+    updateProperty,
     updatePropertySetNewBuyer,
     deleteProperty
 }

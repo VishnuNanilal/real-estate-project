@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
     seller_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "sellers"
+    },
+    admin: {
+        type: Boolean,
+        required: true
     }
     //more to add
 });

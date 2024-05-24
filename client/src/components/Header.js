@@ -1,9 +1,10 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RemoveUser } from '../redux/user.slice'
 
 export default function Header() {
+    const user = useSelector(state=>state.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     function handleSignout(){
@@ -21,6 +22,10 @@ export default function Header() {
             <div className="header-r">
                 right
             </div>
+            {
+                user.
+                <button onClick={()=>navigate('/admin')}>Admin</button>
+            }
             <button onClick={handleSignout}>Sign out</button>
         </header>
     </div>
