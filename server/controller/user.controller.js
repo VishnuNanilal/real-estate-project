@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
 const register = async (req, res)=>{
+    console.log("sdssd")
     const {name, email, phone_num, password} = req.body;
     try{
         const emailPresent = await User.findOne({email});

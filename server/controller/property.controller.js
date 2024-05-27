@@ -163,18 +163,11 @@ const deleteProperty = async (payload) => {
     }
 }
 
-const approveProperty = async (req, res) => {
+const toApproveStatus = async (req, res) => {
+    const {property_id} = req.params;
+    // console.log("REACHED ", property_id)
     try {
-        const property = await Property.findById(req.params.propertyId);
-
-        if (!property) {
-            return res.status(404).json({ success: false, 
-                message: 'Property not found' 
-            });
-        }
-
-        property.status = "approved";
-        await property.save();
+        const property = await Property.findByIdAndUpdate(property_id, {status: "approved"});
 
         res.status(200).json({ 
             success: true, 
@@ -189,54 +182,36 @@ const approveProperty = async (req, res) => {
     }
 };
 
-const approveBidProperty = async (req, res) => {
+const toBidPendingStatus = async (req, res) => {
     try {
-        const property = await Property.findById(req.params.propertyId);
-
-        if (!property) {
-            return res.status(404).json({ success: false, 
-                message: 'Property not found' 
-            });
-        }
-
-        property.status = "bidPending";
-        await property.save();
+        const property = await Property.findByIdAndUpdate(req.params.propertyId, {status: "bidPending"});
 
         res.status(200).json({ 
             success: true, 
-            message: 'Property approved', 
+            message: 'Property status changed to bid pending', 
             data: property 
         });
     } catch (error) {
         res.status(500).json({ 
             success: false, 
-            message: 'Failed to approve property', 
+            message: 'Failed to property status change', 
             error: error.message });
     }
 };
 
-const approveSold = async (req, res) => {
+const toSoldStatus = async (req, res) => {
     try {
-        const property = await Property.findById(req.params.propertyId);
-
-        if (!property) {
-            return res.status(404).json({ success: false, 
-                message: 'Property not found' 
-            });
-        }
-
-        property.status = "sold";
-        await property.save();
+        const property = await Property.findById(req.params.propertyId, {status: "sold"});
 
         res.status(200).json({ 
             success: true, 
-            message: 'Property approved', 
+            message: 'Property status changed to sold', 
             data: property 
         });
     } catch (error) {
         res.status(500).json({ 
             success: false, 
-            message: 'Failed to approve property', 
+            message: 'Failed to property status change', 
             error: error.message });
     }
 };
@@ -249,7 +224,7 @@ module.exports = {
     updateProperty,
     updatePropertySetNewBuyer,
     deleteProperty,
-    approveProperty,
-    approveBidProperty,
-    approveSold
+    toApproveStatus,
+    toBidPendingStatus,
+    toSoldStatus
 }

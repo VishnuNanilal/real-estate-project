@@ -52,10 +52,10 @@ export const updatePropertySetBuyerAPI = async (property_id, payload)=>{
     }
 }
 
-export const toApproveAPI = async (property_id, payload)=>{
+export const toApproveAPI = async (property_id)=>{
 
     try{
-        const response = await axiosInstance.patch(`/property/to-approve/${property_id}`, payload)
+        const response = await axiosInstance.patch(`/property/to-approve/${property_id}`)
         return response.data
     }
     catch(err){
@@ -63,10 +63,10 @@ export const toApproveAPI = async (property_id, payload)=>{
     }
 }
 
-export const toBidPendingAPI = async (property_id, payload)=>{
+export const toBidPendingAPI = async (property_id)=>{
 
     try{
-        const response = await axiosInstance.patch(`/property/to-bid-pending/${property_id}`, payload)
+        const response = await axiosInstance.patch(`/property/to-bid-pending/${property_id}`)
         return response.data
     }
     catch(err){
@@ -76,7 +76,7 @@ export const toBidPendingAPI = async (property_id, payload)=>{
 export const toSoldAPI = async (property_id, payload)=>{
 
     try{
-        const response = await axiosInstance.patch(`/property/to-sold/${property_id}`, payload)
+        const response = await axiosInstance.patch(`/property/to-sold/${property_id}`)
         return response.data
     }
     catch(err){

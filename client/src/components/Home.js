@@ -1,16 +1,16 @@
 import React from 'react'
 import Map from './Map'
 import SellerRegister from './SellerRegister';
-import PendingProperty from './PendingProperty';
-import BidPendingProperty from './BidPendingProperty';
+import PropertyByStatus from './PropertyByStatus';
 
 function Home() {
     return (
         <div className="App">
             <Map />
             <SellerRegister />
-            <PendingProperty />
-            <BidPendingProperty/>
+            <PropertyByStatus status="pending"/>
+            <PropertyByStatus status="bidPending"/>
+            <PropertyByStatus status="sold"/>
         </div>
     )
 }
