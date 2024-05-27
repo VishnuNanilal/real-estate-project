@@ -1,6 +1,6 @@
 Things to implement
 
-[]seller should be able to create property. Default status: "pending"
+[x]seller should be able to create property. Default status: "pending"
 []All pending property should be visible by admin for approval. status: pending->approved
 []All approved property should be publishable by seller as bid. 
 []Once bid time is over, status: approved->bidPending.

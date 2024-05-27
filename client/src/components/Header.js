@@ -23,7 +23,8 @@ export default function Header() {
                 right
             </div>
             {
-                user.
+                user &&
+                user.admin &&
                 <button onClick={()=>navigate('/admin')}>Admin</button>
             }
             <button onClick={handleSignout}>Sign out</button>

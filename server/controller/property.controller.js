@@ -1,20 +1,31 @@
 const Property = require('../models/property.model')
 
-const createProperty = async (payload) => {
-    console.log("...", payload)
+const createProperty = async (req, res) => {
+    console.log("Reached: ", req.body)
     try {
-        const response = await Property.create(payload)
-        console.log("response: ", response)
+        const response = await Property.create(req.body)
+        console.log(response)
         if (response) {
-            return response;
+            return res.status(201).send({
+                success: true,
+                message: "Property created.",
+                data: response
+            })
         }
         else {
-            return null;
+            return res.status(400).send({
+                success: true,
+                message: "Property fetching failed."
+            })
         }
 
     }
     catch (err) {
-        return null;
+        console.log(err)
+        res.status(500).send({
+            success: false,
+            message: "Internal Server Error."
+        })
     }
 }
 
@@ -72,18 +83,18 @@ const getAllProperties = async (req, res) => {
 }
 
 const updateProperty = async (req, res) => {
-    const {property_id} = req.params
-    const {payload} = req.body; 
+    const { property_id } = req.params
+    const { payload } = req.body;
     try {
-        const response = await Property.findByIdAndUpdate(property_id, payload, {new: true})
+        const response = await Property.findByIdAndUpdate(property_id, payload, { new: true })
 
         if (response) {
             return res.status(200).send(
                 {
-                success: true,
-                message: "Property updation successful.",
-                data: response
-            });
+                    success: true,
+                    message: "Property updation successful.",
+                    data: response
+                });
         }
         else {
             return res.status(400).send({
@@ -106,10 +117,10 @@ const updatePropertySetNewBuyer = async (req, res) => {
     console.log("reached")
 
     const { property_id } = req.params;
-    const {buyer_id, buyPrice} = req.body
-    console.log("Reached with: ",property_id, buyer_id)
+    const { buyer_id, buyPrice } = req.body
+    console.log("Reached with: ", property_id, buyer_id)
     try {
-        const response = await Property.findByIdAndUpdate(property_id, {buyer_id, price: buyPrice}, {new: true})
+        const response = await Property.findByIdAndUpdate(property_id, { buyer_id, price: buyPrice }, { new: true })
 
         if (response) {
             return res.status(200).send({
@@ -152,11 +163,93 @@ const deleteProperty = async (payload) => {
     }
 }
 
+const approveProperty = async (req, res) => {
+    try {
+        const property = await Property.findById(req.params.propertyId);
+
+        if (!property) {
+            return res.status(404).json({ success: false, 
+                message: 'Property not found' 
+            });
+        }
+
+        property.status = "approved";
+        await property.save();
+
+        res.status(200).json({ 
+            success: true, 
+            message: 'Property approved', 
+            data: property 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to approve property', 
+            error: error.message });
+    }
+};
+
+const approveBidProperty = async (req, res) => {
+    try {
+        const property = await Property.findById(req.params.propertyId);
+
+        if (!property) {
+            return res.status(404).json({ success: false, 
+                message: 'Property not found' 
+            });
+        }
+
+        property.status = "bidPending";
+        await property.save();
+
+        res.status(200).json({ 
+            success: true, 
+            message: 'Property approved', 
+            data: property 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to approve property', 
+            error: error.message });
+    }
+};
+
+const approveSold = async (req, res) => {
+    try {
+        const property = await Property.findById(req.params.propertyId);
+
+        if (!property) {
+            return res.status(404).json({ success: false, 
+                message: 'Property not found' 
+            });
+        }
+
+        property.status = "sold";
+        await property.save();
+
+        res.status(200).json({ 
+            success: true, 
+            message: 'Property approved', 
+            data: property 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to approve property', 
+            error: error.message });
+    }
+};
+
+
 module.exports = {
     createProperty,
     getProperty,
     getAllProperties,
     updateProperty,
     updatePropertySetNewBuyer,
-    deleteProperty
+    deleteProperty,
+    approveProperty,
+    approveBidProperty,
+    approveSold
 }

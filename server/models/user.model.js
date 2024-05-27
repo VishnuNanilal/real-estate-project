@@ -21,9 +21,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "sellers"
     },
-    admin: {
-        type: Boolean,
-        required: true
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     }
     //more to add
 });

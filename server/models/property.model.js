@@ -47,6 +47,11 @@ const propertySchema = new mongoose.Schema({
     closing_time: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', "bidPending", 'sold'],
+        default: 'pending',
     }
 });
 

@@ -3,10 +3,9 @@ import L, { marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
-import { getAllPropertiesAPI } from '../api/property.api';
+import { createProperty, getAllPropertiesAPI } from '../api/property.api';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import markerImg from '../assets/marker.png'
 
 const Map = () => {
@@ -176,7 +175,14 @@ const Map = () => {
 
       console.log("Map data before sending: ", newFormData)
       try {
-        const response = await updateSellerAddPropertyAPI(user.seller_id, newFormData);
+        const propertyResponse = await createProperty(newFormData);
+        if(!propertyResponse.success){
+          console.log(propertyResponse.message)
+          return;
+        }
+        console.log("New property response: ", propertyResponse.data);
+
+        const response = await updateSellerAddPropertyAPI(user.seller_id, propertyResponse._id);
         if (response.success) {
           alert('Property saved successfully!');
           getAllPropertiesAPIAux()
