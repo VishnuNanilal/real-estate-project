@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
-import { getAllPropertiesAPI, toApproveAPI } from '../api/property.api'
+import { getAllPropertiesAPI, changeStatusAPI } from '../api/property.api'
 
-function PropertyByStatus({status}) {
+function PropertyByStatus({status, nextStatus}) {
     const [property, setProperty] = useState([])
     useEffect(() => {
         async function fetchData() {
@@ -22,15 +22,18 @@ function PropertyByStatus({status}) {
     }, [property, status])
 
     async function handleClick(property_id) {
+        if(!nextStatus) return;
+        
         console.log(property_id)
-        const response = await toApproveAPI(property_id)
+        const response = await changeStatusAPI(property_id, nextStatus)
         console.log(response.message);
     }
 
     return (
-        <div style={{ height: "5rem", backgroundColor: "red" }}>
+        <div style={{border: "1px solid black", backgroundColor: "red" }}>
+            <h4>{status}</h4>
             {
-                property.map(property => <div style={{ border: "1px solid lightgreen" }} onClick={() => handleClick(property._id)}>{property.name}</div>)
+                property.map(property => <div style={{ border: "1px solid lightgreen", cursor: "pointer", margin: "1rem" }} onClick={() => handleClick(property._id)}>{property.name}</div>)
             }
         </div>
     )

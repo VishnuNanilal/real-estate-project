@@ -5,11 +5,11 @@ import PropertyByStatus from './PropertyByStatus';
 
 function Home() {
     return (
-        <div className="App">
+        <div className="home">
             <Map />
             <SellerRegister />
-            <PropertyByStatus status="pending"/>
-            <PropertyByStatus status="bidPending"/>
+            <PropertyByStatus status="pending" nextStatus="approve"/>
+            <PropertyByStatus status="bidPending" nextStatus="sold"/>
             <PropertyByStatus status="sold"/>
         </div>
     )

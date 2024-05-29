@@ -163,55 +163,22 @@ const deleteProperty = async (payload) => {
     }
 }
 
-const toApproveStatus = async (req, res) => {
+const changeStatus = async (req, res) => {
     const {property_id} = req.params;
+    const {status} = req.body
     // console.log("REACHED ", property_id)
     try {
-        const property = await Property.findByIdAndUpdate(property_id, {status: "approved"});
+        const property = await Property.findByIdAndUpdate(property_id, {status});
 
         res.status(200).json({ 
             success: true, 
-            message: 'Property approved', 
+            message: `Property status changed to ${status}`, 
             data: property 
         });
     } catch (error) {
         res.status(500).json({ 
             success: false, 
             message: 'Failed to approve property', 
-            error: error.message });
-    }
-};
-
-const toBidPendingStatus = async (req, res) => {
-    try {
-        const property = await Property.findByIdAndUpdate(req.params.propertyId, {status: "bidPending"});
-
-        res.status(200).json({ 
-            success: true, 
-            message: 'Property status changed to bid pending', 
-            data: property 
-        });
-    } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: 'Failed to property status change', 
-            error: error.message });
-    }
-};
-
-const toSoldStatus = async (req, res) => {
-    try {
-        const property = await Property.findById(req.params.propertyId, {status: "sold"});
-
-        res.status(200).json({ 
-            success: true, 
-            message: 'Property status changed to sold', 
-            data: property 
-        });
-    } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: 'Failed to property status change', 
             error: error.message });
     }
 };
@@ -224,7 +191,5 @@ module.exports = {
     updateProperty,
     updatePropertySetNewBuyer,
     deleteProperty,
-    toApproveStatus,
-    toBidPendingStatus,
-    toSoldStatus
+    changeStatus
 }
