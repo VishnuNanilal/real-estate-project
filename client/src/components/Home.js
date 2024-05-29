@@ -1,16 +1,15 @@
 import React from 'react'
 import Map from './Map'
 import SellerRegister from './SellerRegister';
-import PropertyByStatus from './PropertyByStatus';
+import PropertyByStatusContainer from './PropertyByStatusContainer';
 
 function Home() {
+     
     return (
         <div className="home">
             <Map />
             <SellerRegister />
-            <PropertyByStatus status="pending" nextStatus="approve"/>
-            <PropertyByStatus status="bidPending" nextStatus="sold"/>
-            <PropertyByStatus status="sold"/>
+            <PropertyByStatusContainer/>
         </div>
     )
 }
