@@ -31,7 +31,6 @@ export const getPropertyAPI = async (property_id)=>{
 }
 
 export const updatePropertyAPI = async (property_id, payload)=>{
-    console.log("req sent to ", property_id, "with data ", payload)
     try{
         const response = await axiosInstance.patch(`/property/${property_id}`, payload)
         return response.data
@@ -41,8 +40,17 @@ export const updatePropertyAPI = async (property_id, payload)=>{
     }
 }
 
-export const updatePropertySetBuyerAPI = async (property_id, payload)=>{
+export const deletePropertyAPI = async (property_id)=>{
+    try{
+        const response = await axiosInstance.delete(`/property/${property_id}`)
+        return response.data
+    }
+    catch(err){
+        return err.response.data;
+    }
+}
 
+export const updatePropertySetBuyerAPI = async (property_id, payload)=>{
     try{
         const response = await axiosInstance.patch(`/property/set-buyer/${property_id}`, payload)
         return response.data
@@ -61,3 +69,4 @@ export const changeStatusAPI = async (property_id, status)=>{
         return err.response.data;
     }
 }
+

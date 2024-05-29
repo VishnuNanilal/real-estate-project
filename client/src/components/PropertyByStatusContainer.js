@@ -31,9 +31,9 @@ function PropertyByStatusContainer() {
 
     return (
         <div>
-            <PropertyByStatus data={pendingProperties} nextStatus="bidPending" fetchData={fetchData}/>
-            <PropertyByStatus data={bidPendingProperties} nextStatus="sold" fetchData={fetchData}/>
-            <PropertyByStatus data={soldProperties} fetchData={fetchData}/>
+            <PropertyByStatus property={pendingProperties} nextStatus="bidPending" fetchData={fetchData}/>
+            <PropertyByStatus property={bidPendingProperties} nextStatus="sold" fetchData={fetchData}/>
+            <PropertyByStatus property={soldProperties} fetchData={fetchData}/>
             <button onClick={resetStatus}>(DEV) Reset All property to pending</button>
         </div>
     )

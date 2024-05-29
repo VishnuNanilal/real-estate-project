@@ -131,7 +131,7 @@ const updatePropertySetNewBuyer = async (req, res) => {
         }
         else {
             return res.status(400).send({
-                success: true,
+                success: false,
                 message: "New Buyer Set failed.",
             })
         }
@@ -146,20 +146,32 @@ const updatePropertySetNewBuyer = async (req, res) => {
     }
 }
 
-const deleteProperty = async (payload) => {
+const deleteProperty = async (req, res) => {
+    const {property_id} = req.params;
     try {
-        const response = await Property.findByIdAndDelete(payload.id)
+        const response = await Property.findByIdAndDelete(property_id)
 
         if (response) {
-            return response;
+            return res.status(200).send({
+                success: true,
+                message: "Property deleted.",
+                data: response
+            })
         }
         else {
-            return null;
+            return res.status(400).send({
+                success: true,
+                message: "Property deletion failed.",
+            })
         }
 
     }
     catch (err) {
-        return null;
+        return res.status(500).send({
+            success: false,
+            message: 'Internal server error.',
+            error: err.message
+        });
     }
 }
 

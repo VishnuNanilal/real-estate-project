@@ -10,4 +10,5 @@ router.patch('/set-buyer/:property_id', propertyCtrl.updatePropertySetNewBuyer);
 router.patch('/change-status/:property_id', adminAuth, propertyCtrl.changeStatus);
 router.patch('/:property_id', propertyCtrl.updateProperty)
 
+router.delete('/:property_id',adminAuth, propertyCtrl.deleteProperty);
 module.exports=router
