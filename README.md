@@ -2,8 +2,8 @@ Things to implement
 
 [x]seller should be able to create property. Default status: "pending"
 [x]All pending property should be visible by admin for approval. status: pending->approved
-[]All approved property should be publishable by seller as bid. 
-[]Once bid time is over, status: approved->bidPending.
+[x]All approved property should be publishable by seller as bid. 
+[x]Once bid time is over, status: approved->bidPending.
 [x]All bidPending property should be approvable by admin: status: bidPending->sold
  
 [x] Include bidder's info in the property. (user_id)
@@ -15,7 +15,7 @@ Things to implement
 
 
 [x] Implement admin who can authorize the ownership of a newly added property.
-[] Implement a client side newly marked property sales.
+[] Implement a client side newly marked property sales.(Recent properties)
 
 Headers
 

@@ -11,7 +11,6 @@ function PropertyByStatusContainer() {
     const [pendingProperties, setPendingProperties] = useState([])
     const [bidPendingProperties, setBidPendingProperties] = useState([])
     const [soldProperties, setSoldProperties] = useState([])
-    console.log("PPPP", properties)
     useEffect(() => {
         setPendingProperties(properties.filter(property => property.status === 'pending'))
         setBidPendingProperties(properties.filter(property => property.status === 'bidPending'))
@@ -40,16 +39,16 @@ function PropertyByStatusContainer() {
                 closing_time: new_closing_time,
                 updatedAt: dayjs().format("HH:mm YYYY-MM-DD")
             })
-            console.log(propertyResponse.data)
+            console.log(propertyResponse.message)
         }
         fetchDataAndStore()
     }
 
     return (
         <div>
-            <PropertyByStatus property={pendingProperties} nextStatus="accepted" fetchDataAndStore={fetchDataAndStore} />
-            <PropertyByStatus property={bidPendingProperties} nextStatus="sold" fetchDataAndStore={fetchDataAndStore} />
-            <PropertyByStatus property={soldProperties} fetchDataAndStore={fetchDataAndStore} />
+            <PropertyByStatus property={pendingProperties} status="pending" nextStatus="accepted" fetchDataAndStore={fetchDataAndStore} />
+            <PropertyByStatus property={bidPendingProperties} status="bidPending" nextStatus="sold" fetchDataAndStore={fetchDataAndStore} />
+            <PropertyByStatus property={soldProperties} status="sold" fetchDataAndStore={fetchDataAndStore} />
             <button onClick={resetStatus}>(DEV) Reset All property to pending</button>
         </div>
     )

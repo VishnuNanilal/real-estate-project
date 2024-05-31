@@ -3,7 +3,6 @@ import { changeStatusAPI, deletePropertyAPI, getAllPropertiesAPI } from '../api/
 import dayjs from 'dayjs'
 
 function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
-    console.log("Properties: ", property)
     useEffect(() => {
         console.log(`Properties of status ${status}: `, property);
     }, [status, property])

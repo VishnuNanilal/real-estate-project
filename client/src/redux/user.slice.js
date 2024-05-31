@@ -11,7 +11,6 @@ const userSlice = createSlice({
     },
     reducers: {
         SetUser: (state, action) => {
-            console.log("from store: ", action.payload)
             return ({
                 id : action.payload._id,
                 name : action.payload.name,

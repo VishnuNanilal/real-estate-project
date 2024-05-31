@@ -5,6 +5,7 @@ import PropertyByStatusContainer from './PropertyByStatusContainer';
 import { getAllPropertiesAPI } from '../api/property.api';
 import { setProperties } from '../redux/properties.slice';
 import { useDispatch } from 'react-redux';
+import RecentProperties from './RecentProperties';
 
 function Home() {
     const dispatch = useDispatch()
@@ -22,6 +23,7 @@ return (
         <Map />
         <SellerRegister />
         <PropertyByStatusContainer />
+        <RecentProperties/>
     </div>
 )
 }
