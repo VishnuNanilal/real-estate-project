@@ -87,7 +87,7 @@ const Map = () => {
       let color = ""
       if (status === 'pending') {
         //either admin or the owners of pending property can see them on map.
-        if (user.role === 'admin' || (user.seller_id && user.seller_id.properties.includes(property._id))) {
+        if (displayable(property)) {
           color = "yellow"
         }
         else {
@@ -96,10 +96,18 @@ const Map = () => {
       }
       else if (status === 'accepted')
         color = 'green'
+      else if(status==='bidPending'){
+        if (displayable(property)) {
+          color = "orange"
+        }
+        else {
+          continue; //we don't render current pending property if it doens't belong to user
+        }
+      }
       else if (status === 'sold')
-        color = 'black'
+        color = 'grey'
       else //exhaust
-        color = 'red'
+        color = 'black'
 
       const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
       let popupTimeout;
@@ -122,6 +130,12 @@ const Map = () => {
         });
     }
   }
+
+  //util
+  function displayable(property){
+    return user.role === 'admin' || (user.seller_id && user.seller_id.properties.includes(property._id))
+  }
+
   //to draw markers
   useEffect(() => {
     //remove all set markers if markers list is empty.
