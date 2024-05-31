@@ -73,11 +73,28 @@ const Map = () => {
 
   async function getAllPropertiesAPIAux() {
     const response = await getAllPropertiesAPI()
-    console.log(response)
+    // console.log(response)
     if (response.success) {
       for (let property of response.data) {
-        console.log(property.boundary_points)
-        const polygon = L.polygon(property.boundary_points, { color: 'green', weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+        let status = property.status
+        let color=""
+        if(status==='pending'){
+          //either admin or the owners of pending property can see them on map.
+          if(user.role==='admin' || (user.seller_id && user.seller_id.properties.includes(property._id))){
+            color="yellow"
+          }
+          else{
+            continue; //we don't render current pending property if it doens't belong to user
+          }
+        }
+        else if(status==='approved')
+            color='green'
+        else if(status==='sold')
+            color='black'
+        else //exhaust
+          color='red'
+
+        const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
         let popupTimeout;
         polygon.on('mouseover', function (e) {
           popupTimeout = setTimeout(() => {

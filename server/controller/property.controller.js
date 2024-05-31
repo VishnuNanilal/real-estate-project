@@ -84,9 +84,8 @@ const getAllProperties = async (req, res) => {
 
 const updateProperty = async (req, res) => {
     const { property_id } = req.params
-    const { payload } = req.body;
     try {
-        const response = await Property.findByIdAndUpdate(property_id, payload, { new: true })
+        const response = await Property.findByIdAndUpdate(property_id, req.body, { new: true })
 
         if (response) {
             return res.status(200).send(

@@ -17,7 +17,8 @@ const userSlice = createSlice({
                 name : action.payload.name,
                 email : action.payload.email,
                 phone_num: action.payload.phone_num,
-                seller_id: action.payload.seller_id
+                seller_id: action.payload.seller_id,
+                role: action.payload.role
             })
         },
         RemoveUser: (state) => {

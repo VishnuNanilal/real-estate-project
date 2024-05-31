@@ -106,8 +106,10 @@ const signIn = async (req, res)=>{
 const getUser = async (req, res)=>{
     try{
         const response = await User.findById(req.body.id)
+        .populate('seller_id')
         .select("-password")
         .exec();
+        
         if(response){
             return res.status(200).send({
                 success: true,

@@ -1,23 +1,45 @@
 import { React, useEffect } from 'react'
 import { changeStatusAPI, deletePropertyAPI } from '../api/property.api'
+import dayjs from 'dayjs'
 
 function PropertyByStatus({ property, status, nextStatus, fetchData }) {
-
+    console.log("Properties: ", property)
     useEffect(() => {
         console.log(`Properties of status ${status}: `, property);
     }, [status, property])
 
-    async function handleClick(property_id) {
-        if (!nextStatus) return;
+    async function handleAccept(property) {
+        if (!nextStatus) {
+            console.log("Property already sold .")
+            return;
+        }
 
-        console.log(property_id)
-        const response = await changeStatusAPI(property_id, nextStatus)
+        console.log(property._id)
+        const response = await changeStatusAPI(property._id, nextStatus)
+        if (nextStatus === 'accepted') {
+            const closing_time = dayjs(property.closing_time, 'HH:mm YYYY-MM-DD');
+            const now = dayjs();
+            const diff = closing_time.diff(now, 'second'); // Get the difference in seconds
+            // console.log("time now", now)
+            // console.log("time closing", closing_time)
+            // console.log(`Property ID: ${property._id}, Time until bidPending: ${diff} seconds`);
+            if (diff > 0) {
+                //after closing time, property is automatically set as bidPending state.
+                setTimeout(() => {
+                    changeStatusAPI(property._id, 'bidPending').then((res) => {
+                        console.log(res.message)
+                        fetchData() //to refetch after status change
+                    });
+                }, 10000); // Convert seconds to milliseconds
+            }
+        }
+
         fetchData()
         console.log(response.message);
     }
 
-    async function removeProperty(property_id) {
-        const response = await deletePropertyAPI(property_id)
+    async function removeProperty(property) {
+        const response = await deletePropertyAPI(property._id)
         fetchData()
         console.log(response.message)
     }
@@ -30,8 +52,9 @@ function PropertyByStatus({ property, status, nextStatus, fetchData }) {
                 property.map(property => {
                     return (
                         <div style={divStyle}>
-                            <div onClick={() => handleClick(property._id)}>{property.name}</div>
-                            <button style={{cursor: "pointer"}} onClick={()=>removeProperty(property._id)}>Reject</button>
+                            <div>{property.name}</div>
+                            <button style={{ cursor: "pointer" }} onClick={() => handleAccept(property)}>Accept</button>
+                            <button style={{ cursor: "pointer" }} onClick={() => removeProperty(property)}>Reject</button>
                         </div>
                     )
                 })
