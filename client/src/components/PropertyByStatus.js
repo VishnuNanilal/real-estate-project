@@ -1,8 +1,8 @@
 import { React, useEffect } from 'react'
-import { changeStatusAPI, deletePropertyAPI } from '../api/property.api'
+import { changeStatusAPI, deletePropertyAPI, getAllPropertiesAPI } from '../api/property.api'
 import dayjs from 'dayjs'
 
-function PropertyByStatus({ property, status, nextStatus, fetchData }) {
+function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
     console.log("Properties: ", property)
     useEffect(() => {
         console.log(`Properties of status ${status}: `, property);
@@ -28,19 +28,25 @@ function PropertyByStatus({ property, status, nextStatus, fetchData }) {
                 setTimeout(() => {
                     changeStatusAPI(property._id, 'bidPending').then((res) => {
                         console.log(res.message)
-                        fetchData() //to refetch after status change
+                        fetchDataAndStore() //to refetch after status change
                     });
                 }, 10000); // Convert seconds to milliseconds
             }
+            else{
+                changeStatusAPI(property._id, 'expired').then((res) => {
+                    console.log(res.message)
+                    fetchDataAndStore() //to refetch after status change
+                });
+            }
         }
 
-        fetchData()
+        fetchDataAndStore()
         console.log(response.message);
     }
 
     async function removeProperty(property) {
         const response = await deletePropertyAPI(property._id)
-        fetchData()
+        fetchDataAndStore()
         console.log(response.message)
     }
 
@@ -49,9 +55,9 @@ function PropertyByStatus({ property, status, nextStatus, fetchData }) {
         <div style={{ border: "1px solid black", backgroundColor: "red" }}>
             <h4>{status}</h4>
             {
-                property.map(property => {
+                property.map((property, ind) => {
                     return (
-                        <div style={divStyle}>
+                        <div style={divStyle} key={ind}>
                             <div>{property.name}</div>
                             <button style={{ cursor: "pointer" }} onClick={() => handleAccept(property)}>Accept</button>
                             <button style={{ cursor: "pointer" }} onClick={() => removeProperty(property)}>Reject</button>

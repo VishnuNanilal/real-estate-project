@@ -2,24 +2,29 @@ import React, { useEffect, useState } from 'react'
 import PropertyByStatus from './PropertyByStatus'
 import { changeStatusAPI, getAllPropertiesAPI, updatePropertyAPI } from '../api/property.api'
 import dayjs from 'dayjs'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProperties } from '../redux/properties.slice'
 
 function PropertyByStatusContainer() {
+    const properties = useSelector(state => state.properties)
+    const dispatch = useDispatch()
     const [pendingProperties, setPendingProperties] = useState([])
     const [bidPendingProperties, setBidPendingProperties] = useState([])
     const [soldProperties, setSoldProperties] = useState([])
-
+    console.log("PPPP", properties)
     useEffect(() => {
-        fetchData()
-    }, [])
+        setPendingProperties(properties.filter(property => property.status === 'pending'))
+        setBidPendingProperties(properties.filter(property => property.status === 'bidPending'))
+        setSoldProperties(properties.filter(property => property.status === 'sold'))
+    }, [properties])
 
-    async function fetchData() {
-        const propertyResponse = await getAllPropertiesAPI()
-        if (propertyResponse.success) {
-            setPendingProperties(propertyResponse.data.filter(property => property.status === 'pending'))
-            setBidPendingProperties(propertyResponse.data.filter(property => property.status === 'bidPending'))
-            setSoldProperties(propertyResponse.data.filter(property => property.status === 'sold'))
-        }
-        console.log(propertyResponse.message)
+    function fetchDataAndStore(){
+        getAllPropertiesAPI().then((response)=>{
+            if(response.success){
+                dispatch(setProperties(response.data))
+            }
+            console.log(response.message)
+        })
     }
 
     //DEV MODE
@@ -37,14 +42,14 @@ function PropertyByStatusContainer() {
             })
             console.log(propertyResponse.data)
         }
-        fetchData()
+        fetchDataAndStore()
     }
 
     return (
         <div>
-            <PropertyByStatus property={pendingProperties} nextStatus="accepted" fetchData={fetchData} />
-            <PropertyByStatus property={bidPendingProperties} nextStatus="sold" fetchData={fetchData} />
-            <PropertyByStatus property={soldProperties} fetchData={fetchData} />
+            <PropertyByStatus property={pendingProperties} nextStatus="accepted" fetchDataAndStore={fetchDataAndStore} />
+            <PropertyByStatus property={bidPendingProperties} nextStatus="sold" fetchDataAndStore={fetchDataAndStore} />
+            <PropertyByStatus property={soldProperties} fetchDataAndStore={fetchDataAndStore} />
             <button onClick={resetStatus}>(DEV) Reset All property to pending</button>
         </div>
     )

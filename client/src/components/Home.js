@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Map from './Map'
 import SellerRegister from './SellerRegister';
 import PropertyByStatusContainer from './PropertyByStatusContainer';
+import { getAllPropertiesAPI } from '../api/property.api';
+import { setProperties } from '../redux/properties.slice';
+import { useDispatch } from 'react-redux';
 
 function Home() {
-     
-    return (
-        <div className="home">
-            <Map />
-            <SellerRegister />
-            <PropertyByStatusContainer/>
-        </div>
-    )
+    const dispatch = useDispatch()
+    useEffect(() => {
+        getAllPropertiesAPI().then((response)=>{
+            if (response.success) {
+                dispatch(setProperties(response.data))
+            }
+            console.log(response.message)
+        })
+    }, [])
+
+return (
+    <div className="home">
+        <Map />
+        <SellerRegister />
+        <PropertyByStatusContainer />
+    </div>
+)
 }
 
 export default Home

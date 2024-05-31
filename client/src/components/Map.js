@@ -3,12 +3,14 @@ import L, { marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
-import { createProperty, getAllPropertiesAPI } from '../api/property.api';
+import { createProperty } from '../api/property.api';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import markerImg from '../assets/marker.png'
 
 const Map = () => {
+  const properties = useSelector(state => state.properties)
+
   const mapRef = useRef(null);
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
@@ -69,51 +71,55 @@ const Map = () => {
   //fetch all properties
   useEffect(() => {
     getAllPropertiesAPIAux();
-  }, [])
+  }, [properties])
 
   async function getAllPropertiesAPIAux() {
-    const response = await getAllPropertiesAPI()
-    // console.log(response)
-    if (response.success) {
-      for (let property of response.data) {
-        let status = property.status
-        let color=""
-        if(status==='pending'){
-          //either admin or the owners of pending property can see them on map.
-          if(user.role==='admin' || (user.seller_id && user.seller_id.properties.includes(property._id))){
-            color="yellow"
-          }
-          else{
-            continue; //we don't render current pending property if it doens't belong to user
-          }
-        }
-        else if(status==='approved')
-            color='green'
-        else if(status==='sold')
-            color='black'
-        else //exhaust
-          color='red'
+    
+    //remove currently present layers.
+    mapRef.current.eachLayer((layer) => {
+      if (layer instanceof L.TileLayer) 
+        return; 
+      mapRef.current.removeLayer(layer);
+    });
 
-        const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
-        let popupTimeout;
-        polygon.on('mouseover', function (e) {
-          popupTimeout = setTimeout(() => {
-            this.bindPopup(`<div>
+    for (let property of properties) {
+      let status = property.status 
+      let color = ""
+      if (status === 'pending') {
+        //either admin or the owners of pending property can see them on map.
+        if (user.role === 'admin' || (user.seller_id && user.seller_id.properties.includes(property._id))) {
+          color = "yellow"
+        }
+        else {
+          continue; //we don't render current pending property if it doens't belong to user
+        }
+      }
+      else if (status === 'accepted')
+        color = 'green'
+      else if (status === 'sold')
+        color = 'black'
+      else //exhaust
+        color = 'red'
+
+      const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+      let popupTimeout;
+      polygon.on('mouseover', function (e) {
+        popupTimeout = setTimeout(() => {
+          this.bindPopup(`<div>
                               <h4>${property.name}</h4>
                               <p>Area: ${property.area}</p>
                               <p>Price: ${property.price}</p>
                               <p>Location: ${property.location}</p>
                             </div>`).openPopup();
-          }, 300);
+        }, 300);
+      })
+        .on('mouseout', function () {
+          clearTimeout(popupTimeout)
+          this.closePopup();
         })
-          .on('mouseout', function () {
-            clearTimeout(popupTimeout)
-            this.closePopup();
-          })
-          .on('click', function () {
-            navigate(`/bidder/${property._id}`);
-          });
-      }
+        .on('click', function () {
+          navigate(`/bidder/${property._id}`);
+        });
     }
   }
   //to draw markers
@@ -140,12 +146,12 @@ const Map = () => {
   }, [points]);
 
   function handlePolyReset() {
-    if(markers){
+    if (markers) {
       markers.forEach(marker => {
         mapRef.current.removeLayer(marker);
       })
     }
-    if(polygon) 
+    if (polygon)
       mapRef.current.removeLayer(polygon);
     setPoints([]);
     setMarkers([])
@@ -175,10 +181,10 @@ const Map = () => {
   };
 
   const handleSaveProperty = async () => {
-    
+
     //restructure data to be send to BE.
-    let newFormData = {...formData}
-    newFormData.closing_time=formData.closing_time+" "+formData.closing_date;
+    let newFormData = { ...formData }
+    newFormData.closing_time = formData.closing_time + " " + formData.closing_date;
     // console.log(newFormData.closing_time)
     delete newFormData.closing_date;
 
@@ -193,7 +199,7 @@ const Map = () => {
       console.log("Map data before sending: ", newFormData)
       try {
         const propertyResponse = await createProperty(newFormData);
-        if(!propertyResponse.success){
+        if (!propertyResponse.success) {
           console.log(propertyResponse.message)
           return;
         }

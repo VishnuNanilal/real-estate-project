@@ -39,7 +39,7 @@ function SellerRegister() {
     }
 
     return (
-        <div class='register-modal'>
+        <div className='register-modal'>
             <h2>Register as Seller.</h2>
             <form onSubmit={handleSubmit}>
                 <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange}/>
