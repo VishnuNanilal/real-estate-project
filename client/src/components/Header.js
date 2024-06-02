@@ -14,8 +14,7 @@ export default function Header() {
     }
 
     return(
-        <div className="header">
-        <header className="main-cont">
+        <header>
             <div className="header-l">
                 <img className='logo' alt='logo' src='../pubic/logo192.png'></img>
             </div>
@@ -29,6 +28,5 @@ export default function Header() {
             }
             <button onClick={handleSignout}>Sign out</button>
         </header>
-    </div>
     )
 }

@@ -22,7 +22,7 @@ function RecentProperties() {
     }
 
     return (
-        <div>
+        <div className='recent-feed'>
             <h2>Recent feed component</h2>
             {
                 sortedProperties.map(property =><div style={{height: "5rem", border: "1px solid green"}} onClick={()=>handleClick(property._id)}>{property.name}</div>)

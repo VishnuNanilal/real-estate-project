@@ -82,7 +82,7 @@ This project is a comprehensive real estate bidding platform where users can lis
     cd client
     npm run start
 
-Things to implement
+Features to implement
 
 - [x] seller should be able to create property. Default status: "pending"
 - [x] All pending property should be visible by admin for approval. status: pending->approved
@@ -99,3 +99,20 @@ Things to implement
 - [x] Implement a client side newly marked property sales.(Recent properties)
 
 - [ ] When time is over the payment should be made and marked land owner info should be changed to bought person
+
+## API Endpoints
+
+- /user/register
+- /user/sign-in
+- user/me 
+
+- /seller/register
+- /seller/${seller_id}
+- /seller/${seller_id}/add-property
+- /seller/:seller_id/remove-property/:property_id
+
+- /property/
+- /property/get-all
+- /property/${property_id}
+- /property/set-buyer/${property_id}
+- /property/change-status/${property_id}

@@ -20,10 +20,10 @@ function Home() {
 
 return (
     <div className="home">
-        <Map />
-        <SellerRegister />
-        <PropertyByStatusContainer />
         <RecentProperties/>
+        <Map />
+        {/* <SellerRegister /> */}
+        {/* <PropertyByStatusContainer /> */}
     </div>
 )
 }

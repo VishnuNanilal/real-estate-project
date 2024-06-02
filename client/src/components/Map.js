@@ -12,6 +12,7 @@ const Map = () => {
   const properties = useSelector(state => state.properties)
 
   const mapRef = useRef(null);
+  const [location, setLocation] = useState({ lat: null, long: null })
   const [points, setPoints] = useState([]);
   const [polygon, setPolygon] = useState(null);
   const [polyline, setPolyline] = useState(null);
@@ -42,10 +43,22 @@ const Map = () => {
     popupAnchor: [0, -32] // Popup anchor point
   });
 
+  //fetch geolocation
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          lat: position.coords.latitude,
+          long: position.coords.longitude
+        })
+      }, (error) => console.log("Geolocation error ", error))
+    }
+  }, [])
+
   //Initialize map
   useEffect(() => {
-    // Initialize the map
-    const map = L.map('map').setView([8.5241, 76.9366], 13);
+    const loc = location.lat ? [location.lat, location.long] : [40.712772, -74.006058]
+    const map = L.map('map').setView(loc, 13);
     mapRef.current = map;
 
     // Add OpenStreetMap tile layer
@@ -66,7 +79,7 @@ const Map = () => {
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, [location]);
 
   //fetch all properties
   useEffect(() => {
@@ -74,16 +87,16 @@ const Map = () => {
   }, [properties])
 
   async function getAllPropertiesAPIAux() {
-    
+
     //remove currently present layers.
     mapRef.current.eachLayer((layer) => {
-      if (layer instanceof L.TileLayer) 
-        return; 
+      if (layer instanceof L.TileLayer)
+        return;
       mapRef.current.removeLayer(layer);
     });
 
     for (let property of properties) {
-      let status = property.status 
+      let status = property.status
       let color = ""
       if (status === 'pending') {
         //either admin or the owners of pending property can see them on map.
@@ -96,7 +109,7 @@ const Map = () => {
       }
       else if (status === 'accepted')
         color = 'green'
-      else if(status==='bidPending'){
+      else if (status === 'bidPending') {
         if (displayable(property)) {
           color = "orange"
         }
@@ -132,7 +145,7 @@ const Map = () => {
   }
 
   //util
-  function displayable(property){
+  function displayable(property) {
     return user.role === 'admin' || (user.seller_id && user.seller_id.properties.includes(property._id))
   }
 
@@ -247,27 +260,43 @@ const Map = () => {
   }
 
   return (
-    <>
+    <div className='map-cont'>
       <div id="map" style={{ width: '100%', height: '400px' }} />
       {
         user.seller_id &&
         <div>
           <form onSubmit={handleSubmit}>
-            <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
-            <input type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
-            <input type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
-            <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
-            <input type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
-            <input type='number' name='minimum_increment' placeholder='Minimum Increment' value={formData.minimum_increment} onChange={handleChange} />
-            <input type='time' name='closing_time' placeholder='Closing time' value={formData.closing_time} onChange={handleChange} />
-            <input type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} />
-            <button onClick={handleSaveProperty}>SAVE PROPERTY</button>
+            <label for='name'>Name: 
+            <input id="name" type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
+            </label>
+            <label for='price'>Price:
+            <input id="price" type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
+            </label>
+            <label for='description'>Description:
+            <input id="description" type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
+            </label>
+            <label for='location'>Location:
+            <input id="location" type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
+            </label>
+            <label for='area'>Area:
+            <input id="area" type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
+            </label>
+            <label for='minimum_increment'>Minimum Increment:
+            <input id="minimum_increment" type='number' name='minimum_increment' placeholder='Minimum Increment' value={formData.minimum_increment} onChange={handleChange} />
+            </label>
+            <label for='closing_time'>Closing Time:
+            <input id="closing_time" type='time' name='closing_time' placeholder='Closing time' value={formData.closing_time} onChange={handleChange} />
+            </label>
+            <label for='closing_date'>Closing Date
+            <input id="closing_date" type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} />
+            </label>
+            <button onClick={handleMarkProperty}>MARK PROPERTY</button>
+            <button type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
+            <button onClick={handlePolyReset}>RESET</button>
           </form>
-          <button onClick={handleMarkProperty}>MARK PROPERTY</button>
         </div>
       }
-      <button onClick={handlePolyReset}>RESET</button>
-    </>
+    </div>
   )
 };
 
