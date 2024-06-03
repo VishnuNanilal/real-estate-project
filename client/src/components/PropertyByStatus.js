@@ -1,8 +1,10 @@
 import { React, useEffect } from 'react'
 import { changeStatusAPI, deletePropertyAPI, getAllPropertiesAPI } from '../api/property.api'
 import dayjs from 'dayjs'
+import { updateSellerRemovePropertyAPI } from '../api/seller.api'
 
 function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
+    console.log("....",property)
     useEffect(() => {
         console.log(`Properties of status ${status}: `, property);
     }, [status, property])
@@ -43,10 +45,20 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
         console.log(response.message);
     }
 
-    async function removeProperty(property) {
-        const response = await deletePropertyAPI(property._id)
-        fetchDataAndStore()
-        console.log(response.message)
+    async function removeProperty(property) {  
+        //REMOVES FROM PROP DB AS WELL AS SELLER'S PROP LIST FOR CONSISTENCY.
+        try{
+            let delResponse = await deletePropertyAPI(property._id)
+            if(delResponse.success){
+                let response = await updateSellerRemovePropertyAPI(property.seller_id, property._id)
+                fetchDataAndStore()
+                console.log(response.message)
+            }
+            console.log(delResponse.message)
+        }
+        catch(err){
+            console.log("Error: ", err)
+        }
     }
 
     const divStyle = { border: "1px solid lightgreen", cursor: "pointer", margin: "1rem" }

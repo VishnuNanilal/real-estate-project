@@ -32,7 +32,7 @@ const createProperty = async (req, res) => {
 const getProperty = async (req, res) => {
     const { property_id } = req.params;
     try {
-        const response = await Property.findById(property_id)
+        const response = await Property.findById(property_id).populate('seller_id').exec()
         if (response) {
             return res.status(200).send({
                 success: true,

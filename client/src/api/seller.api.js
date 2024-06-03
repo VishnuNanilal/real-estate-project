@@ -40,9 +40,9 @@ export const updateSellerAddPropertyAPI = async (seller_id, payload)=>{
     }
 }
 
-export const updateSellerRemovePropertyAPI = async ()=>{
+export const updateSellerRemovePropertyAPI = async (seller_id, property_id)=>{
     try{
-        const response = await axiosInstance.patch('/seller/:seller_id/remove-property/:property_id')
+        const response = await axiosInstance.patch(`/seller/${seller_id}/remove-property/:${property_id}`)
         return response.data
     }
     catch(err){

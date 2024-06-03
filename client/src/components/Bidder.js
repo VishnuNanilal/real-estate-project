@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { getPropertyAPI, updatePropertyAPI, updatePropertySetBuyerAPI } from '../api/property.api'
 import dayjs from 'dayjs'
-import './css/Bidder.css'
+import './style/Bidder.css'
 
 function Bidder() {
     const user = useSelector(state => state.user)

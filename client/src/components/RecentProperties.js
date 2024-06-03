@@ -15,7 +15,7 @@ function RecentProperties() {
         sortedProps = sortedProps.slice(0, 10)
         
         setSortedProperties(sortedProps);
-    }, []);
+    }, [properties]);
 
     function handleClick(property_id){
         naviagate(`/bidder/${property_id}`)  

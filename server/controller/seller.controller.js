@@ -158,7 +158,7 @@ const updateSellerRemoveProperty = async (req, res) => {
         else{
             return res.status(400).send({
                 success: false,
-                message: 'Property removal failed.',
+                message: 'Property removal failed from seller property list.',
             });
         }
     } catch (error) {
