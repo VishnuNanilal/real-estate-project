@@ -83,7 +83,7 @@ This project is a comprehensive real estate bidding platform where users can lis
     npm run start
 
 Features to implement
-
+//BACK END
 - [x] seller should be able to create property. Default status: "pending"
 - [x] All pending property should be visible by admin for approval. status: pending->approved
 - [x] All approved property should be publishable by seller as bid. 
@@ -99,6 +99,18 @@ Features to implement
 - [x] Implement a client side newly marked property sales.(Recent properties)
 
 - [ ] When time is over the payment should be made and marked land owner info should be changed to bought person
+
+//FRONT END
+- [ ] Sign In and Register Modal
+- [ ] Home page should have :
+        left half tabs
+        Right hald map
+- [ ] Left half tabs should have: Recent properties, Add new property, 
+- [ ] User Dashboard: Displays user-specific information such as active bids, listed properties, etc.
+- [ ] Seller Dashboard: Specialized dashboard for sellers to manage their properties and see bidding statuses.
+- [ ] Admin Dashboard: Specialized dashboard for admins to approve new properties, bids, and perform other admin tasks. 
+- [ ] Notifications: Displays user notifications about bids, property approvals, etc.
+- [ ] Settings: Allows users to change account settings.
 
 ## API Endpoints
 

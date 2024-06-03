@@ -1,0 +1,28 @@
+/* src/components/Tabs.css */
+.tabs {
+    font-family: Arial, sans-serif;
+  }
+  
+  .tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .tab-buttons button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .tab-buttons button.active {
+    border-bottom: 2px solid #007bff;
+    font-weight: bold;
+  }
+  
+  .tab-content {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  

@@ -6,11 +6,14 @@ import { getAllPropertiesAPI } from '../api/property.api';
 import { setProperties } from '../redux/properties.slice';
 import { useDispatch } from 'react-redux';
 import RecentProperties from './RecentProperties';
+import Tabs from './Tabs';
+import Tab from './Tab';
+import Bidder from './Bidder';
 
 function Home() {
     const dispatch = useDispatch()
     useEffect(() => {
-        getAllPropertiesAPI().then((response)=>{
+        getAllPropertiesAPI().then((response) => {
             if (response.success) {
                 dispatch(setProperties(response.data))
             }
@@ -18,14 +21,17 @@ function Home() {
         })
     }, [])
 
-return (
-    <div className="home">
-        <RecentProperties/>
-        <Map />
-        {/* <SellerRegister /> */}
-        {/* <PropertyByStatusContainer /> */}
-    </div>
-)
+    return (
+        <div className="home">
+            <Tabs>
+                <Tab label="Recent Properties"><RecentProperties /></Tab>
+                <Tab label="Map"><Map /></Tab>
+                <Tab label="Bidder"><Bidder /></Tab>
+            </Tabs>
+            {/* <SellerRegister /> */}
+            <Map />
+        </div>
+    )
 }
 
 export default Home
