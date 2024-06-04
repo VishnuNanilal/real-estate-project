@@ -1,18 +1,21 @@
-import React from 'react'
+import {React, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RemoveUser } from '../redux/user.slice'
-
+import SellerRegister from './SellerRegister'
 export default function Header() {
     const user = useSelector(state=>state.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    const [popUpShown, setPopUpShown] = useState(false)
     function handleSignout(){
         localStorage.removeItem('jwt')
-        dispatch(RemoveUser)
+        dispatch(RemoveUser())
         navigate('/sign-in')
     }
-
+    
+    console.log("User: ", user)
     return(
         <header>
             <div className="header-l">
@@ -22,11 +25,26 @@ export default function Header() {
                 right
             </div>
             {
-                user &&
+                user.id &&
                 user.admin &&
                 <button onClick={()=>navigate('/admin')}>Admin</button>
             }
-            <button onClick={handleSignout}>Sign out</button>
+            {
+                user.id&&
+                !user.seller_id
+                &&
+                <button onClick={()=>setPopUpShown(true)} style={{position: "relative"}} >Regiser as Seller
+                    {
+                        popUpShown &&
+                        <SellerRegister setPopupShown={setPopUpShown}/>
+                    }
+                </button>
+            }
+            {
+                user.id
+                &&
+                <button onClick={handleSignout}>Sign out</button>
+            }
         </header>
     )
 }

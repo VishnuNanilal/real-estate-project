@@ -3,13 +3,16 @@ import { useSelector } from 'react-redux'
 import { getPropertyAPI } from '../api/property.api'
 
 function UserProperties() {
-    const userProperties = useSelector(state=>state.user).seller_id.properties
-    // const  userProperties = useSelector(state=>state.properties)
+    const user = useSelector(state=>state.user)
+    const [userProperties, setUserProperties] = useState([])
     const [userPropertiesData, setUserPropertiesData] = useState([])
-    console.log(userProperties)
+
+    useEffect(()=>{
+        setUserProperties(user.seller_id ? user.seller_id.properties: []) 
+    }, [user])
+
     useEffect(()=>{
         async function fetchData(){
-            if(!userProperties) return
             // let arr = userProperties.map(prop_id=>getPropertyAPI(prop_id))
             // arr = await Promise.all(arr)
             // // arr = arr.map(obj=>obj.data)
@@ -25,8 +28,6 @@ function UserProperties() {
 
         fetchData()
     }, [userProperties])
-
-    console.log(userPropertiesData)
 
     return (
         <div className='recent-feed'>

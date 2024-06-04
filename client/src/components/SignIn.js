@@ -54,7 +54,7 @@ function SignIn() {
                 <label for='password'>Password: 
                     <input id="password" type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange} />
                 </label>
-                <button>Submit</button>
+                <button>Sign In</button>
                 <div>Create New Account <span onClick={handleNavigate} style={{color: "blue"}}>Register</span></div>
             </form>
         </div>

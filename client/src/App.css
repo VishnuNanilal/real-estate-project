@@ -41,10 +41,14 @@ header, .location-header {
 }
 
 .register-modal {
-  width: 20rem;
-  height: 10rem;
+  min-width: 20rem;
+  min-height: 10rem;
 
-  border: 1px solid green;
+  padding: 2rem;
+
+  border-radius: 5px;
+
+  z-index: 10000;
 }
 
 .modal {
@@ -98,4 +102,9 @@ button{
   background-color: brown;
 
   display: flex;
+}
+
+.pop-up{
+  position: absolute;
+  background-color: white;
 }

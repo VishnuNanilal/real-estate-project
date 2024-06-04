@@ -9,6 +9,7 @@ import Tab from './Tab';
 import Bidder from './Bidder';
 import UserProperties from './UserProperties';
 import PropertyByStatusContainer from './PropertyByStatusContainer';
+import SellerRegister from './SellerRegister'
 
 function Home() {
     const dispatch = useDispatch()

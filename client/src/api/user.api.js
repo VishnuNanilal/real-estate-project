@@ -11,7 +11,6 @@ export const registerUserAPI = async (payload)=>{
 }
 
 export const signInUserAPI = async (payload)=>{
-    console.log(">>>", payload)
     try{
         const response = await axiosInstance.post('/user/sign-in', payload)
         return response.data

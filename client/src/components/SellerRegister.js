@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUserAPI } from '../api/user.api';
 import { SetUser } from '../redux/user.slice';
 
-function SellerRegister() {
+function SellerRegister({setPopupShown}) {
     const dispatch = useDispatch()
     const user = useSelector(state=>state.user)
     const [formData, setFormData] = useState({
@@ -39,7 +39,7 @@ function SellerRegister() {
     }
 
     return (
-        <div className='register-modal'>
+        <div className='register-modal pop-up' onMouseOut={()=>setPopupShown(false)}>
             <h2>Register as Seller.</h2>
             <form onSubmit={handleSubmit}>
                 <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange}/>
