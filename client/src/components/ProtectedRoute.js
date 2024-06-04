@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { SetUser, RemoveUser } from '../redux/user.slice'
+import { setUser, removeUser } from '../redux/user.slice'
 import { getUserAPI } from '../api/user.api'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ function ProtectedRoute({ children }) {
 
             let userResponse = await getUserAPI()
             if (userResponse.success) {
-                dispatch(SetUser(userResponse.data))
+                dispatch(setUser(userResponse.data))
             }
             else {
                 ResetUser()
@@ -28,7 +28,7 @@ function ProtectedRoute({ children }) {
     }, [])
 
     function ResetUser(){
-        dispatch(RemoveUser())
+        dispatch(removeUser())
         localStorage.removeItem('jwt')
         navigate('/sign-in')
     }

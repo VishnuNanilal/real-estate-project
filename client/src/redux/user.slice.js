@@ -10,7 +10,7 @@ const userSlice = createSlice({
         seller_id: ""
     },
     reducers: {
-        SetUser: (state, action) => {
+        setUser: (state, action) => {
             return ({
                 id : action.payload._id,
                 name : action.payload.name,
@@ -20,7 +20,7 @@ const userSlice = createSlice({
                 role: action.payload.role
             })
         },
-        RemoveUser: (state) => {
+        removeUser: (state) => {
             return ({
                 id : "",
                 name : "",
@@ -32,5 +32,5 @@ const userSlice = createSlice({
     }
 })
 
-export const {SetUser, RemoveUser} = userSlice.actions
+export const {setUser, removeUser} = userSlice.actions
 export default userSlice.reducer;

@@ -1,7 +1,7 @@
 import {React, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { RemoveUser } from '../redux/user.slice'
+import { removeUser } from '../redux/user.slice'
 import SellerRegister from './SellerRegister'
 export default function Header() {
     const user = useSelector(state=>state.user)
@@ -11,7 +11,7 @@ export default function Header() {
     const [popUpShown, setPopUpShown] = useState(false)
     function handleSignout(){
         localStorage.removeItem('jwt')
-        dispatch(RemoveUser())
+        dispatch(removeUser())
         navigate('/sign-in')
     }
     

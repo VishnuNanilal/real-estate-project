@@ -103,6 +103,7 @@ const updateSellerAddProperty = async (req, res) => {
     try {
         const {seller_id} = req.params;
         const {property_id} = req.body
+        console.log("s ", seller_id, "p", property_id)
         const seller = await Seller.findById(seller_id)
         if (!seller) {
             return res.status(404).send({

@@ -19,7 +19,7 @@ function UserProperties() {
             // console.log(arr)
             let arr = []
             for(let prop of userProperties){
-                console.log("...", prop)
+                // console.log("...", prop)
                 arr.push(await getPropertyAPI(prop))
             }
 

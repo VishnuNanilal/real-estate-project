@@ -2,7 +2,7 @@ import {React, useState} from 'react'
 import { registerSellerAPI } from '../api/seller.api';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserAPI } from '../api/user.api';
-import { SetUser } from '../redux/user.slice';
+import { setUser } from '../redux/user.slice';
 
 function SellerRegister({setPopupShown}) {
     const dispatch = useDispatch()
@@ -31,7 +31,7 @@ function SellerRegister({setPopupShown}) {
             const updatedUser = {...user, seller_id: response.data._id}
             let userResponse = await updateUserAPI(updatedUser);
             if(userResponse.success){
-                dispatch(SetUser(userResponse.data))
+                dispatch(setUser(userResponse.data))
             }
             console.log(userResponse.message)
         }

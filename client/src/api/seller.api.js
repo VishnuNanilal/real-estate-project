@@ -30,9 +30,10 @@ export const updateSellerAPI = async (seller_id, payload)=>{
     }
 }
 
-export const updateSellerAddPropertyAPI = async (seller_id, payload)=>{
+export const updateSellerAddPropertyAPI = async (seller_id, property_id)=>{
+    console.log("api", seller_id, property_id)
     try{
-        const response = await axiosInstance.patch(`/seller/${seller_id}/add-property`, payload)
+        const response = await axiosInstance.patch(`/seller/${seller_id}/add-property`, {property_id})
         return response.data
     }
     catch(err){

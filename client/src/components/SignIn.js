@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 import { getUserAPI, signInUserAPI } from '../api/user.api';
-import { SetUser, RemoveUser } from '../redux/user.slice';
+import { setUser, RemoveUser } from '../redux/user.slice';
 import { useSelector, UseDispatch, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ function SignIn() {
 
             if (userResponse.success) {
                 console.log("user fetched: ", userResponse.data)
-                dispatch(SetUser(userResponse.data))
+                dispatch(setUser(userResponse.data))
                 navigate('/')
             }
             console.log(userResponse.message);

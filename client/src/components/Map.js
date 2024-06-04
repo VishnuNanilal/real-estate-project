@@ -3,11 +3,13 @@ import L, { marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { updateSellerAddPropertyAPI, updateSellerRemovePropertyAPI } from '../api/seller.api'
-import { createProperty } from '../api/property.api';
-import { useSelector } from 'react-redux';
+import { createProperty, getAllPropertiesAPI } from '../api/property.api';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import markerImg from '../assets/marker.png'
-
+import { setProperties } from '../redux/properties.slice'
+import { getUserAPI } from '../api/user.api';
+import { setUser } from '../redux/user.slice';
 const Map = () => {
   const properties = useSelector(state => state.properties)
 
@@ -20,7 +22,7 @@ const Map = () => {
 
   const user = useSelector(state => state.user)
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: "",
     price: 0,
@@ -84,65 +86,66 @@ const Map = () => {
   //fetch all properties
   useEffect(() => {
     getAllPropertiesAPIAux();
-  }, [properties])
 
-  async function getAllPropertiesAPIAux() {
+    async function getAllPropertiesAPIAux() {
 
-    //remove currently present layers.
-    mapRef.current.eachLayer((layer) => {
-      if (layer instanceof L.TileLayer)
-        return;
-      mapRef.current.removeLayer(layer);
-    });
-
-    for (let property of properties) {
-      let status = property.status
-      let color = ""
-      if (status === 'pending') {
-        //either admin or the owners of pending property can see them on map.
-        if (displayable(property)) {
-          color = "yellow"
+      //remove currently present layers.
+      mapRef.current.eachLayer((layer) => {
+        if (layer instanceof L.TileLayer)
+          return;
+        mapRef.current.removeLayer(layer);
+      });
+      console.log("XXXXX", properties)
+      console.log("YYYYY", user)
+      for (let property of properties) {
+        let status = property.status
+        let color = ""
+        if (status === 'pending') {
+          //either admin or the owners of pending property can see them on map.
+          if (displayable(property)) {
+            color = "yellow"
+          }
+          else {
+            continue; //we don't render current pending property if it doens't belong to user
+          }
         }
-        else {
-          continue; //we don't render current pending property if it doens't belong to user
+        else if (status === 'accepted')
+          color = 'green'
+        else if (status === 'bidPending') {
+          if (displayable(property)) {
+            color = "orange"
+          }
+          else {
+            continue; //we don't render current pending property if it doens't belong to user
+          }
         }
-      }
-      else if (status === 'accepted')
-        color = 'green'
-      else if (status === 'bidPending') {
-        if (displayable(property)) {
-          color = "orange"
-        }
-        else {
-          continue; //we don't render current pending property if it doens't belong to user
-        }
-      }
-      else if (status === 'sold')
-        color = 'grey'
-      else //exhaust
-        color = 'black'
-
-      const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
-      let popupTimeout;
-      polygon.on('mouseover', function (e) {
-        popupTimeout = setTimeout(() => {
-          this.bindPopup(`<div>
-                              <h4>${property.name}</h4>
-                              <p>Area: ${property.area}</p>
-                              <p>Price: ${property.price}</p>
-                              <p>Location: ${property.location}</p>
-                            </div>`).openPopup();
-        }, 300);
-      })
-        .on('mouseout', function () {
-          clearTimeout(popupTimeout)
-          this.closePopup();
+        else if (status === 'sold')
+          color = 'grey'
+        else //exhaust
+          color = 'black'
+  
+        const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
+        let popupTimeout;
+        polygon.on('mouseover', function (e) {
+          popupTimeout = setTimeout(() => {
+            this.bindPopup(`<div>
+                                <h4>${property.name}</h4>
+                                <p>Area: ${property.area}</p>
+                                <p>Price: ${property.price}</p>
+                                <p>Location: ${property.location}</p>
+                              </div>`).openPopup();
+          }, 300);
         })
-        .on('click', function () {
-          navigate(`/bidder/${property._id}`);
-        });
+          .on('mouseout', function () {
+            clearTimeout(popupTimeout)
+            this.closePopup();
+          })
+          .on('click', function () {
+            navigate(`/bidder/${property._id}`);
+          });
+      }
     }
-  }
+  }, [properties, user])
 
   //util
   function displayable(property) {
@@ -232,20 +235,36 @@ const Map = () => {
         }
         console.log("New property response: ", propertyResponse.data);
 
-        const response = await updateSellerAddPropertyAPI(user.seller_id, propertyResponse._id);
+        const response = await updateSellerAddPropertyAPI(user.seller_id._id, propertyResponse.data._id);
         if (response.success) {
-          alert('Property saved successfully!');
-          getAllPropertiesAPIAux()
+          alert('Property saved successfully to seller!');
+          fetchDataAndStore()
           handlePolyReset()
-        } else {
-          alert('Failed to save property.');
         }
+        console.log(response.message)
+
       } catch (error) {
         console.error('Error saving property:', error);
         alert('Error saving property.');
       }
     }
   };
+
+  function fetchDataAndStore() {
+    getAllPropertiesAPI().then((response) => {
+      if (response.success) {
+        dispatch(setProperties(response.data))
+      }
+      console.log(response.message)
+    }).catch(console.log("Properties data fetch failed"))
+
+    getUserAPI().then(response=>{
+      if(response.success) {
+        dispatch(setUser(response.data))
+      }
+      console.log(response.message)
+    }).catch(console.log("User data fetch failed"))
+  }
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -255,9 +274,6 @@ const Map = () => {
     }))
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-  }
 
   return (
     <div className='map-cont'>
@@ -265,30 +281,30 @@ const Map = () => {
       {
         user.seller_id &&
         <div>
-          <form onSubmit={handleSubmit}>
-            <label for='name'>Name: 
-            <input id="name" type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
+          <form onSubmit={(e) => e.preventDefault()}>
+            <label for='name'>Name:
+              <input id="name" type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} />
             </label>
             <label for='price'>Price:
-            <input id="price" type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
+              <input id="price" type='number' name='price' placeholder='Price' value={formData.price} onChange={handleChange} />
             </label>
             <label for='description'>Description:
-            <input id="description" type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
+              <input id="description" type='text' name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
             </label>
             <label for='location'>Location:
-            <input id="location" type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
+              <input id="location" type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} />
             </label>
             <label for='area'>Area:
-            <input id="area" type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
+              <input id="area" type='number' name='area' placeholder='Area' value={formData.area} onChange={handleChange} />
             </label>
             <label for='minimum_increment'>Minimum Increment:
-            <input id="minimum_increment" type='number' name='minimum_increment' placeholder='Minimum Increment' value={formData.minimum_increment} onChange={handleChange} />
+              <input id="minimum_increment" type='number' name='minimum_increment' placeholder='Minimum Increment' value={formData.minimum_increment} onChange={handleChange} />
             </label>
             <label for='closing_time'>Closing Time:
-            <input id="closing_time" type='time' name='closing_time' placeholder='Closing time' value={formData.closing_time} onChange={handleChange} />
+              <input id="closing_time" type='time' name='closing_time' placeholder='Closing time' value={formData.closing_time} onChange={handleChange} />
             </label>
             <label for='closing_date'>Closing Date
-            <input id="closing_date" type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} />
+              <input id="closing_date" type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} />
             </label>
             <button onClick={handleMarkProperty}>MARK PROPERTY</button>
             <button type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
