@@ -13,27 +13,24 @@ function UserProperties() {
 
     useEffect(()=>{
         async function fetchData(){
-            // let arr = userProperties.map(prop_id=>getPropertyAPI(prop_id))
-            // arr = await Promise.all(arr)
-            // // arr = arr.map(obj=>obj.data)
-            // console.log(arr)
-            let arr = []
+            let daraArr = []
             for(let prop of userProperties){
                 // console.log("...", prop)
-                arr.push(await getPropertyAPI(prop))
+                daraArr.push(getPropertyAPI(prop).then(res=>res.data))
             }
-
-            console.log(arr)
+            daraArr = await Promise.all(daraArr)
+            setUserPropertiesData(daraArr)
         }
 
         fetchData()
     }, [userProperties])
 
+    console.log(">>>>>",userPropertiesData)
     return (
         <div className='recent-feed'>
             <h2>Your properties</h2>
             {
-                // userPropertiesData.map(property =><div style={{height: "5rem", border: "1px solid green"}}>{property}</div>)
+                userPropertiesData.map(property =><div style={{height: "5rem", border: "1px solid green"}}>{property.name}</div>)
             }
         </div>
     )
