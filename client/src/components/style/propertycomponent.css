@@ -1,0 +1,35 @@
+.property-component {
+    width: 25rem;
+    min-width: 10rem;
+    margin: 2rem 0;
+    padding: 1rem;
+    border-radius: 5px;
+    
+    font-size: 14px;
+    
+    background-color: white;
+    box-shadow: 1px 1px 10px 1px darkgray;
+
+    cursor: pointer;
+}
+
+.property-component:hover{
+    background-color: aliceblue;
+}
+
+.property-component div,
+.property-component>h3 {
+    max-height: 40px;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px 15px;
+    background-color: white;
+
+    box-shadow: 1px 1px 7px 1px lightgray;
+
+    overflow: hidden;
+}
+
+.property-component-description{
+    font-size: 13px;
+}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getPropertyAPI } from '../api/property.api'
+import PropertyComp from './PropertyComp'
 
 function UserProperties() {
     const user = useSelector(state=>state.user)
     const [userProperties, setUserProperties] = useState([])
     const [userPropertiesData, setUserPropertiesData] = useState([])
-
     useEffect(()=>{
         setUserProperties(user.seller_id ? user.seller_id.properties: []) 
     }, [user])
@@ -30,7 +30,7 @@ function UserProperties() {
         <div className='recent-feed'>
             <h2>Your properties</h2>
             {
-                userPropertiesData.map(property =><div style={{height: "5rem", border: "1px solid green"}}>{property.name}</div>)
+                userPropertiesData.map(property =><PropertyComp property={property}/>)
             }
         </div>
     )

@@ -24,5 +24,11 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-top: none;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    background-color: white;
   }
   

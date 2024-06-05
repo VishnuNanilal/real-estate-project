@@ -10,6 +10,7 @@ import Bidder from './Bidder';
 import UserProperties from './UserProperties';
 import PropertyByStatusContainer from './PropertyByStatusContainer';
 import SellerRegister from './SellerRegister'
+import PropertyComp from './PropertyComp';
 
 function Home() {
     const dispatch = useDispatch()
