@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Map from './Map'
-import { getSellerAPI, updateSellerAddPropertyAPI } from '../api/seller.api';
+import {updateSellerAddPropertyAPI } from '../api/seller.api';
 import { createProperty, getAllPropertiesAPI } from '../api/property.api';
 import { setProperties } from '../redux/properties.slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import Bidder from './Bidder';
 import UserProperties from './UserProperties';
 import PropertyByStatusContainer from './PropertyByStatusContainer';
 import PropertyAddComponent from './PropertyAddComponent';
-import L, { marker } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {setUser} from '../redux/user.slice'
 import { getUserAPI } from '../api/user.api';
@@ -24,6 +24,7 @@ function Home() {
     const [markers, setMarkers] = useState([]);
     const [points, setPoints] = useState([]);
     const dispatch = useDispatch()
+
     useEffect(() => {
         getAllPropertiesAPI().then((response) => {
             if (response.success) {

@@ -13,13 +13,13 @@ function UserProperties() {
 
     useEffect(()=>{
         async function fetchData(){
-            let daraArr = []
+            let dataArr = []
             for(let prop of userProperties){
                 // console.log("...", prop)
-                daraArr.push(getPropertyAPI(prop).then(res=>res.data))
+                dataArr.push(getPropertyAPI(prop).then(res=>res.data))
             }
-            daraArr = await Promise.all(daraArr)
-            setUserPropertiesData(daraArr)
+            dataArr = await Promise.all(dataArr)
+            setUserPropertiesData(dataArr)
         }
 
         fetchData()

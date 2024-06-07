@@ -99,9 +99,11 @@ button{
 
 .home{
   width: 90vw;
-  background-color: brown;
+  padding: 1rem;
+  background-color: lightsalmon;
 
   display: flex;
+  justify-content: space-around;
 }
 
 .pop-up{

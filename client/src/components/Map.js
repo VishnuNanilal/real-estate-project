@@ -1,21 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import markerImg from '../assets/marker.png'
 
-const Map = ({L, formData, setFormData, mapRef, points, setPoints, setMarkers}) => {
+const Map = ({ L, points, mapRef, setPoints, setMarkers }) => {
+  // console.log(props)
   const properties = useSelector(state => state.properties)
   const [location, setLocation] = useState({ lat: null, long: null })
-
   const user = useSelector(state => state.user)
   const navigate = useNavigate();
-
-  const customIcon = L.icon({
-    iconUrl: markerImg,
-    iconSize: [32, 32], // Size of the icon
-    iconAnchor: [16, 32], // Anchor point of the icon
-    popupAnchor: [0, -32] // Popup anchor point
-  });
 
   //fetch geolocation
   useEffect(() => {
@@ -44,16 +37,15 @@ const Map = ({L, formData, setFormData, mapRef, points, setPoints, setMarkers}) 
 
     function handleMapClick(e) {
       const { lat, lng } = e.latlng;
-      const newPoint = [lat, lng];
       // Update points state
-      setPoints((prevPoints) => [...prevPoints, newPoint]);
+      setPoints((prevPoints) => [...prevPoints, [lat, lng]]);
     }
 
     // Cleanup function to remove the map on component unmount
     return () => {
       mapRef.current.remove();
     };
-  }, [location]);
+  }, [L, location.lat, location.long, setPoints, mapRef]);
 
   //fetch all properties
   useEffect(() => {
@@ -95,7 +87,7 @@ const Map = ({L, formData, setFormData, mapRef, points, setPoints, setMarkers}) 
           color = 'grey'
         else //exhaust
           color = 'black'
-  
+
         const polygon = L.polygon(property.boundary_points, { color, weight: 7, opacity: 0.5, lineCap: 'square' }).addTo(mapRef.current);
         let popupTimeout;
         polygon.on('mouseover', function (e) {
@@ -117,24 +109,31 @@ const Map = ({L, formData, setFormData, mapRef, points, setPoints, setMarkers}) 
           });
       }
     }
-  }, [properties, user])
 
-  //util
-  function displayable(property) {
-    return user.role === 'admin' || (user.seller_id && user.seller_id.properties.includes(property._id))
-  }
+    //util
+    function displayable(property) {
+      return user.role === 'admin' || (user.seller_id && user.seller_id.properties.includes(property._id))
+    }
+  }, [properties, user, L, navigate, mapRef])
+
 
   //to draw markers
   useEffect(() => {
     //remove all set markers if markers list is empty.
     if (points.length > 0) {
       const newMarker = L.marker([points[points.length - 1][0], points[points.length - 1][1]],
-        { icon: customIcon })
+        { icon: L.icon({
+          iconUrl: markerImg,
+          iconSize: [32, 32], // Size of the icon
+          iconAnchor: [16, 32], // Anchor point of the icon
+          popupAnchor: [0, -32] // Popup anchor point
+        }) 
+      })
         .addTo(mapRef.current);
-
+        
       setMarkers(prev => [...prev, newMarker])
     }
-  }, [points]);
+  }, [points, L, setMarkers, mapRef]);
 
   //to draw poly line
   useEffect(() => {
@@ -145,7 +144,7 @@ const Map = ({L, formData, setFormData, mapRef, points, setPoints, setMarkers}) 
         mapRef.current.removeLayer(polyline);
       };
     }
-  }, [points]);
+  }, [points, L, mapRef]);
 
   return (
     <div className='map-cont'>
