@@ -27,7 +27,7 @@ function UserProperties() {
 
     console.log(">>>>>",userPropertiesData)
     return (
-        <div className='recent-feed'>
+        <div className='property-container'>
             <h2>Your properties</h2>
             {
                 userPropertiesData.map(property =><PropertyComp property={property}/>)

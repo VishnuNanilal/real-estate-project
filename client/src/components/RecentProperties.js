@@ -1,11 +1,12 @@
 import { React, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import PropertyComp from './PropertyComp';
 
 function RecentProperties() {
     let properties = useSelector(state=>state.properties)
     const naviagate = useNavigate()
-    const [sortedProperties, setSortedProperties] = useState([]);
+    const [recentProperties, setRecentProperties] = useState([]);
 
     useEffect(() => {
         let sortedProps = [...properties].sort((x, y) => {
@@ -14,7 +15,7 @@ function RecentProperties() {
 
         sortedProps = sortedProps.slice(0, 10)
         
-        setSortedProperties(sortedProps);
+        setRecentProperties(sortedProps);
     }, [properties]);
 
     function handleClick(property_id){
@@ -22,10 +23,10 @@ function RecentProperties() {
     }
 
     return (
-        <div className='recent-feed'>
+        <div className='property-container'>
             <h2>Recent feed component</h2>
             {
-                sortedProperties.map(property =><div style={{height: "5rem", border: "1px solid green"}} onClick={()=>handleClick(property._id)}>{property.name}</div>)
+                recentProperties.map(property =><PropertyComp property={property} />)
             }
         </div>
     )

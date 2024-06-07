@@ -1,14 +1,14 @@
 .property-component {
-    width: 25rem;
-    min-width: 10rem;
-    margin: 2rem 0;
-    padding: 1rem;
+    width: 23rem;
+    min-width: 7rem;
+    margin: 1.5rem 0;
+    padding: .5rem;
     border-radius: 5px;
     
     font-size: 14px;
     
     background-color: white;
-    box-shadow: 1px 1px 10px 1px darkgray;
+    box-shadow: 1px 1px 20px 1px darkgray;
 
     cursor: pointer;
 }
@@ -18,18 +18,31 @@
 }
 
 .property-component div,
-.property-component>h3 {
+.property-component h3 {
     max-height: 40px;
     border-radius: 5px;
-    margin: 10px;
-    padding: 5px 15px;
-    background-color: white;
-
-    box-shadow: 1px 1px 7px 1px lightgray;
+    /* margin: 0; */
+    padding: 10px 15px;
 
     overflow: hidden;
 }
 
-.property-component-description{
+.property-component .description{
     font-size: 13px;
+    margin-bottom: 2rem;
+}
+
+.property-component .name{
+    box-shadow: 1px 1px 7px 1px whitesmoke;
+    margin-bottom: 1rem;
+}
+
+.property-component .location {
+    font-weight: 600;
+}
+
+.property-component .hori {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

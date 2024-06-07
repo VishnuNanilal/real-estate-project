@@ -5,11 +5,14 @@ function PropertyComp({property}) {
     const navigate = useNavigate()
     return (
         <div className='property-component' onClick={()=>navigate(`./bidder/${property._id}`)}>
-            <h3 className='property-component-name'>{property.name}</h3>
-            <div className='property-component-price'>{"Rs." + property.price + " /cent"}</div>
-            <div className='property-component-location'>{property.location}</div>
-            <div className='property-component-description'>{property.description}</div>
-            <div className='property-component-area'>{property.area + " sq.m"}</div>
+            <h3 className='name'>{property.name}</h3>
+            <div className='description'>{property.description}</div>
+            <div className='location'>{property.location}</div>
+
+            <div className='hori'>
+                <div className='price'>{"Rs." + property.price + " /cent"}</div>
+                <div className='area'>{property.area + " sq.m"}</div>
+            </div>
         </div>
     )
 }
