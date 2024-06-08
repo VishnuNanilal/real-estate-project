@@ -147,7 +147,7 @@ function Home() {
                 <Tab label="Recent Properties"><RecentProperties /></Tab>
                 <Tab label="Bidder"><Bidder /></Tab>
                 <Tab label="All properties"><PropertyByStatusContainer /></Tab>
-                <Tab label="New property"><PropertyAddComponent formData={formData} setFormData={setFormData} handleMarkProperty={handleMarkProperty} handleSaveProperty={handleSaveProperty} handlePolyReset={handlePolyReset}/></Tab>
+                <Tab label="New property"><PropertyAddComponent formData={formData} setFormData={setFormData} handleMarkProperty={handleMarkProperty} handleSaveProperty={handleSaveProperty}/></Tab>
             </Tabs>
             <Map L={L} formData={formData} 
                         setFormData={setFormData} 

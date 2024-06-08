@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import markerImg from '../assets/marker.png'
 
-const Map = ({ L, points, mapRef, setPoints, setMarkers }) => {
+const Map = ({ L, points, mapRef, setPoints, setMarkers, handlePolyReset}) => {
   // console.log(props)
   const properties = useSelector(state => state.properties)
   const [location, setLocation] = useState({ lat: null, long: null })
@@ -149,6 +149,7 @@ const Map = ({ L, points, mapRef, setPoints, setMarkers }) => {
   return (
     <div className='map-cont'>
       <div id="map" style={{ width: '100%', height: '400px' }} />
+      <button onClick={handlePolyReset}>Reset markers</button>
     </div>
   )
 };

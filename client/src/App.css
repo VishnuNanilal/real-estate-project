@@ -1,43 +1,18 @@
 *{
   box-sizing: border-box;
+  --light1: white;
+  --light2: grey;
+  --dark1: darkblue;
+  --dark2: black;
 }
 
 .main-cont {
-  background-color: violet;
+  background-color: var(--light);
 
   padding: 2rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-header{
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  
-  background-color: blue;
-}
-
-.location-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: black;
-  box-shadow: 0px 10px 20px 3px red;
-}
-
-header, .location-header {
-  height: 5rem;
-  width: 100vw;
-}
-
-.location-header input{
-  width: 70vw;
-
-  margin-right: 2rem;
-  display: inline;
 }
 
 .register-modal {
@@ -59,19 +34,19 @@ header, .location-header {
 }
 
 .modal-form {
-  min-width: 30vw;
+  min-width: 20vw;
   min-height: 18rem;
 
-  padding: 3rem;
+  padding: 2.5rem;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: lightgreen;
-  border-radius: 1rem;
+  background-color: silver;
+  border-radius: 5px;
 
-  box-shadow: 5px 5px 10px 3px lightgrey;
+  box-shadow: 2px 2px 10px 2px grey;
 }
 
 label {
@@ -84,7 +59,7 @@ input {
 
   margin: .25rem;
   padding: 1rem;
-  border: 1px solid grey;
+  border: 1px solid lightgrey;
   border-radius: 7px;
 }
 
@@ -93,8 +68,9 @@ input {
 }
 
 button{
-  background-color: light
-  green;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 .home{

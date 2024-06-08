@@ -11,7 +11,6 @@ function PropertyAddComponent({formData, setFormData, handleMarkProperty, handle
           [name]: value
         }))
       }
-      console.log(">>>", user)
     return (
         <div>
             {
@@ -43,7 +42,6 @@ function PropertyAddComponent({formData, setFormData, handleMarkProperty, handle
                     </label>
                     <button onClick={handleMarkProperty}>MARK PROPERTY</button>
                     <button type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
-                    <button onClick={handlePolyReset}>RESET</button>
                 </form>
             }
         </div>
