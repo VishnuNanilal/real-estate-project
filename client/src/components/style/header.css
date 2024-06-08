@@ -1,0 +1,65 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 2rem;
+
+    background-color: var(--dark1);
+}
+
+.header-l, .header-r{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.location-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--dark2);
+    box-shadow: 0px 10px 20px 0px var(--light2);
+}
+
+header, .location-header {
+    height: 4rem; 
+}
+
+.location-header input {
+    width: 40vw;
+    height: 1rem;
+    margin-right: 2rem;
+    display: inline;
+}
+
+.signout-btn{
+    width: 5rem;
+    height: 2rem;
+    margin-right: 1rem;
+}
+.signout-btn:hover {
+    background-color: var(--light2)
+}
+
+.menu-icon{
+    color: white;
+    cursor: pointer;
+}
+
+.menu-icon:hover{
+    color:var(--light2)
+}
+
+.menu-cont {
+    width: 20%;
+    min-height: 100vh; 
+    
+    background-color: var(--light2);
+
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    z-index: 401;
+}
