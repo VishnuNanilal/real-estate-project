@@ -1,5 +1,5 @@
 import { React, useEffect } from 'react'
-import { changeStatusAPI, deletePropertyAPI, getAllPropertiesAPI } from '../api/property.api'
+import { changeStatusAPI, deletePropertyAPI, getAllPropertiesAPI, updatePropertyAPI } from '../api/property.api'
 import dayjs from 'dayjs'
 import { updateSellerRemovePropertyAPI } from '../api/seller.api'
 
@@ -17,6 +17,8 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
 
         console.log(property._id)
         const response = await changeStatusAPI(property._id, nextStatus)
+
+        //if property is changed from pending to accepted status.
         if (nextStatus === 'accepted') {
             const closing_time = dayjs(property.closing_time, 'HH:mm YYYY-MM-DD');
             const now = dayjs();
@@ -39,6 +41,16 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
                     fetchDataAndStore() //to refetch after status change
                 });
             }
+        }
+
+        //if property is changed from bidPending to sold state.
+        if(nextStatus === 'sold'){
+            console.log("reached with, ", property)
+            const response = updatePropertyAPI(property._id, {seller_id: property.buyer_id, buyer_id: null})
+            if(response.success){
+                console.log("new updated prop data", response.data);
+            }
+            console.log(response.message)
         }
 
         fetchDataAndStore()

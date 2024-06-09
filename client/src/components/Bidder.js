@@ -118,7 +118,7 @@ function Bidder() {
             </div>
             <form onSubmit={handleBuy}>
                 <input type="number" min={minimum_bid} onChange={(e) => setBuyPrice(e.target.value)} value={buyPrice} />
-                <button className={timeRemaining === 'Expired' ? 'disabled' : ''}>Save</button>
+                <button className={timeRemaining === 'Expired' ? 'disabled' : ''}>Buy property</button>
             </form>
             <div style={{ height: "2px", background: "lightgrey", width: "100vw" }}></div>
         </div>

@@ -15,6 +15,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {setUser} from '../redux/user.slice'
 import { getUserAPI } from '../api/user.api';
+import DashBoard from './DashBoard';
 
 function Home() {
     const mapRef = useRef(null);
@@ -148,6 +149,7 @@ function Home() {
                 <Tab label="Bidder"><Bidder /></Tab>
                 <Tab label="All properties"><PropertyByStatusContainer /></Tab>
                 <Tab label="New property"><PropertyAddComponent formData={formData} setFormData={setFormData} handleMarkProperty={handleMarkProperty} handleSaveProperty={handleSaveProperty}/></Tab>
+                <Tab label="menu-item Dashboard"><DashBoard /></Tab>
             </Tabs>
             <Map L={L} formData={formData} 
                         setFormData={setFormData} 

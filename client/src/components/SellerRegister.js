@@ -39,7 +39,7 @@ function SellerRegister({setPopupShown}) {
     }
 
     return (
-        <div className='register-modal pop-up' onMouseOut={()=>setPopupShown(false)}>
+        <div className='register-modal pop-up' onMouseLeave={()=>setPopupShown(false)}>
             <h2>Register as Seller.</h2>
             <form onSubmit={handleSubmit}>
                 <input type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange}/>

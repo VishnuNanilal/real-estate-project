@@ -59,8 +59,6 @@ const Map = ({ L, points, mapRef, setPoints, setMarkers, handlePolyReset}) => {
           return;
         mapRef.current.removeLayer(layer);
       });
-      console.log("XXXXX", properties)
-      console.log("YYYYY", user)
       for (let property of properties) {
         let status = property.status
         let color = ""
