@@ -84,6 +84,7 @@ const getAllProperties = async (req, res) => {
 
 const updateProperty = async (req, res) => {
     const { property_id } = req.params
+    // console.log("reached backend property_id: ", property_id, "payload", req.body)
     try {
         const response = await Property.findByIdAndUpdate(property_id, req.body, { new: true })
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import markerImg from '../assets/marker.png'
 
-const Map = ({ L, points, mapRef, setPoints, setMarkers, handlePolyReset}) => {
+const Map = ({ L, mapRef, setPoints, points, setMarkers, handlePolyReset}) => {
   // console.log(props)
   const properties = useSelector(state => state.properties)
   const [location, setLocation] = useState({ lat: null, long: null })

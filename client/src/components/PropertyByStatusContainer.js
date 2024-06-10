@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropertyByStatus from './PropertyByStatus'
-import { changeStatusAPI, getAllPropertiesAPI, updatePropertyAPI } from '../api/property.api'
+import { getAllPropertiesAPI, updatePropertyAPI } from '../api/property.api'
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProperties } from '../redux/properties.slice'
@@ -39,7 +39,7 @@ function PropertyByStatusContainer() {
                 closing_time: new_closing_time,
                 updatedAt: dayjs().format("HH:mm YYYY-MM-DD")
             })
-            console.log(propertyResponse.message)
+            alert(propertyResponse.message)
         }
         fetchDataAndStore()
     }

@@ -31,6 +31,7 @@ export const getPropertyAPI = async (property_id)=>{
 }
 
 export const updatePropertyAPI = async (property_id, payload)=>{
+    console.log("kkk", property_id, "payload", payload)
     try{
         const response = await axiosInstance.patch(`/property/${property_id}`, payload)
         return response.data

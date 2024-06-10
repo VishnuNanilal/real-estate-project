@@ -46,18 +46,12 @@ export default function Header() {
                     </button>
                 }
                 {
-                    //sign out section
-                    user.id
-                    &&
-                    <button className="signout-btn" onClick={handleSignout}>Sign out</button>
-                }
-                {
                     <FontAwesomeIcon className="menu-icon" icon={faBars} onClick={()=>setMenuVisible(true)}/>
                 }
                 {
                     menuVisible
                     &&   
-                    <Menu setMenuVisible={setMenuVisible} />
+                    <Menu setMenuVisible={setMenuVisible} handleSignout={handleSignout}/>
                 }
             </div>
         </header>

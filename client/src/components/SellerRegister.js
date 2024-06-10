@@ -12,9 +12,9 @@ function SellerRegister({setPopupShown}) {
         name: "",
     });
 
-    function handleNavigate(){
-        alert("Navigated to Sign in.")
-    }
+    // function handleNavigate(){
+    //     alert("Navigated to Sign in.")
+    // }
 
     function handleChange(e){
         const {name, value} = e.target;

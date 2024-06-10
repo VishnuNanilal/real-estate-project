@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin'],
         default: 'user'
-    }
+    },
+    owned_properties: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "properties"
+    }]
     //more to add
 });
 

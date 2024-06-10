@@ -1,17 +1,17 @@
 import { React, useEffect } from 'react'
-import { changeStatusAPI, deletePropertyAPI, getAllPropertiesAPI, updatePropertyAPI } from '../api/property.api'
+import { changeStatusAPI, deletePropertyAPI, updatePropertyAPI } from '../api/property.api'
 import dayjs from 'dayjs'
 import { updateSellerRemovePropertyAPI } from '../api/seller.api'
+import { updateUserAddPropertyAPI } from '../api/user.api'
 
-function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
-    console.log("....",property)
-    useEffect(() => {
-        console.log(`Properties of status ${status}: `, property);
-    }, [status, property])
+function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore }) {
+    // useEffect(() => {
+    //     console.log(`Properties of status ${status}: `, property);
+    // }, [status, property])
 
     async function handleAccept(property) {
         if (!nextStatus) {
-            console.log("Property already sold .")
+            alert("Property already sold .")
             return;
         }
 
@@ -35,7 +35,7 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
                     });
                 }, 10000); // Convert seconds to milliseconds
             }
-            else{
+            else {
                 changeStatusAPI(property._id, 'expired').then((res) => {
                     console.log(res.message)
                     fetchDataAndStore() //to refetch after status change
@@ -44,31 +44,37 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore}) {
         }
 
         //if property is changed from bidPending to sold state.
-        if(nextStatus === 'sold'){
-            console.log("reached with, ", property)
-            const response = updatePropertyAPI(property._id, {seller_id: property.buyer_id, buyer_id: null})
-            if(response.success){
-                console.log("new updated prop data", response.data);
+        if (nextStatus === 'sold') {
+            const seller_id_temp = property.seller_id;
+            console.log("...", seller_id_temp)
+            const response = await updatePropertyAPI(property._id, { seller_id: property.buyer_id, buyer_id: null, owner_id: property.buyer_id })
+            console.log(">>>", response)
+            if (response.success) {
+                const sellerResponse = await updateSellerRemovePropertyAPI(seller_id_temp, property._id)
+                console.log(sellerResponse.message);
+                const userResponse = await updateUserAddPropertyAPI(property._id)
+                console.log(userResponse.message);
             }
             console.log(response.message)
         }
 
         fetchDataAndStore()
+        alert(response.message)
         console.log(response.message);
     }
 
-    async function removeProperty(property) {  
+    async function removeProperty(property) {
         //REMOVES FROM PROP DB AS WELL AS SELLER'S PROP LIST FOR CONSISTENCY.
-        try{
+        try {
             let delResponse = await deletePropertyAPI(property._id)
-            if(delResponse.success){
+            if (delResponse.success) {
                 let response = await updateSellerRemovePropertyAPI(property.seller_id, property._id)
                 fetchDataAndStore()
                 console.log(response.message)
             }
             console.log(delResponse.message)
         }
-        catch(err){
+        catch (err) {
             console.log("Error: ", err)
         }
     }

@@ -39,3 +39,15 @@ export const updateUserAPI = async (payload)=>{
         return err.response.data;
     }
 }
+
+export const updateUserAddPropertyAPI = async (property_id)=>{
+    console.log("reached api")
+    try{
+        const response = await axiosInstance.patch(`/user/me/add-property/${property_id}`)
+        return response.data
+    }
+    catch(err){
+        return err.response.data;
+    }
+}
+

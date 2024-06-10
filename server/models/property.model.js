@@ -52,6 +52,10 @@ const propertySchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'accepted', "bidPending", 'sold'],
         default: 'pending',
+    },
+    owner_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"users"
     }
 });
 

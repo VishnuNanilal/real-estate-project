@@ -134,6 +134,7 @@ const getUser = async (req, res)=>{
 }
 
 const updateUser = async (req, res)=>{
+    console.log("xxx")
     try{
         const response = await User.findByIdAndUpdate(req.body.id, req.body, {new:true})
                         .populate("seller_id").exec();
@@ -187,10 +188,42 @@ const deleteUser = async (req, res)=>{
     }
 }
 
+const UpdateUserAddProperty = async (req, res)=>{
+    const user_id = req.body.id
+    const {property_id} = req.params
+    console.log("ffF", user_id, property_id)
+    try{
+        const user = await User.findById(user_id);
+        if(!user){
+            return res.status(401).send({
+                success: false,
+                error: "Authentication failed."
+            })
+        }
+
+        user.owned_properties.push(property_id);
+        await user.save()
+        return res.status(200).json({
+            success: true,
+            message: 'Property added to seller',
+            user: user
+        });
+        
+    }    
+    catch(err){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal server error.',
+            error: err.message
+        });
+    }
+}
+
 module.exports = {
     register,
     signIn,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    UpdateUserAddProperty
 }
