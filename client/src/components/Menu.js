@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Profile from './Profile/Profile'
-import Settings from './Profile/Settings'
 import { useNavigate } from 'react-router-dom'
 
 function Menu({ setMenuVisible, handleSignout }) {
