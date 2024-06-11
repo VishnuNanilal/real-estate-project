@@ -7,8 +7,6 @@ import Tab from './Tab'
 function DashBoard() {
     const properties = useSelector(state => state.properties)
     const user = useSelector(state => state.user)
-    console.log("user: ",user)
-    console.log("properties: ",properties)
 
     useEffect(() => {
 
@@ -20,7 +18,7 @@ function DashBoard() {
 
     console.log()
     return (
-        <main className='dashboard'>
+        <main className='dashboard' style={{ height: "100 vh" }}>
             <h1>DashBoard</h1>
             <Tabs>
                 <Tab label="Active Bid Properties"><Properties properties={activeBidProps} /></Tab>
@@ -31,12 +29,16 @@ function DashBoard() {
     )
 }
 
-const Properties = (properties) => {
-    <>
-        {
-            properties.length > 0 ? properties.map(property => <PropertyComp property={property} />) : <div>No properties to display</div>
-        }
-    </>
+const Properties = ({ properties }) => {
+
+    return (
+        <>
+            {console.log("props", properties.length)}
+            {
+                properties.length > 0 ? properties.map(property => <PropertyComp property={property} />) : <div>No properties to display</div>
+            }
+        </>
+    )
 }
 
 export default DashBoard

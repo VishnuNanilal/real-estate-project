@@ -31,14 +31,14 @@ export default Menu
 
 /*
 > Buyer Menu Options
-Dashboard: Overview of user activities, including active bids and won properties.
-My Bids: List of properties the user has placed bids on.
+- [x] Dashboard: Overview of user activities, including active bids and won properties.
+- [x] My Bids: List of properties the user has placed bids on.
 
 >Status of each bid.
 Notifications: Alerts and updates about bid statuses and other activities.
 Profile: View and edit personal information.
 Settings:Account settings and preferences.
-Logout:Sign out of the account.
+- [x] Logout:Sign out of the account.
 
 >Seller Menu Options
 Dashboard:Overview of seller activities, including listed properties and ongoing bids.
