@@ -14,6 +14,7 @@ function Menu({ setMenuVisible, handleSignout }) {
         &&
         <button onClick={()=>navigate('/admin')}>Admin</button>
       }
+      <button onClick={()=>navigate('/dashboard')}>DashBoard</button>
       <button onClick={()=>navigate('/settings')}>Settings</button>
       <button onClick={()=>navigate('/seller')}>Seller</button>
       {

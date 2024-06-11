@@ -30,7 +30,6 @@ function Home() {
                 <Tab label="Own properties"><UserProperties /></Tab>
                 <Tab label="Recent Properties"><RecentProperties /></Tab>
                 <Tab label="Bidder"><Bidder /></Tab>
-                <Tab label="menu-item Dashboard"><DashBoard /></Tab>
             </Tabs>
             <MapReadOnly/>
             {/* <Map L={L} formData={formData} 
