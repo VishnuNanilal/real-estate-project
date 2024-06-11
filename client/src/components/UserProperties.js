@@ -28,7 +28,7 @@ function UserProperties() {
     console.log(">>>>>",userPropertiesData)
     return (
         <div className='property-container'>
-            <h2>Your properties</h2>
+            <h2>My properties</h2>
             {
                 userPropertiesData.map(property =><PropertyComp property={property}/>)
             }
