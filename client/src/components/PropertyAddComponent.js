@@ -4,7 +4,7 @@ import Map from './Map'
 import { createProperty, getAllPropertiesAPI } from '../api/property.api';
 import { updateSellerAddPropertyAPI } from '../api/seller.api';
 import { setProperties } from '../redux/properties.slice';
-import { getUserAPI } from '../api/user.api';
+import { getUserAPI, pushNotificationAPI } from '../api/user.api';
 import { setUser } from '../redux/user.slice';
 import L from 'leaflet'
 
@@ -83,6 +83,10 @@ function PropertyAddComponent() {
                 const response = await updateSellerAddPropertyAPI(user.seller_id._id, propertyResponse.data._id);
                 if (response.success) {
                     alert('Property saved successfully to seller!');
+                    //push property added notification to user.
+                    const notification= `Property ${propertyResponse.data.name} added to your account.` 
+                    let notificationResponse = await pushNotificationAPI(notification)
+                    console.log(notificationResponse.message)
                     fetchDataAndStore()
                     handlePolyReset()
                 }

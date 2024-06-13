@@ -2,43 +2,43 @@ const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
-const register = async (req, res)=>{
-    const {name, email, phone_num, password} = req.body;
-    try{
-        const emailPresent = await User.findOne({email});
-        if(emailPresent) 
+const register = async (req, res) => {
+    const { name, email, phone_num, password } = req.body;
+    try {
+        const emailPresent = await User.findOne({ email });
+        if (emailPresent)
             return res.status(409).send({
                 success: false,
                 error: "Email already in use."
-        })
+            })
 
-        const phonePresent = await User.findOne({phone_num});
-        if(phonePresent) 
+        const phonePresent = await User.findOne({ phone_num });
+        if (phonePresent)
             return res.status(409).send({
                 success: false,
                 error: "Phone number already in use."
-        })
+            })
 
         const salt = await bcrypt.genSalt(10);
         req.body.password = await bcrypt.hash(req.body.password, salt);
         const response = await User.create(req.body);
         response.password = "###"
-        if(response){
+        if (response) {
             return res.status(201).send({
                 success: true,
                 data: response,
                 message: "User created."
             })
         }
-        else{
+        else {
             return res.status(400).send({
                 success: false,
                 error: "User creation failed on DB."
             })
         }
-        
-    }    
-    catch(err){
+
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -47,20 +47,20 @@ const register = async (req, res)=>{
     }
 }
 
-const signIn = async (req, res)=>{
-    const {data, password} = req.body;
-    try{
-        let phonePresent=null;
-        let emailPresent=null;
-        if(typeof data === "Number"){
-            phonePresent = await User.findOne({phone_num: data});
+const signIn = async (req, res) => {
+    const { data, password } = req.body;
+    try {
+        let phonePresent = null;
+        let emailPresent = null;
+        if (typeof data === "Number") {
+            phonePresent = await User.findOne({ phone_num: data });
         }
-        else{
-            emailPresent = await User.findOne({email: data});
+        else {
+            emailPresent = await User.findOne({ email: data });
         }
 
         let response = emailPresent || phonePresent;
-        if(!response){
+        if (!response) {
             return res.status(401).send({
                 success: false,
                 message: "Wrong credentials."
@@ -68,7 +68,7 @@ const signIn = async (req, res)=>{
         }
 
         const isVerified = await bcrypt.compare(req.body.password, response.password);
-        if(!isVerified){
+        if (!isVerified) {
             return res.status(401).send({
                 success: false,
                 message: "Wrong credentials."
@@ -76,23 +76,23 @@ const signIn = async (req, res)=>{
         }
         // console.log("User fetched with current data ", response);
         // console.log("Sign in data, response.id: ", response.id)
-        const token = jwt.sign({id: response.id}, process.env.jwt_secret);
+        const token = jwt.sign({ id: response.id }, process.env.jwt_secret);
         // console.log("Token: ", token)
-        if(token){
+        if (token) {
             return res.status(201).send({
                 success: true,
                 data: token,
                 message: "User signed in."
             })
         }
-        else{
+        else {
             return res.status(403).send({
                 success: false,
                 error: "User sign in failed."
             })
         }
-    }    
-    catch(err){
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -101,29 +101,30 @@ const signIn = async (req, res)=>{
     }
 }
 
-const getUser = async (req, res)=>{
-    try{
+const getUser = async (req, res) => {
+    try {
         const response = await User.findById(req.body.id)
-        .populate('seller_id')
-        .select("-password")
-        .exec();
-        
-        if(response){
+            .populate('seller_id')
+            .populate('notifications')
+            .select("-password")
+            .exec();
+
+        if (response) {
             return res.status(200).send({
                 success: true,
                 message: "User data fetched.",
                 data: response,
             })
         }
-        else{
+        else {
             return res.status(401).send({
                 success: false,
                 message: "Authentication failed."
             })
         }
-        
-    }    
-    catch(err){
+
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -132,27 +133,27 @@ const getUser = async (req, res)=>{
     }
 }
 
-const updateUser = async (req, res)=>{
+const updateUser = async (req, res) => {
     console.log("xxx")
-    try{
-        const response = await User.findByIdAndUpdate(req.body.id, req.body, {new:true})
-                        .populate("seller_id").exec();
-        if(response){
+    try {
+        const response = await User.findByIdAndUpdate(req.body.id, req.body, { new: true })
+            .populate("seller_id").exec();
+        if (response) {
             return res.status(200).send({
                 success: true,
                 message: "User data updated.",
                 data: response,
             })
         }
-        else{
+        else {
             return res.status(401).send({
                 success: false,
                 error: "Authentication failed."
             })
         }
-        
-    }    
-    catch(err){
+
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -161,24 +162,24 @@ const updateUser = async (req, res)=>{
     }
 }
 
-const deleteUser = async (req, res)=>{
-    try{
+const deleteUser = async (req, res) => {
+    try {
         const response = await User.findByIdAndDelete(req.body.id);
-        if(response){
+        if (response) {
             return res.status(200).send({
                 success: true,
                 message: "User data deleted.",
             })
         }
-        else{
+        else {
             return res.status(401).send({
                 success: false,
                 error: "Authentication failed."
             })
         }
-        
-    }    
-    catch(err){
+
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -187,13 +188,13 @@ const deleteUser = async (req, res)=>{
     }
 }
 
-const UpdateUserAddProperty = async (req, res)=>{
+const UpdateUserAddProperty = async (req, res) => {
     const user_id = req.body.id
-    const {property_id} = req.params
+    const { property_id } = req.params
     console.log("ffF", user_id, property_id)
-    try{
+    try {
         const user = await User.findById(user_id);
-        if(!user){
+        if (!user) {
             return res.status(401).send({
                 success: false,
                 error: "Authentication failed."
@@ -207,9 +208,9 @@ const UpdateUserAddProperty = async (req, res)=>{
             message: 'Property added to seller',
             user: user
         });
-        
-    }    
-    catch(err){
+
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -218,24 +219,94 @@ const UpdateUserAddProperty = async (req, res)=>{
     }
 }
 
-const getAllUsers = async (req, res)=>{
-    try{
+const getAllUsers = async (req, res) => {
+    try {
         let response = await User.find()
-        if(response){
+        if (response) {
             return res.status(200).send({
                 success: true,
                 message: "All users fetched",
-                data:response
+                data: response
             })
         }
-        else{
-                return res.status(400).send({
-                    success: false,
-                    message: "All users fetch failed",
-                })
+        else {
+            return res.status(400).send({
+                success: false,
+                message: "All users fetch failed",
+            })
         }
     }
-    catch(err){
+    catch (err) {
+        return res.status(500).send({
+            success: false,
+            message: 'Internal server error.',
+            error: err.message
+        });
+    }
+}
+
+const pushNotification = async (req, res) => {
+    const { id, notification } = req.body
+    console.log("Notification data", id, notification)
+    let notificationObj = { text: notification }
+    try {
+        let response = await User.findByIdAndUpdate(id, { $push: { notifications: notificationObj } }, { new: true })
+
+        if (response) {
+            return res.status(200).send({
+                success: true,
+                message: "Notification added to user",
+                data: response
+            })
+        }
+        else {
+            return res.status(400).send({
+                success: false,
+                message: "Notification addition failed",
+            })
+        }
+    }
+    catch (err) {
+        return res.status(500).send({
+            success: false,
+            message: 'Internal server error.',
+            error: err.message
+        });
+    }
+}
+
+const popNotification = async (req, res) => {
+    const { user_id } = req.body
+    const { notification_id } = req.params
+
+    try {
+        let user = User.findById(user_id)
+        if (!user) {
+            return res.status(401).send({
+                success: false,
+                message: "Authorization failed."
+            })
+        }
+        console.log("User notifications", user.notifications)
+        const index = user.notifications.findIndex(notification => notification._id.equals(notification_id));
+        if (index !== -1) {
+            user.notifications.splice(index, 1);
+            await user.save();
+
+            return res.status(200).send({
+                success: true,
+                message: 'Notification removed from user',
+                data: user
+            });
+        }
+        else {
+            return res.status(400).send({
+                success: false,
+                message: 'Notification removal failed from users list.',
+            });
+        }
+    }
+    catch (err) {
         return res.status(500).send({
             success: false,
             message: 'Internal server error.',
@@ -251,5 +322,7 @@ module.exports = {
     updateUser,
     deleteUser,
     UpdateUserAddProperty,
-    getAllUsers
+    getAllUsers,
+    pushNotification,
+    popNotification
 }

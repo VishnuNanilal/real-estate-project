@@ -62,3 +62,23 @@ export const getAllUsers = async ()=>{
     }
 }
 
+export const pushNotificationAPI = async (notification)=>{
+    console.log("Notification data", notification)
+    try{
+        const response = await axiosInstance.patch(`/user/notification/push`, {notification})
+        return response.data
+    }
+    catch(err){
+        return err.response.data;
+    }
+}
+
+export const popNotificationAPI = async (notification_id)=>{
+    try{
+        const response = await axiosInstance.patch(`/user/notification/pop`, {notification_id})
+        return response.data
+    }
+    catch(err){
+        return err.response.data;
+    }
+}

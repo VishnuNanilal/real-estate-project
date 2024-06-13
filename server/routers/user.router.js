@@ -18,6 +18,11 @@ router.get('/get-all', userCtrl.getAllUsers)
 //update user
 router.patch('/me', JWTAuth, userCtrl.updateUser)
 
+//push notification
+router.patch('/notification/push', JWTAuth, userCtrl.pushNotification)
+
+//pull notification
+router.patch('/notification/pop/:notification_id', JWTAuth, userCtrl.popNotification)
 
 //delete user
 router.delete('/me', JWTAuth, userCtrl.deleteUser)

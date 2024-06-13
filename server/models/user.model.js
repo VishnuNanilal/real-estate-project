@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const notificationSchema = new mongoose.Schema({
+    text: {
+        type: String,
+        required: true
+    },
+    read: {
+        type: Boolean,
+        default: false
+    }
+})
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -30,6 +41,8 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "properties"
     }]
+    ,
+    notifications: [notificationSchema]
     //more to add
 });
 

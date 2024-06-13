@@ -7,7 +7,8 @@ const userSlice = createSlice({
         name: "",
         email: "",
         phone_num: 0,
-        seller_id: ""
+        seller_id: "",
+        notifications: []
     },
     reducers: {
         setUser: (state, action) => {
@@ -17,7 +18,8 @@ const userSlice = createSlice({
                 email : action.payload.email,
                 phone_num: action.payload.phone_num,
                 seller_id: action.payload.seller_id,
-                role: action.payload.role
+                role: action.payload.role,
+                notifications: action.payload.notifications
             })
         },
         removeUser: (state) => {
@@ -26,7 +28,8 @@ const userSlice = createSlice({
                 name : "",
                 email : "",
                 phone_num: "",
-                seller_id: ""
+                seller_id: "",
+                notifications: []
             });
         }
     }
