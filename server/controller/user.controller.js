@@ -91,7 +91,6 @@ const signIn = async (req, res)=>{
                 error: "User sign in failed."
             })
         }
-        
     }    
     catch(err){
         return res.status(500).send({
@@ -119,7 +118,7 @@ const getUser = async (req, res)=>{
         else{
             return res.status(401).send({
                 success: false,
-                error: "Authentication failed."
+                message: "Authentication failed."
             })
         }
         
@@ -219,11 +218,38 @@ const UpdateUserAddProperty = async (req, res)=>{
     }
 }
 
+const getAllUsers = async (req, res)=>{
+    try{
+        let response = await User.find()
+        if(response){
+            return res.status(200).send({
+                success: true,
+                message: "All users fetched",
+                data:response
+            })
+        }
+        else{
+                return res.status(400).send({
+                    success: false,
+                    message: "All users fetch failed",
+                })
+        }
+    }
+    catch(err){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal server error.',
+            error: err.message
+        });
+    }
+}
+
 module.exports = {
     register,
     signIn,
     getUser,
     updateUser,
     deleteUser,
-    UpdateUserAddProperty
+    UpdateUserAddProperty,
+    getAllUsers
 }

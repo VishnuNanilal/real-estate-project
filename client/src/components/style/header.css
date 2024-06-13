@@ -63,3 +63,9 @@ header, .location-header {
 
     z-index: 401;
 }
+
+.header-nav button{
+    height: 1rem;
+    min-width: 3rem;
+    margin: 0 1rem;
+}

@@ -1,4 +1,4 @@
-.property-component {
+.card-component {
     width: 23rem;
     min-width: 7rem;
     margin: 1.5rem 0;
@@ -13,12 +13,12 @@
     cursor: pointer;
 }
 
-.property-component:hover{
+.card-component:hover{
     background-color: aliceblue;
 }
 
-.property-component div,
-.property-component h3 {
+.card-component div,
+.card-component h3 {
     max-height: 40px;
     border-radius: 5px;
     /* margin: 0; */
@@ -27,21 +27,21 @@
     overflow: hidden;
 }
 
-.property-component .description{
+.card-component .description{
     font-size: 13px;
     margin-bottom: 2rem;
 }
 
-.property-component .name{
+.card-component .name{
     box-shadow: 1px 1px 7px 1px whitesmoke;
     margin-bottom: 1rem;
 }
 
-.property-component .location {
+.card-component .location {
     font-weight: 600;
 }
 
-.property-component .hori {
+.card-component .hori {
     display: flex;
     justify-content: space-between;
     align-items: center;

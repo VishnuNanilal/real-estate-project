@@ -28,6 +28,14 @@ export default function Header() {
                 <img className='logo' alt='logo' src='../pubic/logo192.png'></img>
             </div>
             <div className="header-r">
+                {
+                    <div className='header-nav'>
+                        <button onClick={() => navigate('/info/about-us')}>About Us</button>
+                        <button onClick={() => navigate('/info/support')}>Support</button>
+                        <button onClick={() => navigate('/info/tos')}>Terms Of Service</button>
+                        <button onClick={() => navigate('/info/privacy-policy')}>Privacy Policy</button>
+                    </div>
+                }
                 {/* {
                 user.id &&
                 user.admin &&
@@ -46,12 +54,12 @@ export default function Header() {
                     </button>
                 }
                 {
-                    <FontAwesomeIcon className="menu-icon" icon={faBars} onClick={()=>setMenuVisible(true)}/>
+                    <FontAwesomeIcon className="menu-icon" icon={faBars} onClick={() => setMenuVisible(true)} />
                 }
                 {
                     menuVisible
-                    &&   
-                    <Menu setMenuVisible={setMenuVisible} handleSignout={handleSignout}/>
+                    &&
+                    <Menu setMenuVisible={setMenuVisible} handleSignout={handleSignout} />
                 }
             </div>
         </header>

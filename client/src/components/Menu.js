@@ -50,14 +50,13 @@ Settings:Account settings and preferences.
 Logout:Sign out of the account.
 
 >Admin Menu Options
-Admin Dashboard:Overview of platform activities, pending approvals, and user statistics.
-Approve Properties:List of properties awaiting approval.
-Options to approve or reject new property listings.
-Approve Bids:List of bid results awaiting approval.Options to approve or reject bid results.
-Manage Users:View and manage user accounts.Options to deactivate or delete users.
+- [x] Admin Dashboard:Overview of platform activities, pending approvals, and user statistics.
+- [x] Options to approve or reject new property listings.
+- [x] Approve Bids:List of bid results awaiting approval.Options to approve or reject bid results.
+- [x] Manage Users:View and manage user accounts.Options to deactivate or delete users.
 Reports/Analytics:Access to various reports and analytics about platform usage.
 Settings:Admin-specific settings and preferences.
-Logout:Sign out of the admin account.
+- [x] Logout:Sign out of the admin account.
 
 >Additional Menu Options (If Applicable)
 Support/Help:FAQs and contact options for customer support.

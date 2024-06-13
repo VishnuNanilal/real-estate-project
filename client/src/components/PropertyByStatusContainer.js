@@ -4,6 +4,8 @@ import { getAllPropertiesAPI, updatePropertyAPI } from '../api/property.api'
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProperties } from '../redux/properties.slice'
+import Tabs from './Tabs'
+import Tab from './Tab'
 
 function PropertyByStatusContainer() {
     const properties = useSelector(state => state.properties)
@@ -17,9 +19,9 @@ function PropertyByStatusContainer() {
         setSoldProperties(properties.filter(property => property.status === 'sold'))
     }, [properties])
 
-    function fetchDataAndStore(){
-        getAllPropertiesAPI().then((response)=>{
-            if(response.success){
+    function fetchDataAndStore() {
+        getAllPropertiesAPI().then((response) => {
+            if (response.success) {
                 dispatch(setProperties(response.data))
             }
             console.log(response.message)
@@ -46,9 +48,11 @@ function PropertyByStatusContainer() {
 
     return (
         <div>
-            <PropertyByStatus property={pendingProperties} status="pending" nextStatus="accepted" fetchDataAndStore={fetchDataAndStore} />
-            <PropertyByStatus property={bidPendingProperties} status="bidPending" nextStatus="sold" fetchDataAndStore={fetchDataAndStore} />
-            <PropertyByStatus property={soldProperties} status="sold" fetchDataAndStore={fetchDataAndStore} />
+            <Tabs>
+                <Tab label="Pending properties"><PropertyByStatus property={pendingProperties} status="pending" nextStatus="accepted" fetchDataAndStore={fetchDataAndStore} /></Tab>
+                <Tab label="Pending Bids"><PropertyByStatus property={bidPendingProperties} status="bidPending" nextStatus="sold" fetchDataAndStore={fetchDataAndStore} /></Tab>
+                <Tab label="Sold properties"><PropertyByStatus property={soldProperties} status="sold" fetchDataAndStore={fetchDataAndStore} /></Tab>
+            </Tabs>
             <button onClick={resetStatus}>(DEV) Reset All property to pending</button>
         </div>
     )

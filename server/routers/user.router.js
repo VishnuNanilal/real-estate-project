@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const userCtrl = require('../controller/user.controller');
 const {JWTAuth} = require('../Middlewares/jwtAuthMW')
+const {AdminAuth}  = require('../Middlewares/adminAuthMW')
+
 //register user
 router.post('/register', userCtrl.register); 
 
@@ -10,6 +12,8 @@ router.post('/sign-in', userCtrl.signIn);
 //get user
 router.get('/me', JWTAuth, userCtrl.getUser)
 
+//get all users
+router.get('/get-all', userCtrl.getAllUsers)
 
 //update user
 router.patch('/me', JWTAuth, userCtrl.updateUser)

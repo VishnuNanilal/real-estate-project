@@ -2,7 +2,6 @@ import React from 'react'
 import './style/propertycomponent.css'
 import { useNavigate } from 'react-router-dom'
 function PropertyComp({ property }) {
-    console.log("prop comp", property)
     const navigate = useNavigate()
     return (
         <>
@@ -10,7 +9,7 @@ function PropertyComp({ property }) {
                 !property ?
                     <div style={{border: "1px solid black"}}>THIS PROPERTY IS UNDEFINED. SHOULD FIX</div>
                     :
-                    <div className='property-component' onClick={() => navigate(`./bidder/${property._id}`)}>
+                    <div className='card-component' onClick={() => navigate(`./bidder/${property._id}`)}>
                         <h3 className='name'>{property.name}</h3>
                         <div className='description'>{property.description}</div>
                         <div className='location'>{property.location}</div>

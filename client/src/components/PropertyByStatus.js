@@ -1,8 +1,9 @@
-import { React, useEffect } from 'react'
+import { React} from 'react'
 import { changeStatusAPI, deletePropertyAPI, updatePropertyAPI } from '../api/property.api'
 import dayjs from 'dayjs'
 import { updateSellerRemovePropertyAPI } from '../api/seller.api'
 import { updateUserAddPropertyAPI } from '../api/user.api'
+import PropertyComp from './PropertyComp'
 
 function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore }) {
     // useEffect(() => {
@@ -64,6 +65,9 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore }) {
     }
 
     async function removeProperty(property) {
+        const resp = window.confirm("Delete the current property?")
+        if(!resp) return
+
         //REMOVES FROM PROP DB AS WELL AS SELLER'S PROP LIST FOR CONSISTENCY.
         try {
             let delResponse = await deletePropertyAPI(property._id)
@@ -79,20 +83,28 @@ function PropertyByStatus({ property, status, nextStatus, fetchDataAndStore }) {
         }
     }
 
-    const divStyle = { border: "1px solid lightgreen", cursor: "pointer", margin: "1rem" }
     return (
-        <div style={{ border: "1px solid black", backgroundColor: "red" }}>
-            <h4>{status}</h4>
+        <div>
             {
-                property.map((property, ind) => {
-                    return (
-                        <div style={divStyle} key={ind}>
-                            <div>{property.name}</div>
-                            <button style={{ cursor: "pointer" }} onClick={() => handleAccept(property)}>Accept</button>
-                            <button style={{ cursor: "pointer" }} onClick={() => removeProperty(property)}>Reject</button>
-                        </div>
-                    )
-                })
+                property.length === 0
+                    ?
+                    <div>No Properties</div>
+                    :
+                    property.map((property, ind) => {
+                        return (
+                            <div style={{width: "35rem", 
+                                        display: "flex", 
+                                        justifyContent:"space-between", 
+                                        alignItems: "center"
+                                    }}>
+                                <PropertyComp property={property} />
+                                <div>
+                                    <button style={{ cursor: "pointer" }} onClick={() => handleAccept(property)}>Accept</button>
+                                    <button style={{ cursor: "pointer" }} onClick={() => removeProperty(property)}>Reject</button>
+                                </div>
+                            </div>
+                        )
+                    })
             }
         </div>
     )
