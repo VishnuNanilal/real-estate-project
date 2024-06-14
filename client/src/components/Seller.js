@@ -8,11 +8,11 @@ import PropertyComp from './PropertyComp'
 function Seller() {
   return (
     <div className='main-center'>
-      <h1>Seller</h1>
+      <div className='heading'>Seller</div>
       <Tabs>
         <Tab label="Add property"><PropertyAddComponent /></Tab>
         <Tab label="Placed Properties"><BidProps /></Tab>
-        <Tab label="Notifications"></Tab>
+        <Tab label="Notifications"><Notifications/></Tab>
       </Tabs>
     </div>
   )
@@ -30,7 +30,9 @@ const Notifications = () => {
   return(
     <div>
       {
-        user.notifications.map(notification=><div>{notification.text}</div>)
+        user.notifications.map((notification, ind)=><div key={ind} className='card-component' style={{padding: "2rem", cursor: "revert"}}>
+          {ind+1}. { notification.text}
+          </div>)
       }
     </div>
   )

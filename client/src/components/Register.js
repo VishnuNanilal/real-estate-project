@@ -36,19 +36,19 @@ function Register() {
         <div class='modal'>
             <form class="modal-form" onSubmit={handleSubmit}>
                 <label for="name">Name:
-                    <input id="name" type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} required={true}/>
+                    <input id="name" type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} required={true} />
                 </label>
                 <label for="email">Email:
-                    <input id="email" type='text' name='email' placeholder='Email' value={formData.email} onChange={handleChange} required={true}/>
+                    <input id="email" type='text' name='email' placeholder='Email' value={formData.email} onChange={handleChange} required={true} />
                 </label>
                 <label for="phone_num">Phone No:
-                    <input id="phone_num" type='Number' name='phone_num' placeholder='Phone No.' value={formData.phone_num} onChange={handleChange} required={true}/>
+                    <input id="phone_num" type='Number' name='phone_num' placeholder='Phone No.' value={formData.phone_num} onChange={handleChange} required={true} />
                 </label>
                 <label for="password">Password:
-                    <input id="password" type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange} required={true}/>
+                    <input id="password" type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange} required={true} />
                 </label>
                 <button>Register</button>
-                <div>Already have an account? <span onClick={handleNavigate} style={{color: "blue"}}>Sign in</span></div>
+                <div>Already have an account? <span onClick={handleNavigate} style={{ color: "blue" }}>Sign in</span></div>
             </form>
         </div>
     )

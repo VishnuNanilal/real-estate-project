@@ -84,7 +84,7 @@ function PropertyAddComponent() {
                 if (response.success) {
                     alert('Property saved successfully to seller!');
                     //push property added notification to user.
-                    const notification= `Property ${propertyResponse.data.name} added to your account.` 
+                    const notification = `Property ${propertyResponse.data.name} added to your account.`
                     let notificationResponse = await pushNotificationAPI(notification)
                     console.log(notificationResponse.message)
                     fetchDataAndStore()
@@ -136,7 +136,15 @@ function PropertyAddComponent() {
         }))
     }
     return (
-        <div style={{display: "flex", width: "100vw"}}>
+        <div className='main-center add-property' style={{width: "100vw", display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
+            <Map L={L}
+                mapRef={mapRef}
+                points={points}
+                setPoints={setPoints}
+                markers={setMarkers}
+                setMarkers={setMarkers}
+                handlePolyReset={handlePolyReset} 
+            />
             {
                 <form onSubmit={(e) => e.preventDefault()}>
                     <label for='name'>Name:
@@ -167,13 +175,6 @@ function PropertyAddComponent() {
                     <button type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
                 </form>
             }
-            <Map L={L} 
-                mapRef={mapRef} 
-                points={points} 
-                setPoints={setPoints} 
-                markers={setMarkers}
-                setMarkers={setMarkers} 
-                handlePolyReset={handlePolyReset} />
         </div>
     )
 }

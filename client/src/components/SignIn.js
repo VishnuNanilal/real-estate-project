@@ -44,18 +44,15 @@ function SignIn() {
 
     return (
         <div className='modal'>
-            {
-                `user name: ${user.name}`
-            }
             <form className='modal-form' onSubmit={handleSubmit}>
-                <label for="data">User name or Email: 
+                <label for="data">User name or Email:
                     <input id="data" type='text' name='data' placeholder='Email or Phone No.' value={formData.data} onChange={handleChange} />
                 </label>
-                <label for='password'>Password: 
+                <label for='password'>Password:
                     <input id="password" type='password' name='password' placeholder='Password' value={formData.password} onChange={handleChange} />
                 </label>
                 <button>Sign In</button>
-                <div>Create New Account <span onClick={handleNavigate} style={{color: "blue"}}>Register</span></div>
+                <div>Create New Account <span onClick={handleNavigate} style={{ color: "blue" }}>Register</span></div>
             </form>
         </div>
     )

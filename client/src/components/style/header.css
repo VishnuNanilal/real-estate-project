@@ -59,16 +59,27 @@ header, .location-header {
 }
 
 .menu-cont {
-    width: 20%;
-    min-height: 100vh; 
-    
-    background-color: var(--light2);
+    height: 100vh;
+    width: 20rem;
+    padding: 2rem;
 
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--dark1);
+
+    position:absolute;
     right: 0;
     top: 0;
-
+    box-shadow: -5px 0px 20px 0px darkblue;
     z-index: 401;
+}
+
+.menu-cont button {
+    width: 100%;
+    height: 2rem;
+    background-color: var(--light2);
 }
 
 .header-nav button{

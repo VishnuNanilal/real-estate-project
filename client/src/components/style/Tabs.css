@@ -1,8 +1,15 @@
 /* src/components/Tabs.css */
 .tabs {
+    min-width: 100%;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
   }
   
+  #half{
+    /* width: 50%; */
+    background-color: green;
+  }
+
   .tab-buttons {
     display: flex;
     border-bottom: 1px solid #ccc;
@@ -32,4 +39,3 @@
     overflow-y: scroll;
     overflow-x: hidden;
   }
-  

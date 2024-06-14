@@ -25,7 +25,7 @@ function UserProperties() {
         fetchData()
     }, [userProperties])
 
-    console.log(">>>>>",userPropertiesData)
+    // console.log(">>>>>",userPropertiesData)
     return (
         <div className='property-container'>
             <h2>My properties</h2>

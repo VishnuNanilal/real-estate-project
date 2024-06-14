@@ -1,4 +1,4 @@
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import './App.css';
 import './components/style/components.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -16,7 +16,7 @@ import Seller from './components/Seller';
 import DashBoard from './components/DashBoard';
 import Info from './components/Additional/Info';
 
-function App() {
+function App() { 
   return (
     <Provider store={store}>
       <BrowserRouter>

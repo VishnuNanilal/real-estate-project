@@ -7,10 +7,10 @@
 }
 
 .map-cont{
-    width: 50%;
-    
+    width: 50vw;
+    margin-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+  } 

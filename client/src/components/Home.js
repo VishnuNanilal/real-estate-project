@@ -25,11 +25,13 @@ function Home() {
     return (
         <div className='main-center'>
             <div className="home">
-                <Tabs>
-                    <Tab label="Own properties"><UserProperties /></Tab>
-                    <Tab label="Recent Properties"><RecentProperties /></Tab>
-                    <Tab label="Bidder"><Bidder /></Tab>
-                </Tabs>
+                <div style={{width: "50%"}}>
+                    <Tabs>
+                        <Tab label="Own properties"><UserProperties /></Tab>
+                        <Tab label="Recent Properties"><RecentProperties /></Tab>
+                        <Tab label="Bidder"><Bidder /></Tab>
+                    </Tabs>
+                </div>
                 <MapReadOnly />
                 {/* <Map L={L} formData={formData} 
                         setFormData={setFormData} 

@@ -8,7 +8,6 @@
 
 .main-center {
   min-height: 100vh;
-  background-color: aqua;
   padding: 1rem;
   
   display: flex;
@@ -17,6 +16,11 @@
   align-items: center;
 }
 
+.heading{
+  width: 100%;
+  padding: 2rem 1rem;
+  font-size: 2rem;
+}
 /* .main-cont {
   background-color: orange;
 
@@ -42,6 +46,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  transform: translate(0, 10%);
 }
 
 .modal-form {
@@ -101,10 +107,9 @@ button{
 .home{
   width: 90vw;
   padding: 1rem;
-  background-color: lightsalmon;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .pop-up{
@@ -120,4 +125,11 @@ button{
 .bad {
   color: white;
   background-color: red;
+}
+
+.add-property form {
+  margin-left: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--light2);
+  border-radius: 10px;
 }
