@@ -6,14 +6,25 @@
   --dark2: black;
 }
 
-.main-cont {
-  background-color: var(--light);
+.main-center {
+  min-height: 100vh;
+  background-color: aqua;
+  padding: 1rem;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+/* .main-cont {
+  background-color: orange;
 
   padding: 2rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .register-modal {
   min-width: 20rem;
@@ -67,6 +78,20 @@ input {
   display: block;
 }
 
+.modal-form button {
+  width: 5rem;
+  height: 2rem;
+  margin-bottom: 1rem;  
+
+  color: var(--light1);
+  background-color: var(--dark1);
+}
+
+.modal-form button:hover {
+  color: var(--light1);
+  background-color: var(--dark2);
+}
+
 button{
   border: none;
   border-radius: 2px;
@@ -85,4 +110,14 @@ button{
 .pop-up{
   position: absolute;
   background-color: white;
+}
+
+.good {
+  color: white;
+  background-color: green;
+}
+
+.bad {
+  color: white;
+  background-color: red;
 }

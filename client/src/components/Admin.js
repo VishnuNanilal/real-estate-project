@@ -6,12 +6,12 @@ import { getAllUsers, getUserAPI } from '../api/user.api'
 
 function Admin() {
   return (
-    <main >
+    <div className='main-center' >
       <Tabs>
         <Tab label="Requests"><PropertyByStatusContainer /></Tab>
         <Tab label="User management"><UserManagement /></Tab>
       </Tabs>
-    </main>
+    </div>
   )
 }
 

@@ -6,6 +6,13 @@ header {
     background-color: var(--dark1);
 }
 
+.logo{
+    background-color: orange;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
 .header-l, .header-r{
     display: flex;
     justify-content: space-around;

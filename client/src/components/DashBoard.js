@@ -18,14 +18,14 @@ function DashBoard() {
 
     console.log()
     return (
-        <main className='dashboard' style={{ height: "100 vh" }}>
+        <div className='main-center'>
             <h1>DashBoard</h1>
             <Tabs>
                 <Tab label="Active Bid Properties"><Properties properties={activeBidProps} /></Tab>
                 <Tab label="My Bids"><Properties properties={bidProps} /></Tab>
                 <Tab label="Bought Properties"><Properties properties={boughtProps} /></Tab>
             </Tabs>
-        </main>
+        </div>
     )
 }
 

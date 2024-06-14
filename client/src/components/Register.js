@@ -34,7 +34,7 @@ function Register() {
 
     return (
         <div class='modal'>
-            <form class="modal-form"onSubmit={handleSubmit}>
+            <form class="modal-form" onSubmit={handleSubmit}>
                 <label for="name">Name:
                     <input id="name" type='text' name='name' placeholder='Name' value={formData.name} onChange={handleChange} required={true}/>
                 </label>

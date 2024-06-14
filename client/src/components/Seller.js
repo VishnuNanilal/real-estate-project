@@ -7,13 +7,14 @@ import PropertyComp from './PropertyComp'
 
 function Seller() {
   return (
-    <main>
+    <div className='main-center'>
+      <h1>Seller</h1>
       <Tabs>
         <Tab label="Add property"><PropertyAddComponent /></Tab>
         <Tab label="Placed Properties"><BidProps /></Tab>
         <Tab label="Notifications"></Tab>
       </Tabs>
-    </main>
+    </div>
   )
 }
 

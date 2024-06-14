@@ -21,11 +21,11 @@ export default function Header() {
         navigate('/sign-in')
     }
 
-    console.log("User: ", user)
+    // console.log("User: ", user)
     return (
         <header>
             <div className="header-l">
-                <img className='logo' alt='logo' src='../pubic/logo192.png'></img>
+                <img className='logo' alt='logo' src='../pubic/logo192.png' onClick={()=>navigate('./')}></img>
             </div>
             <div className="header-r">
                 {

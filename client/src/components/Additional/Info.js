@@ -3,7 +3,7 @@ import { Route, Routes} from 'react-router-dom'
 
 function Info() {
     return (
-        <div>
+        <div className='main-center'>
             <Routes>
                 <Route path='/about-us' element={<AboutUs />} />
                 <Route path='/support' element={<Support />} />

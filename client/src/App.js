@@ -22,7 +22,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Location />
-        <div className='main-cont'>
+        <main>
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/sign-in' element={<SignIn />} />
@@ -34,7 +34,7 @@ function App() {
             <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
             <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidder /></ProtectedRoute>} />
           </Routes>
-        </div>
+        </main>
       </BrowserRouter>
     </Provider >
   );

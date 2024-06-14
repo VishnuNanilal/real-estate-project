@@ -34,7 +34,7 @@ function ProtectedRoute({ children }) {
     }
 
     return (
-        <div className='protected-route'>
+        <div>
             {
                 children
             }
