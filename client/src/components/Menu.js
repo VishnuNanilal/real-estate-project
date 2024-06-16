@@ -8,7 +8,7 @@ function Menu({ setMenuVisible, handleSignout }) {
   const navigate = useNavigate()
   return (
     <div className='menu-cont' onClick={() => setMenuVisible(false)}>
-      <Profile/>
+      <button onClick={()=>navigate('/profile')}>Profile</button>
       {
         user.role === 'admin'
         &&

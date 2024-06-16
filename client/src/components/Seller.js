@@ -8,7 +8,7 @@ import PropertyComp from './PropertyComp'
 function Seller() {
   return (
     <div className='main-center'>
-      <div className='heading'>Seller</div>
+      <h2 className='section-title'>Seller</h2>
       <Tabs>
         <Tab label="Add property"><PropertyAddComponent /></Tab>
         <Tab label="Placed Properties"><BidProps /></Tab>
@@ -22,7 +22,12 @@ const BidProps = () => {
   const properties = useSelector(state => state.properties)
   const user = useSelector(state => state.user)
 
-  return (properties.filter(property => property.seller_id === user.seller_id._id).map(property => <PropertyComp property={property} />))
+  const own_properties = properties.filter(property => property.seller_id === user.seller_id._id)
+  return (own_properties.length===0
+    ?
+    <div>No properties</div>
+    :
+    own_properties.map(property => <PropertyComp property={property} />))
 }
 
 const Notifications = () => {
@@ -30,6 +35,10 @@ const Notifications = () => {
   return(
     <div>
       {
+        user.notifications.length === 0
+        ?
+        <div>No notifications</div>
+        :
         user.notifications.map((notification, ind)=><div key={ind} className='card-component' style={{padding: "2rem", cursor: "revert"}}>
           {ind+1}. { notification.text}
           </div>)

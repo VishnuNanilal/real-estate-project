@@ -30,15 +30,33 @@
   align-items: center;
 } */
 
+.section-title{
+  color: red;
+  width:100%;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid blue;
+}
+
 .register-modal {
   min-width: 20rem;
   min-height: 10rem;
 
-  padding: 2rem;
+  margin: 1rem;
+  padding: 1.5rem;
 
+  top: 4rem;
+  right: 0;
+  
+  border: 10px solid var(--dark2);
   border-radius: 5px;
-
+  background-color: var(--dark1);
   z-index: 10000;
+}
+
+.register-modal button{
+  margin-top: 1rem;
+  height: 2rem;
+  width: 5rem;
 }
 
 .modal {

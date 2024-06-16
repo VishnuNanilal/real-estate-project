@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 function Info() {
     return (
@@ -16,33 +16,33 @@ function Info() {
 
 function AboutUs() {
     return (
-        <div>
+        <h2 className='section-title'>
             About Us
-        </div>
+        </h2>
     )
 }
 
 function Support() {
     return (
-        <div>
+        <h2 className='section-title'>
             Support
-        </div>
+        </h2>
     )
 }
 
 function TOS() {
     return (
-        <div>
+        <h2 className='section-title'>
             Terms of Service
-        </div>
+        </h2>
     )
 }
 
 function PrivacyPolicy() {
     return (
-        <div>
+        <h2 className='section-title'>
             Privacy Policy
-        </div>
+        </h2>
     )
 }
 export default Info

@@ -19,7 +19,7 @@ function DashBoard() {
     console.log()
     return (
         <div className='main-center'>
-            <h1>DashBoard</h1>
+            <h2 className='section-title'>DashBoard</h2>
             <Tabs>
                 <Tab label="Active Bid Properties"><Properties properties={activeBidProps} /></Tab>
                 <Tab label="My Bids"><Properties properties={bidProps} /></Tab>

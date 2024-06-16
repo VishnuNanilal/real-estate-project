@@ -15,6 +15,7 @@ import Settings from './components/Profile/Settings';
 import Seller from './components/Seller';
 import DashBoard from './components/DashBoard';
 import Info from './components/Additional/Info';
+import Profile from './components/Profile/Profile';
 
 function App() { 
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path='/sign-in' element={<SignIn />} />
             <Route path='/info/*' element={<Info/>} />
             <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+            <Route path='/profile' element ={<ProtectedRoute><Profile/></ProtectedRoute>}/>
             <Route path='/seller' element={<ProtectedRoute><Seller /></ProtectedRoute>}/>
             <Route path='/dashboard' element={<ProtectedRoute><DashBoard /></ProtectedRoute>}/>
             <Route path='/settings' element={<ProtectedRoute><Settings/></ProtectedRoute>} />

@@ -1,26 +1,32 @@
 header {
+    width: 100vw;
+    min-width: 1024px;
+    min-height: 5rem;
+    padding: 5px 3.5rem;
+
     display: flex;
     justify-content: space-between;
-    padding: 5px 2rem;
-
     background-color: var(--dark1);
+    /* position: sticky; */
+    /* top:0 ; */
 }
 
 .logo{
-    background-color: orange;
-    width: 3rem;
-    height: 3rem;
+    width: 5rem;
+    height: 4rem;
     cursor: pointer;
+
+    border-radius: 3px;
 }
 
 .header-l, .header-r{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid white;
 }
 
 .location-header {
+    height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,24 +35,11 @@ header {
     box-shadow: 0px 10px 20px 0px var(--light2);
 }
 
-header, .location-header {
-    height: 4rem; 
-}
-
 .location-header input {
     width: 40vw;
-    height: 1rem;
+    height: .75rem;
     margin-right: 2rem;
     display: inline;
-}
-
-.signout-btn{
-    width: 5rem;
-    height: 2rem;
-    margin-right: 1rem;
-}
-.signout-btn:hover {
-    background-color: var(--light2)
 }
 
 .menu-icon{
@@ -60,8 +53,8 @@ header, .location-header {
 
 .menu-cont {
     height: 100vh;
-    width: 20rem;
-    padding: 2rem;
+    width: 18rem;
+    padding: 4rem .5rem;
 
     display: flex;
     flex-direction: column;
@@ -69,21 +62,51 @@ header, .location-header {
     gap: 1rem;
     background-color: var(--dark1);
 
-    position:absolute;
+    position:fixed;
     right: 0;
     top: 0;
     box-shadow: -5px 0px 20px 0px darkblue;
-    z-index: 401;
+    z-index: 2000;
 }
 
 .menu-cont button {
     width: 100%;
     height: 2rem;
+    border: none;
+}
+
+.menu-cont button:hover {
     background-color: var(--light2);
 }
 
-.header-nav button{
+.header-nav {
+    display: flex;
+}
+
+.header-nav div {
     height: 1rem;
     min-width: 3rem;
-    margin: 0 1rem;
+    margin-right: 1.5rem;
+
+    color: white;
+    cursor: pointer;
 }
+
+.seller-register-btn {
+    height: 3rem;
+    width: 8rem;
+    font-size: 1rem;
+    font-weight: 400;
+
+    border: 2px solid var(--light2);
+}
+
+.seller-register-btn:hover {
+    background-color: var(--light2);
+}
+
+.menu-icon{
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
+

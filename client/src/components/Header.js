@@ -25,15 +25,15 @@ export default function Header() {
     return (
         <header>
             <div className="header-l">
-                <img className='logo' alt='logo' src='../pubic/logo192.png' onClick={()=>navigate('./')}></img>
+                <img className='logo' alt='logo' src='../logo.png' onClick={()=>navigate('./')}></img>
             </div>
             <div className="header-r">
                 {
                     <div className='header-nav'>
-                        <button onClick={() => navigate('/info/about-us')}>About Us</button>
-                        <button onClick={() => navigate('/info/support')}>Support</button>
-                        <button onClick={() => navigate('/info/tos')}>Terms Of Service</button>
-                        <button onClick={() => navigate('/info/privacy-policy')}>Privacy Policy</button>
+                        <div onClick={() => navigate('/info/about-us')}>About Us</div>
+                        <div onClick={() => navigate('/info/support')}>Support</div>
+                        <div onClick={() => navigate('/info/tos')}>Terms Of Service</div>
+                        <div onClick={() => navigate('/info/privacy-policy')}>Privacy Policy</div>
                     </div>
                 }
                 {/* {
@@ -46,7 +46,8 @@ export default function Header() {
                     user.id &&
                     !user.seller_id
                     &&
-                    <button onClick={() => setPopUpShown(true)} style={{ position: "relative" }} >Regiser as Seller
+                    <button className="seller-register-btn" onClick={() => setPopUpShown(true)}>
+                        Register as Seller
                         {
                             popUpShown &&
                             <SellerRegister setPopupShown={setPopUpShown} />
