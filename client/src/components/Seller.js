@@ -32,6 +32,7 @@ const BidProps = () => {
 
 const Notifications = () => {
   const user = useSelector(state => state.user)
+  console.log("Notifications: ", user.notifications)
   return(
     <div>
       {
@@ -39,7 +40,7 @@ const Notifications = () => {
         ?
         <div>No notifications</div>
         :
-        user.notifications.map((notification, ind)=><div key={ind} className='card-component' style={{padding: "2rem", cursor: "revert"}}>
+        user.notifications.map((notification, ind)=><div key={ind} className='card-component notification-card' style={{padding: "2rem", cursor: "revert"}}>
           {ind+1}. { notification.text}
           </div>)
       }

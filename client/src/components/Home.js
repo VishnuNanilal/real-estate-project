@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import RecentProperties from './RecentProperties';
 import Tabs from './Tabs';
 import Tab from './Tab';
-import Bidder from './Bidder';
+import Bidding from './Bidding';
 import UserProperties from './UserProperties';
 import 'leaflet/dist/leaflet.css';
 import MapReadOnly from './MapReadOnly';
@@ -29,7 +29,6 @@ function Home() {
                     <Tabs>
                         <Tab label="Own properties"><UserProperties /></Tab>
                         <Tab label="Recent Properties"><RecentProperties /></Tab>
-                        <Tab label="Bidder"><Bidder /></Tab>
                     </Tabs>
                 </div>
                 <MapReadOnly />

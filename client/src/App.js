@@ -6,7 +6,7 @@ import Header from './components/Header'
 import Location from './components/Location'
 import store from './redux/store';
 import Home from './components/Home';
-import Bidder from './components/Bidder';
+import Bidding from './components/Bidding';
 import Register from './components/Register';
 import SignIn from './components/SignIn';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -17,26 +17,28 @@ import DashBoard from './components/DashBoard';
 import Info from './components/Additional/Info';
 import Profile from './components/Profile/Profile';
 
-function App() { 
+function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Header />
-        <Location />
-        <main>
-          <Routes>
-            <Route path='/register' element={<Register />} />
-            <Route path='/sign-in' element={<SignIn />} />
-            <Route path='/info/*' element={<Info/>} />
-            <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-            <Route path='/profile' element ={<ProtectedRoute><Profile/></ProtectedRoute>}/>
-            <Route path='/seller' element={<ProtectedRoute><Seller /></ProtectedRoute>}/>
-            <Route path='/dashboard' element={<ProtectedRoute><DashBoard /></ProtectedRoute>}/>
-            <Route path='/settings' element={<ProtectedRoute><Settings/></ProtectedRoute>} />
-            <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidder /></ProtectedRoute>} />
-          </Routes>
-        </main>
+        <div className='background-image'>
+          <Header />
+          <Location />
+          <main>
+            <Routes>
+              <Route path='/register' element={<Register />} />
+              <Route path='/sign-in' element={<SignIn />} />
+              <Route path='/info/*' element={<Info />} />
+              <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+              <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path='/seller' element={<ProtectedRoute><Seller /></ProtectedRoute>} />
+              <Route path='/dashboard' element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
+              <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+              <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidding /></ProtectedRoute>} />
+            </Routes>
+          </main>
+        </div>
       </BrowserRouter>
     </Provider >
   );

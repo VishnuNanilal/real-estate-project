@@ -136,7 +136,7 @@ function PropertyAddComponent() {
         }))
     }
     return (
-        <div className='main-center add-property' style={{width: "100vw", display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
+        <div className='main-center add-property' style={{display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
             <Map L={L}
                 mapRef={mapRef}
                 points={points}

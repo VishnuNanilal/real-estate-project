@@ -6,9 +6,8 @@ header {
 
     display: flex;
     justify-content: space-between;
-    background-color: var(--dark1);
-    /* position: sticky; */
-    /* top:0 ; */
+    
+    background-color: rgba(1, 1, 1, .75);
 }
 
 .logo{
@@ -26,13 +25,13 @@ header {
 }
 
 .location-header {
-    height: 3rem;
+    padding-top: 1rem;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: var(--dark2);
-    box-shadow: 0px 10px 20px 0px var(--light2);
+    background-color: rgba(1, 1, 1, .1);
 }
 
 .location-header input {
@@ -48,7 +47,7 @@ header {
 }
 
 .menu-icon:hover{
-    color:var(--light2)
+    color:var(--highlight);
 }
 
 .menu-cont {
@@ -65,17 +64,22 @@ header {
     position:fixed;
     right: 0;
     top: 0;
-    box-shadow: -5px 0px 20px 0px darkblue;
+    box-shadow: -5px 0px 10px 0px var(--dark1);
     z-index: 2000;
 }
 
 .menu-cont button {
     width: 100%;
     height: 2rem;
+    min-height: 2.5rem;
     border: none;
+
+    color: var(--dark1);
+    background-color: var(--light1);
 }
 
 .menu-cont button:hover {
+    color: var(--light1);
     background-color: var(--light2);
 }
 
@@ -88,8 +92,12 @@ header {
     min-width: 3rem;
     margin-right: 1.5rem;
 
-    color: white;
+    color: var(--light1);
     cursor: pointer;
+}
+
+.header-nav div:hover {
+    color: var(--light2);
 }
 
 .seller-register-btn {

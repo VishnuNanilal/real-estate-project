@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { getPropertyAPI, updatePropertyAPI, updatePropertySetBuyerAPI } from '../api/property.api'
 import dayjs from 'dayjs'
-import './style/Bidder.css'
+import './style/Bidding.css'
 
-function Bidder() {
+function Bidding() {
     const user = useSelector(state => state.user)
     const { property_id } = useParams()
     const [property, setProperty] = useState({
@@ -48,7 +48,7 @@ function Bidder() {
     useEffect(() => {
         let intervalId;
         const calculateRemainingTime = () => {
-            
+
             if (!property || timeRemaining === 'Expired') {
                 clearInterval(intervalId);
                 return;
@@ -106,23 +106,26 @@ function Bidder() {
     }
 
     return (
-        <div className="property-container">
-            <div>Current bid amount: <strong>property.name</strong></div>
-            <div>Time Remaining: {timeRemaining}</div>
-            <div className="property-card">
-                <h2>{property.name}</h2>
-                <p><strong>Description:</strong> {property.description}</p>
-                <p><strong>Location:</strong> {property.location}</p>
-                <p><strong>Price:</strong> ${property.price}</p>
-                <p><strong>Area:</strong> {property.area} sq ft</p>
+        <div className='main-center'>
+            <h2 className='section-title'>Bidding</h2>
+            <div className="property-container">
+                <div>Current bid amount: <strong>{property.price}</strong></div>
+                <div>Time Remaining: {timeRemaining}</div>
+                <div className="property-card">
+                    <h2>{property.name}</h2>
+                    <p><strong>Description:</strong> {property.description}</p>
+                    <p><strong>Location:</strong> {property.location}</p>
+                    <p><strong>Price:</strong> ${property.price}</p>
+                    <p><strong>Area:</strong> {property.area} sq ft</p>
+                </div>
+                <form onSubmit={handleBuy}>
+                    <input type="number" min={minimum_bid} onChange={(e) => setBuyPrice(e.target.value)} value={buyPrice} />
+                    <button className={timeRemaining === 'Expired' ? 'disabled' : ''}>Buy property</button>
+                </form>
+                <div style={{ height: "2px", background: "lightgrey", width: "100vw" }}></div>
             </div>
-            <form onSubmit={handleBuy}>
-                <input type="number" min={minimum_bid} onChange={(e) => setBuyPrice(e.target.value)} value={buyPrice} />
-                <button className={timeRemaining === 'Expired' ? 'disabled' : ''}>Buy property</button>
-            </form>
-            <div style={{ height: "2px", background: "lightgrey", width: "100vw" }}></div>
         </div>
     )
 }
 
-export default Bidder
+export default Bidding

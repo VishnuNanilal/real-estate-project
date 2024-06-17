@@ -24,7 +24,7 @@ function RecentProperties() {
 
     return (
         <div className='property-container'>
-            <h2>Recent feed component</h2>
+            <h2>Recent Properties</h2>
             {
                 recentProperties.map(property =><PropertyComp property={property} />)
             }
