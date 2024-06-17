@@ -1,35 +1,75 @@
-.property-container {
-    height: 100vh;
-    width: 100vw;
+.bid-property-container{
+    min-height: 100%;
+    width: 100%;
+    margin-top: 3rem;
+    padding: 3rem 10rem;
+
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+
+    background-color: var(--dark1A);
 }
 
-.property-card {
+.bid-property-container div:nth-child(1), .bid-property-container div:nth-child(2){
+    font-size: 1.5rem;
     width: 100%;
-    max-width: 600px;
+    padding-bottom: 1rem;
+}
 
-    padding: 40px;
+.bid-property-card {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 2rem;
     
-    border: 1px solid green;
-    border-radius: 8px;
+    border: 1px solid var(--light1A);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 
+    background-color: var(--light1);
     cursor: pointer;
 }
 
-.property-card h2 {
+.bid-property-card h2 {
     margin-top: 0;
     color: #333;
 }
 
-.property-card p {
+.bid-property-card p {
+    padding: 1rem;
     color: #666;
     line-height: 1.6;
+    background-color: red;
 }
 
-.property-card p strong {
+.bid-property-card p strong {
     color: #333;
 }
+
+.bid-property-container form{
+    min-width: 25rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.bid-property-container button{
+    background-color: var(--);
+}
+/*.property-container {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    
+    background-color: var(--dark1A);
+}
+
+.property-container div {
+    width: 100%;
+    background-color: var(--dark1);
+}
+*/

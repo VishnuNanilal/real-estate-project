@@ -108,12 +108,12 @@ function Bidding() {
     return (
         <div className='main-center'>
             <h2 className='section-title'>Bidding</h2>
-            <div className="property-container">
+            <div className="bid-property-container">
                 <div>Current bid amount: <strong>{property.price}</strong></div>
                 <div>Time Remaining: {timeRemaining}</div>
-                <div className="property-card">
+                <div className="bid-property-card">
                     <h2>{property.name}</h2>
-                    <p><strong>Description:</strong> {property.description}</p>
+                    <p>{property.description}</p>
                     <p><strong>Location:</strong> {property.location}</p>
                     <p><strong>Price:</strong> ${property.price}</p>
                     <p><strong>Area:</strong> {property.area} sq ft</p>
@@ -122,7 +122,6 @@ function Bidding() {
                     <input type="number" min={minimum_bid} onChange={(e) => setBuyPrice(e.target.value)} value={buyPrice} />
                     <button className={timeRemaining === 'Expired' ? 'disabled' : ''}>Buy property</button>
                 </form>
-                <div style={{ height: "2px", background: "lightgrey", width: "100vw" }}></div>
             </div>
         </div>
     )

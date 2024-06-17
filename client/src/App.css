@@ -9,7 +9,8 @@
   --light2A: #6b95d3CC; 
   --dark1A: #1b212cCC; 
   --dark2A: #1c293eCC;
-  
+  --black-alpha: rgba(1, 1, 1, 0.65);
+
   --highlight: #96ecff;
   --button-hover: #5f7fb7;
   --hover: #7CB9E8;
@@ -56,7 +57,7 @@
   padding: 1rem;
   padding-bottom: 1rem;
   color: white;
-  background-color: rgba(1, 1, 1, 0.7);
+  background-color: var(--black-alpha);
   border-bottom: 1px solid var(--light1);
 }
 
@@ -140,18 +141,18 @@ input {
   background-color: var(--dark2);
 }
 
-button{
+.button-custom{
   min-width: 5rem;
   min-height: 2rem;
-
-  border: none;
-  border-radius: 2px;
+  margin: 1rem;
+  border: 1px solid var(--light1);
+  border-radius: 4px;
   
   background-color: var(--dark1);
   cursor: pointer;
 }
 
-button:hover {
+.button-custom:hover {
   background-color: var(--button-hover);
 }
 
@@ -168,19 +169,27 @@ button:hover {
   background-color: white;
 }
 
-.good {
+.good, .bad {
+  padding: 1rem;
   color: white;
+  border: none;
+}
+
+.good {
   background-color: green;
 }
 
 .bad {
-  color: white;
   background-color: red;
 }
 
 .add-property form {
   margin-left: 2rem;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--light2);
-  border-radius: 10px;
+  border-radius: 5px;
 }

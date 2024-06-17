@@ -26,7 +26,7 @@ function RecentProperties() {
         <div className='property-container'>
             <h2>Recent Properties</h2>
             {
-                recentProperties.map(property =><PropertyComp property={property} />)
+                recentProperties.map(property =><PropertyComp property={property} onClick={handleClick} />)
             }
         </div>
     )

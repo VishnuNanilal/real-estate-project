@@ -171,8 +171,10 @@ function PropertyAddComponent() {
                     <label for='closing_date'>Closing Date
                         <input id="closing_date" type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} required="true" />
                     </label>
-                    <button onClick={handleMarkProperty}>MARK PROPERTY</button>
-                    <button type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
+                    <div>
+                        <button className='good button-custom' onClick={handleMarkProperty}>MARK PROPERTY</button>
+                        <button className='good button-custom' type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
+                    </div>
                 </form>
             }
         </div>

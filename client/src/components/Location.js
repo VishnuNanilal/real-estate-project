@@ -16,7 +16,7 @@ function handleLocationChange(e){
     <div className='location-header'>
         <form onSubmit={handleLocationChange}>
             <input onChange={handleInput} value={placeInput}/>
-            <button>Search</button>
+            <button className='button-custom'>Search</button>
         </form>
     </div>
   )

@@ -147,7 +147,7 @@ const Map = ({ L, mapRef, setPoints, points, setMarkers, handlePolyReset}) => {
   return (
     <div className='map-cont'>
       <div id="map" style={{ width: '100%', height: '400px' }} />
-      <button onClick={handlePolyReset}>Reset markers</button>
+      <button className='bad button-custom' onClick={handlePolyReset}>Reset markers</button>
     </div>
   )
 };

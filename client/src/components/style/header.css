@@ -7,7 +7,7 @@ header {
     display: flex;
     justify-content: space-between;
     
-    background-color: rgba(1, 1, 1, .75);
+    background-color: rgba(1, 1, 1, .9);
 }
 
 .logo{
@@ -58,8 +58,8 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    background-color: var(--dark1);
+    gap: .75rem;
+    background-color: #0d1725f3; 
 
     position:fixed;
     right: 0;
@@ -71,9 +71,10 @@ header {
 .menu-cont button {
     width: 100%;
     height: 2rem;
+    margin: revert;
     min-height: 2.5rem;
     border: none;
-
+    border-radius: 3px;
     color: var(--dark1);
     background-color: var(--light1);
 }
