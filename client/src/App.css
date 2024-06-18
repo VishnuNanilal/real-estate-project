@@ -18,6 +18,10 @@
   color: #f2f2f2;
 }
 
+input{
+  color: black;
+}
+
 .background-image{
   min-height: 100vh;
   background-image: url('../public/background-image.png');

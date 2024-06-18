@@ -14,7 +14,7 @@
 
 .bid-property-container div:nth-child(1), .bid-property-container div:nth-child(2){
     font-size: 1.5rem;
-    width: 100%;
+    width:100%;
     padding-bottom: 1rem;
 }
 
@@ -32,14 +32,15 @@
 
 .bid-property-card h2 {
     margin-top: 0;
+    padding-bottom: 1rem;
     color: #333;
+    border-bottom: 1px solid var(--dark1A);
 }
 
 .bid-property-card p {
-    padding: 1rem;
+    padding: 0.2rem;
     color: #666;
     line-height: 1.6;
-    background-color: red;
 }
 
 .bid-property-card p strong {
@@ -51,10 +52,7 @@
     margin-top: 2rem;
     display: flex;
     justify-content: space-around;
-}
-
-.bid-property-container button{
-    background-color: var(--);
+    align-items: center;
 }
 /*.property-container {
     height: 100%;

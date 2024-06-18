@@ -24,6 +24,7 @@ function Bidding() {
         closing_time: 0,
     })
     let minimum_bid = !property.price ? 0 : property.price + property.minimum_increment;
+    console.log("MIN BID: ", minimum_bid)
     const [buyPrice, setBuyPrice] = useState(minimum_bid)
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [expired, setExpired] = useState(false)
@@ -111,16 +112,16 @@ function Bidding() {
             <div className="bid-property-container">
                 <div>Current bid amount: <strong>{property.price}</strong></div>
                 <div>Time Remaining: {timeRemaining}</div>
-                <div className="bid-property-card">
-                    <h2>{property.name}</h2>
-                    <p>{property.description}</p>
-                    <p><strong>Location:</strong> {property.location}</p>
-                    <p><strong>Price:</strong> ${property.price}</p>
-                    <p><strong>Area:</strong> {property.area} sq ft</p>
-                </div>
+                    <div className="bid-property-card">
+                        <h2>{property.name}</h2>
+                        <p>{property.description}</p>
+                        <p><strong>Location:</strong> {property.location}</p>
+                        <p><strong>Price:</strong> ${property.price}</p>
+                        <p><strong>Area:</strong> {property.area} sq ft</p>
+                    </div>
                 <form onSubmit={handleBuy}>
                     <input type="number" min={minimum_bid} onChange={(e) => setBuyPrice(e.target.value)} value={buyPrice} />
-                    <button className={timeRemaining === 'Expired' ? 'disabled' : ''}>Buy property</button>
+                    <button className={timeRemaining === 'Expired' ? 'disabled button-custom' : 'button-custom'}>Buy property</button>
                 </form>
             </div>
         </div>

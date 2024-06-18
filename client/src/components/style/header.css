@@ -1,5 +1,4 @@
 header {
-    width: 100vw;
     min-width: 1024px;
     min-height: 5rem;
     padding: 5px 3.5rem;
@@ -26,11 +25,13 @@ header {
 
 .location-header {
     padding-top: 1rem;
-    height: 4rem;
+    min-height: 4rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
+    position: relative; 
     background-color: rgba(1, 1, 1, .1);
 }
 
@@ -119,3 +120,22 @@ header {
     margin-left: 2rem;
 }
 
+.search-results-div{
+    width: 35rem;
+    padding: 0.5rem 0rem;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 4rem;
+    left: 24rem;
+    background-color: var(--light1);
+
+    z-index: 500;
+}
+
+.search-results-div div{
+    padding: 0.3rem 1rem;
+}
+.search-results-div div:hover{
+    background-color: var(--highlight);
+}
