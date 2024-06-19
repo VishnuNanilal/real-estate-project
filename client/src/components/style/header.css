@@ -27,7 +27,7 @@ header {
     padding-top: 1rem;
     min-height: 4rem;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
 
@@ -35,15 +35,36 @@ header {
     background-color: rgba(1, 1, 1, .1);
 }
 
+
 .location-header form{
+    display: flex;
+    position: relative;
+}
+
+.location-header-input-cont{
+    display: flex;
+    align-items: center;
+
+    position: relative;
+}
+
+.fa-x{
+    padding: 2px;
     position: absolute;
+    right: 1rem;
+    
+    background-color: darkgrey;
+    border: 1px solid black;
+    border-radius: 2px;
+
+    cursor: pointer;
 }
 
 .location-header input {
     width: 40vw;
     height: .75rem;
-    margin-right: 2rem;
-    display: inline;
+
+    font-size: 1.1rem;
 }
 
 .menu-icon{

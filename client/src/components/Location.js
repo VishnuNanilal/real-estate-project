@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { setLocation } from '../redux/mapLocation.slice';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons'
 export default function Location() {
   const [placeInput, setPlaceInput] = useState("");
   const [result, setResult] = useState([])
@@ -23,6 +24,7 @@ export default function Location() {
 
   async function handleLocationSubmit(e) {
     e.preventDefault()
+  
     const locations = await getLocationFromInput()
     const coords = { lat: locations[0].lat, lon: locations[0].lon }
     dispatch(setLocation(coords));
@@ -34,20 +36,25 @@ export default function Location() {
     dispatch(setLocation(coords));
   }
 
-  console.log("Search result: ", result)
+  // console.log("Search result: ", result)
 
   return (
     <div className='location-header'>
       <form onSubmit={handleLocationSubmit}>
-        <input onChange={(e) => setPlaceInput(e.target.value)} value={placeInput} />
-        <button className='button-custom'>Search</button>
+        <div className='location-header-input-cont'>
+          <input onChange={(e) => setPlaceInput(e.target.value)} value={placeInput} />
+          {
+            result.length > 0 && <FontAwesomeIcon className='close-icon' icon={faX} onClick={()=>setPlaceInput("")}/>
+          }
+        </div>
+        <button className='button-custom' disabled={result.length===0}>Search</button>
         {
           result.length > 0
           &&
           <div className='search-results-div'>
             {
               result.map(location => <div
-                style={{ color: "black" }}
+                style={{ color: "black", cursor: "pointer" }}
                 onClick={(e) => handleLocationClick(e, location)}
               >{location.name}</div>)
             }
