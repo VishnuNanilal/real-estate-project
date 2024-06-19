@@ -5,26 +5,26 @@ import L from 'leaflet'
 
 const MapReadOnly = () => {
     const mapRef = useRef(null)
+    const location = useSelector(state=>state.mapLocation)
     const properties = useSelector(state => state.properties)
-    const [location, setLocation] = useState({ lat: null, long: null })
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
 
-    //fetch geolocation
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                setLocation({
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude
-                })
-            }, (error) => console.log("Geolocation error ", error))
-        }
-    }, [])
+    // //fetch geolocation
+    // useEffect(() => {
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition((position) => {
+    //             setLocation({
+    //                 lat: position.coords.latitude,
+    //                 lon: position.coords.longitude
+    //             })
+    //         }, (error) => console.log("Geolocation error ", error))
+    //     }
+    // }, [])
 
     //Initialize map
     useEffect(() => {
-        const loc = location.lat ? [location.lat, location.long] : [40.712772, -74.006058]
+        const loc = location.lat ? [location.lat, location.lon] : [40.712772, -74.006058]
         const map = L.map('map').setView(loc, 13);
         mapRef.current = map;
 
@@ -36,7 +36,7 @@ const MapReadOnly = () => {
         return () => {
             mapRef.current.remove();
         };
-    }, [location.lat, location.long, mapRef]);
+    }, [location.lat, location.lon, mapRef]);
 
     //fetch all properties
     useEffect(() => {

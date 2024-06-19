@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import RecentProperties from './RecentProperties';
 import Tabs from './Tabs';
 import Tab from './Tab';
-import Bidding from './Bidding';
 import UserProperties from './UserProperties';
 import 'leaflet/dist/leaflet.css';
 import MapReadOnly from './MapReadOnly';
+import { setLocation } from '../redux/mapLocation.slice';
 
 function Home() {
     const dispatch = useDispatch()
@@ -20,6 +20,20 @@ function Home() {
             }
             console.log(response.message)
         })
+    }, [dispatch])
+
+    //fetch geolocation
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const coords = {
+                    lat: position.coords.latitude,
+                    lon: position.coords.longitude
+                }
+                console.log(coords)
+                dispatch(setLocation(coords))
+            }, (error) => console.log("Geolocation error ", error))
+        }
     }, [dispatch])
 
     return (

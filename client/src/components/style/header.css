@@ -35,6 +35,10 @@ header {
     background-color: rgba(1, 1, 1, .1);
 }
 
+.location-header form{
+    position: absolute;
+}
+
 .location-header input {
     width: 40vw;
     height: .75rem;
@@ -126,11 +130,14 @@ header {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 4rem;
-    left: 24rem;
+    top: 3rem;
+    left: 0.35rem;
+    
+    border: 2px solid var(--dark1A);
+    border-radius: .5rem;
     background-color: var(--light1);
 
-    z-index: 500;
+    z-index: 1001;
 }
 
 .search-results-div div{
