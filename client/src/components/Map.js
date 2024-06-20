@@ -6,25 +6,13 @@ import markerImg from '../assets/marker.png'
 const Map = ({ L, mapRef, setPoints, points, setMarkers, handlePolyReset}) => {
   // console.log(props)
   const properties = useSelector(state => state.properties)
-  const [location, setLocation] = useState({ lat: null, long: null })
   const user = useSelector(state => state.user)
   const navigate = useNavigate();
-
-  //fetch geolocation
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          lat: position.coords.latitude,
-          long: position.coords.longitude
-        })
-      }, (error) => console.log("Geolocation error ", error))
-    }
-  }, [])
+  const location = useSelector(state=>state.mapLocation)
 
   //Initialize map
   useEffect(() => {
-    const loc = location.lat ? [location.lat, location.long] : [40.712772, -74.006058]
+    const loc = location.lat ? [location.lat, location.lon] : [40.712772, -74.006058]
     const map = L.map('map').setView(loc, 13);
     mapRef.current = map;
 
@@ -45,7 +33,7 @@ const Map = ({ L, mapRef, setPoints, points, setMarkers, handlePolyReset}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [L, location.lat, location.long, setPoints, mapRef]);
+  }, [L, location.lat, location.lon, setPoints, mapRef]);
 
   //fetch all properties
   useEffect(() => {
@@ -68,7 +56,7 @@ const Map = ({ L, mapRef, setPoints, points, setMarkers, handlePolyReset}) => {
             color = "yellow"
           }
           else {
-            continue; //we don't render current pending property if it doens't belong to user
+            continue; //we don't render current pending property if it doens't belon to user
           }
         }
         else if (status === 'accepted')
@@ -78,7 +66,7 @@ const Map = ({ L, mapRef, setPoints, points, setMarkers, handlePolyReset}) => {
             color = "orange"
           }
           else {
-            continue; //we don't render current pending property if it doens't belong to user
+            continue; //we don't render current pending property if it doens't belon to user
           }
         }
         else if (status === 'sold')

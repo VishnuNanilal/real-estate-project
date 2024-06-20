@@ -7,7 +7,7 @@
 
   --light1A: #f2f2f2CC
   --light2A: #6b95d3CC; 
-  --dark1A: #1b212cCC; 
+  --dark1A: #10101999; 
   --dark2A: #1c293eCC;
   --black-alpha: rgba(1, 1, 1, 0.65);
 
@@ -196,4 +196,9 @@ input {
   align-items: center;
   border: 1px solid var(--light2);
   border-radius: 5px;
+  background-color: var(--black-alpha);
+}
+
+.add-property label{
+  margin-bottom: 3px;
 }

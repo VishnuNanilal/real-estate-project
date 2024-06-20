@@ -34,7 +34,7 @@ function PropertyAddComponent() {
     })
 
     const handleMarkProperty = () => {
-        if (points.length < 2) {
+        if (points.length <= 2) {
             alert("Mark atleast 3 points.")
         }
         else {
@@ -57,13 +57,20 @@ function PropertyAddComponent() {
 
     const handleSaveProperty = async (e) => {
         e.preventDefault()
-        //restructure data to be send to BE.
-        let newFormData = { ...formData }
-        newFormData.closing_time = formData.closing_time + " " + formData.closing_date;
-        // console.log(newFormData.closing_time)
-        delete newFormData.closing_date;
 
+        if(!formDataValidation()){
+            console.log("Incomplete form.")
+            return;
+        }
+
+        //polygon shoud be present.
         if (polygon) {
+            //restructure data to be send to BE.
+            let newFormData = { ...formData }
+            newFormData.closing_time = formData.closing_time + " " + formData.closing_date;
+            // console.log(newFormData.closing_time)
+            delete newFormData.closing_date;
+            
             const polygonPoints = polygon.getLatLngs()[0].map(latlng => [latlng.lat, latlng.lng]);
 
             //add extra data to the formData before sending
@@ -135,6 +142,12 @@ function PropertyAddComponent() {
             [name]: value
         }))
     }
+
+    function formDataValidation(){
+        const {name, price, location, area, minimum_increment, closing_time, closing_date} = formData
+        return name && price && location && area && minimum_increment && closing_time && closing_date;
+    }
+
     return (
         <div className='main-center add-property' style={{display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
             <Map L={L}
@@ -172,7 +185,7 @@ function PropertyAddComponent() {
                         <input id="closing_date" type='date' name='closing_date' placeholder='Closing date' value={formData.closing_date} onChange={handleChange} required="true" />
                     </label>
                     <div>
-                        <button className='good button-custom' onClick={handleMarkProperty}>MARK PROPERTY</button>
+                        <button className='good button-custom' type='button' onClick={handleMarkProperty}>MARK PROPERTY</button>
                         <button className='good button-custom' type='submit' onClick={handleSaveProperty}>SAVE PROPERTY</button>
                     </div>
                 </form>
