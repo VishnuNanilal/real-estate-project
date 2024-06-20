@@ -7,16 +7,18 @@ import { setProperties } from '../redux/properties.slice';
 import { getUserAPI, pushNotificationAPI } from '../api/user.api';
 import { setUser } from '../redux/user.slice';
 import L from 'leaflet'
+import Alert from './Alert';
 
 function PropertyAddComponent() {
-    const mapRef = useRef(null);
     const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
+
+    const mapRef = useRef(null);
     const [points, setPoints] = useState([]);
     const [markers, setMarkers] = useState([]);
     const [polygon, setPolygon] = useState(null);
     const [polyline, setPolyline] = useState(null);
-
-    const dispatch = useDispatch()
+    const [showAlert, setShowAlert] = useState(true);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -150,6 +152,9 @@ function PropertyAddComponent() {
 
     return (
         <div className='main-center add-property' style={{display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
+            {
+                showAlert && <Alert message="test message" type="warning" onClose={()=>setShowAlert(false)}/>
+            }
             <Map L={L}
                 mapRef={mapRef}
                 points={points}

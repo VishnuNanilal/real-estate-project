@@ -21,24 +21,24 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <div className='background-image'>
-          <Header />
-          <Location />
-          <main>
-            <Routes>
-              <Route path='/register' element={<Register />} />
-              <Route path='/sign-in' element={<SignIn />} />
-              <Route path='/info/*' element={<Info />} />
-              <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-              <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path='/seller' element={<ProtectedRoute><Seller /></ProtectedRoute>} />
-              <Route path='/dashboard' element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
-              <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-              <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
-              <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidding /></ProtectedRoute>} />
-            </Routes>
-          </main>
-        </div>
+          <div className='background-image'>
+            <Header />
+            <Location />
+            <main>
+              <Routes>
+                <Route path='/register' element={<Register />} />
+                <Route path='/sign-in' element={<SignIn />} />
+                <Route path='/info/*' element={<Info />} />
+                <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+                <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path='/seller' element={<ProtectedRoute><Seller /></ProtectedRoute>} />
+                <Route path='/dashboard' element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
+                <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+                <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                <Route path='/bidder/:property_id' element={<ProtectedRoute><Bidding /></ProtectedRoute>} />
+              </Routes>
+            </main>
+          </div>
       </BrowserRouter>
     </Provider >
   );

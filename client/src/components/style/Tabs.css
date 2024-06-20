@@ -3,7 +3,7 @@
     min-width: 100%;
     min-height: 100vh;
     font-family: Arial, sans-serif;
-    background-color: var(--dark1A)
+    background-color: var(--dark1A);
   }
   
   #half{
@@ -15,6 +15,7 @@
     display: flex;
     border-bottom: 1px solid #ccc;
     background-color: var(--dark2A);
+    color: white;
   }
   
   .tab-buttons button {

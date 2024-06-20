@@ -1,5 +1,9 @@
 *{
   box-sizing: border-box;
+}
+
+body{
+  color: #f2f2f2;
   --light1: #f2f2f2;
   --light2: #4877bd;
   --dark1: #1b212c;
@@ -14,12 +18,14 @@
   --highlight: #96ecff;
   --button-hover: #5f7fb7;
   --hover: #7CB9E8;
-
-  color: #f2f2f2;
 }
 
 input{
   color: black;
+}
+
+button{
+  color: var(--light1);
 }
 
 .background-image{
