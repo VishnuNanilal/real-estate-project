@@ -15,8 +15,18 @@ app.get('/', (req, res) => {
     res.status(200).send('Welcome to the API!');
 });
 
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(__dirname,"..", "client", "build")));
+    app.get("*", (req, res)=>{
+        res.sendFile(path.join(__dirname,"..", "client", "build", "index.html"));
+    });
+}
+
 app.use('/user', userRouter);
 app.use('/seller', sellerRouter)
 app.use('/property', propertyRouter)
 
 app.listen(process.env.PORT, ()=>console.log(`Server listening at port ${process.env.PORT}`))
+
+
+
