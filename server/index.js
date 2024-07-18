@@ -10,7 +10,10 @@ const propertyRouter = require('./routers/property.router');
 
 app.use(cors())
 app.use(express.json())
-app.get('/', (req, res)=>console.log("201 OK!"))
+app.get('/', (req, res) => {
+    console.log("201 OK!");
+    res.status(200).send('Welcome to the API!');
+});
 
 app.use('/user', userRouter);
 app.use('/seller', sellerRouter)
