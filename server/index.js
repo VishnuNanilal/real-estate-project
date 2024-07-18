@@ -12,7 +12,6 @@ app.use(cors())
 app.use(express.json())
 app.get('/', (req, res) => {
     console.log("201 OK!");
-    res.status(200).send('Welcome to the API!');
 });
 
 if(process.env.NODE_ENV==='production'){
