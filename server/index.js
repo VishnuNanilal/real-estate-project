@@ -7,7 +7,7 @@ const mongoose = require('./configs/databaseConfig')
 const userRouter = require('./routers/user.router');
 const sellerRouter = require('./routers/seller.router');
 const propertyRouter = require('./routers/property.router');
-
+const path = require('path')
 app.use(cors())
 app.use(express.json())
 app.get('/', (req, res) => {
@@ -27,6 +27,3 @@ app.use('/seller', sellerRouter)
 app.use('/property', propertyRouter)
 
 app.listen(process.env.PORT, ()=>console.log(`Server listening at port ${process.env.PORT}`))
-
-
-
