@@ -37,4 +37,6 @@ app.use('*', (req, res) => {
     res.status(404).send('Route not found');
 });
 
-app.listen(process.env.PORT, () => console.log(`Server listening at port ${process.env.PORT}`));
+//deployed site will set process.ENV.PORT
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Server listening at port ${PORT}`));
