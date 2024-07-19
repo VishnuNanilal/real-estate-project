@@ -76,7 +76,7 @@ const signIn = async (req, res) => {
         }
         // console.log("User fetched with current data ", response);
         // console.log("Sign in data, response.id: ", response.id)
-        const token = jwt.sign({ id: response.id }, process.env.jwt_secret);
+        const token = jwt.sign({ id: response.id }, process.env.jwt_secret, {expiresIn: "1hr"});
         // console.log("Token: ", token)
         if (token) {
             return res.status(201).send({
