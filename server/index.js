@@ -12,6 +12,16 @@ const path = require('path');
 app.use(cors());
 app.use(express.json());
 
+// Use specific routers
+app.use('/user', userRouter);
+app.use('/seller', sellerRouter);
+app.use('/property', propertyRouter);
+
+// Fallback route for handling 404 errors
+app.use('*', (req, res) => {
+    res.status(404).send('Route not found');
+});
+
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, "..", "client", "build")));
@@ -26,16 +36,6 @@ if (process.env.NODE_ENV === 'production') {
         res.status(200).send('Welcome to the API!');
     });
 }
-
-// Use specific routers
-app.use('/user', userRouter);
-app.use('/seller', sellerRouter);
-app.use('/property', propertyRouter);
-
-// Fallback route for handling 404 errors
-app.use('*', (req, res) => {
-    res.status(404).send('Route not found');
-});
 
 //deployed site will set process.ENV.PORT
 const PORT = process.env.PORT || 3001;
