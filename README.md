@@ -9,7 +9,7 @@ This project is a comprehensive real estate bidding platform where users can lis
 1. [Project Title and Description](#project-title-and-description)
 2. [Table of Contents](#table-of-contents)
 3. [Installation Instructions](#installation-instructions)
-4. [Language and Tools](#language-and-tools)
+4. [Languages and Tools](#languages-and-tools)
 5. [Usage Instructions](#usage-instructions)
 6. [Features](#features)
 7. [Contributing](#contributing)
