@@ -60,92 +60,79 @@ This project is a comprehensive real estate bidding platform where users can lis
 ## API Endpoints
 
 ### User
-- /user/register :
-    method : post
-    payload: {name:"", email:"", phone_num: 0, password:""}
+- **/user/register**
+  - Method: POST
+  - Payload: `{name:"", email:"", phone_num: 0, password:""}`
 
-- /user/sign-in :
-    method : post
-    payload: {name:"", email:""/phone_num: 0, password:""}
+- **/user/sign-in**
+  - Method: POST
+  - Payload: `{name:"", email:""/phone_num: 0, password:""}`
 
-- /user/me :
-    method: get
+- **/user/me**
+  - Method: GET
 
-- /user/me :
-    method: patch
-    payload: update data
+- **/user/me**
+  - Method: PATCH
+  - Payload: `{update data}`
 
-- /user/me/add-property/${property_id}`
-    method: patch
+- **/user/me/add-property/${property_id}**
+  - Method: PATCH
 
-- /user/get-all
-    method: get
+- **/user/get-all**
+  - Method: GET
 
-- /user/notification/push
-    method: patch
-    payload: {notification: ""}
+- **/user/notification/push**
+  - Method: PATCH
+  - Payload: `{notification: ""}`
 
-- /user/notification/pop
-    method: patch
-    payload: {notification_id: ""}
+- **/user/notification/pop**
+  - Method: PATCH
+  - Payload: `{notification_id: ""}`
 
 ### Seller
-- /seller/register :
-    method: post,
-    payload: {user_id: "", name: ""}
+- **/seller/register**
+  - Method: POST
+  - Payload: `{user_id: "", name: ""}`
 
-- /seller/${seller_id} :
-    method: get
+- **/seller/${seller_id}**
+  - Method: GET
 
-- /seller/${seller_id} :
-    method: patch
-    payload: update data
+- **/seller/${seller_id}**
+  - Method: PATCH
+  - Payload: `{update data}`
 
-- /seller/${seller_id}/add-property :
-    method: patch,
-    payload: {property_id:""}
+- **/seller/${seller_id}/add-property**
+  - Method: PATCH
+  - Payload: `{property_id:""}`
 
-- /seller/:seller_id/remove-property/:property_id
-    method: patch
+- **/seller/:seller_id/remove-property/:property_id**
+  - Method: PATCH
 
 ### Property
-- /property/
-    method: post
-    payload: {
-        name: "",
-        price: 0,
-        description: "",
-        location: "",
-        boundary_points: [],
-        area: "",
-        seller_id: "",
-        createdAt: "",
-        updatedAt: "",
-        minimum_increment: 1000,
-        closing_time: 0,
-        closing_date: Date.now()
-    }
+- **/property/**
+  - Method: POST
+  - Payload: `{name: "", price: 0, description: "", location: "", boundary_points: [], area: "", seller_id: "", createdAt: "", updatedAt: "", minimum_increment: 1000, closing_time: 0, closing_date: Date.now()}`
 
-- /property/get-all
-    method: get
+- **/property/get-all**
+  - Method: GET
 
-- /property/${property_id}
-    method: get
+- **/property/${property_id}**
+  - Method: GET
 
-- /property/${property_id}
-    method: patch
-    payload: update data
+- **/property/${property_id}**
+  - Method: PATCH
+  - Payload: `{update data}`
 
-- /property/${property_id}
-    method: delete
+- **/property/${property_id}**
+  - Method: DELETE
 
-- /property/set-buyer/${property_id}
-    method: patch
-    payload:  {property_id:"", buyer_id: ""}
+- **/property/set-buyer/${property_id}**
+  - Method: PATCH
+  - Payload: `{property_id:"", buyer_id: ""}`
 
-- /property/change-status/${property_id}
-    method: patch
-    payload: {status: ""}
+- **/property/change-status/${property_id}**
+  - Method: PATCH
+  - Payload: `{status: ""}`
 
 ## Usage Instructions
 
@@ -296,3 +283,68 @@ This project is a comprehensive real estate bidding platform where users can lis
 - [x] About Us:Information about the platform and the team.
 - [x] Terms of Service:Legal information and terms of use.
 - [x] Privacy Policy:Information about data privacy and user rights.
+
+## Contributing
+
+Thank you for your interest in contributing to the Real Estate Bidding Platform! We welcome contributions from the community to help improve this project.
+
+### How to Contribute
+
+1. **Fork the Repository**
+
+    - Go to the project's GitHub page.
+    - Click on the 'Fork' button at the top right of the page to create a copy of the repository under your own GitHub account.
+
+2. **Clone the Forked Repository**
+
+    ```bash
+    git clone https://github.com/your-username/real-estate-project.git
+    cd real-estate-project
+    ```
+
+3. **Create a New Branch**
+
+    - Create a new branch for your feature or bugfix.
+
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+
+4. **Make Changes**
+
+    - Implement your feature or bugfix.
+    - Ensure your code follows the project's coding standards and conventions.
+    - Write or update tests as necessary.
+
+5. **Commit Your Changes**
+
+    - Commit your changes with a clear and descriptive commit message.
+
+    ```bash
+    git add .
+    git commit -m "Add detailed description of your changes"
+    ```
+
+6. **Push to Your Fork**
+
+    - Push your changes to your forked repository.
+
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+
+7. **Submit a Pull Request**
+
+    - Go to the original repository on GitHub.
+    - Click on 'Pull Requests' and then 'New Pull Request'.
+    - Select your branch from the dropdown menu and create the pull request.
+    - Provide a detailed description of your changes in the pull request.
+
+### Guidelines
+
+- **Code Style**: Please ensure your code adheres to the project's coding style.
+- **Testing**: Write tests for new features and ensure existing tests pass.
+- **Commits**: Write clear and concise commit messages.
+- **Pull Requests**: Provide a detailed description of your changes and the problem they solve.
+
+We appreciate your contributions and thank you for helping improve the Real Estate Bidding Platform!
