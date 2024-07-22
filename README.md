@@ -9,11 +9,12 @@ This project is a comprehensive real estate bidding platform where users can lis
 1. [Project Title and Description](#project-title-and-description)
 2. [Table of Contents](#table-of-contents)
 3. [Installation Instructions](#installation-instructions)
-4. [Usage Instructions](#usage-instructions)
-5. [Features](#features)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact Information](#contact-information)
+4. [Language and Tools]
+5. [Usage Instructions](#usage-instructions)
+6. [Features](#features)
+7. [Contributing](#contributing)
+8. [License](#license)
+9. [Contact Information](#contact-information)
 ---
 
 ## Installation Instructions
@@ -56,6 +57,13 @@ This project is a comprehensive real estate bidding platform where users can lis
     cd client
     npm run start
 
+## Languages and tools
+- [React](https://react.dev/)
+- [NodeJS](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Axios](https://axios-http.com/docs/intro)    
+- [MongoDB](https://www.mongodb.com/docs/atlas/)
+- [Stripe](https://docs.stripe.com/)
 
 ## API Endpoints
 
