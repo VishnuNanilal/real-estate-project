@@ -219,7 +219,7 @@ This project is a comprehensive real estate bidding platform where users can lis
 5. Recent Feed - Recently accepted properties displayed on recent feed.
 ---
 
-## Future to implement
+## Future Features
 //BACK END
 - [x] seller should be able to create property. Default status: "pending"
 - [x] All pending property should be visible by admin for approval. status: pending->approved
@@ -298,7 +298,7 @@ Thank you for your interest in contributing to the Real Estate Bidding Platform!
 2. **Clone the Forked Repository**
 
     ```bash
-    git clone https://github.com/your-username/real-estate-project.git
+    git clone https://github.com/VishnuNanilal/real-estate-project.git
     cd real-estate-project
     ```
 
@@ -348,3 +348,14 @@ Thank you for your interest in contributing to the Real Estate Bidding Platform!
 - **Pull Requests**: Provide a detailed description of your changes and the problem they solve.
 
 We appreciate your contributions and thank you for helping improve the Real Estate Bidding Platform!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## Contact Information
+
+This project is maintained by *VISHNU NANILAL PANICKER*
+
+- phone number: +91 7306365503
+- email: vishnunlal@gmail.com
