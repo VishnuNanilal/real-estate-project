@@ -1,5 +1,5 @@
 import axiosInstance from ".";
-
+//README api updated
 export const createProperty = async (payload)=>{
     try{
         const response = await axiosInstance.post('/property/', payload)
@@ -9,7 +9,7 @@ export const createProperty = async (payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const getAllPropertiesAPI = async ()=>{
     try{
         const response = await axiosInstance.get('/property/get-all')
@@ -19,7 +19,7 @@ export const getAllPropertiesAPI = async ()=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const getPropertyAPI = async (property_id)=>{
     try{
         const response = await axiosInstance.get(`/property/${property_id}`)
@@ -29,7 +29,7 @@ export const getPropertyAPI = async (property_id)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const updatePropertyAPI = async (property_id, payload)=>{
     console.log("kkk", property_id, "payload", payload)
     try{
@@ -40,7 +40,7 @@ export const updatePropertyAPI = async (property_id, payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const deletePropertyAPI = async (property_id)=>{
     try{
         const response = await axiosInstance.delete(`/property/${property_id}`)

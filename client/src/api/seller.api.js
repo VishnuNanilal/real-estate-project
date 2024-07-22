@@ -1,5 +1,5 @@
 import axiosInstance from ".";
-
+//README api updated
 export const registerSellerAPI = async (payload)=>{
     try{
         const response = await axiosInstance.post('/seller/register', payload)
@@ -9,7 +9,7 @@ export const registerSellerAPI = async (payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const getSellerAPI = async (seller_id)=>{
     try{
         const response = await axiosInstance.get(`/seller/${seller_id}`)
@@ -19,7 +19,7 @@ export const getSellerAPI = async (seller_id)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const updateSellerAPI = async (seller_id, payload)=>{
     try{
         const response = await axiosInstance.patch(`seller/${seller_id}`, payload)
@@ -29,7 +29,7 @@ export const updateSellerAPI = async (seller_id, payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const updateSellerAddPropertyAPI = async (seller_id, property_id)=>{
     console.log("api", seller_id, property_id)
     try{
@@ -40,7 +40,7 @@ export const updateSellerAddPropertyAPI = async (seller_id, property_id)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const updateSellerRemovePropertyAPI = async (seller_id, property_id)=>{
     try{
         const response = await axiosInstance.patch(`/seller/${seller_id}/remove-property/${property_id}`)

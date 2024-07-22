@@ -6,7 +6,7 @@ This project is a comprehensive real estate bidding platform where users can lis
 
 ## Features
 1. Authorization and Authentication.
-- Registration and Sign in, user Auth.
+- Registration and Sign in.
 - User and Admin authentication.
 
 2. Map display
@@ -22,12 +22,8 @@ This project is a comprehensive real estate bidding platform where users can lis
 
 ## Future Features
 1. Different components for:
-- Sign in, Register
-- User
-- Admin
-- Home
-
-2. Clean up front end using CSS.
+- Payment option using Sprite which only finalizes when the bidding is done.
+- Payment to the platform for flying the bid from both seller and buyer.
 
 ## Table of Contents
 
@@ -82,6 +78,97 @@ This project is a comprehensive real estate bidding platform where users can lis
     cd client
     npm run start
 
+
+## API Endpoints
+
+### User
+- /user/register :
+    method : post
+    payload: {name:"", email:"", phone_num: 0, password:""}
+
+- /user/sign-in :
+    method : post
+    payload: {name:"", email:""/phone_num: 0, password:""}
+
+- /user/me :
+    method: get
+
+- /user/me :
+    method: patch
+    payload: update data
+
+- /user/me/add-property/${property_id}`
+    method: patch
+
+- /user/get-all
+    method: get
+
+- /user/notification/push
+    method: patch
+    payload: {notification: ""}
+
+- /user/notification/pop
+    method: patch
+    payload: {notification_id: ""}
+
+### Seller
+- /seller/register :
+    method: post,
+    payload: {user_id: "", name: ""}
+
+- /seller/${seller_id} :
+    method: get
+
+- /seller/${seller_id} :
+    method: patch
+    payload: update data
+
+- /seller/${seller_id}/add-property :
+    method: patch,
+    payload: {property_id:""}
+
+- /seller/:seller_id/remove-property/:property_id
+    method: patch
+
+### Property
+- /property/
+    method: post
+    payload: {
+        name: "",
+        price: 0,
+        description: "",
+        location: "",
+        boundary_points: [],
+        area: "",
+        seller_id: "",
+        createdAt: "",
+        updatedAt: "",
+        minimum_increment: 1000,
+        closing_time: 0,
+        closing_date: Date.now()
+    }
+
+- /property/get-all
+    method: get
+
+- /property/${property_id}
+    method: get
+
+- /property/${property_id}
+    method: patch
+    payload: update data
+
+- /property/${property_id}
+    method: delete
+
+- /property/set-buyer/${property_id}
+    method: patch
+    payload:  {property_id:"", buyer_id: ""}
+
+- /property/change-status/${property_id}
+    method: patch
+    payload: {status: ""}
+
 ## Features to implement
 //BACK END
 - [x] seller should be able to create property. Default status: "pending"
@@ -98,18 +185,18 @@ This project is a comprehensive real estate bidding platform where users can lis
 - [x] Implement admin who can authorize the ownership of a newly added property.
 - [x] Implement a client side newly marked property sales.(Recent properties)
 
-- [ ] When time is over the payment should be made and marked land owner info should be changed to bought person
+- [ ] When time is over the payment should be made and marked land owner info should be changed to bought person. Relevant payments should be carried out.
 
 //FRONT END
-- [ ] Sign In and Register Modal
-- [ ] Home page should have :
+- [x] Sign In and Register Modal
+- [x] Home page should have :
         left half tabs
         Right hald map
-- [ ] Left half tabs should have: Recent properties, Add new property, 
-- [ ] User Dashboard: Displays user-specific information such as active bids, listed properties, etc.
-- [ ] Seller Dashboard: Specialized dashboard for sellers to manage their properties and see bidding statuses.
-- [ ] Admin Dashboard: Specialized dashboard for admins to approve new properties, bids, and perform other admin tasks. 
-- [ ] Notifications: Displays user notifications about bids, property approvals, etc.
+- [x] Left half tabs should have: Recent properties, Add new property, 
+- [x] User Dashboard: Displays user-specific information such as active bids, listed properties, etc.
+- [x] Seller Dashboard: Specialized dashboard for sellers to manage their properties and see bidding statuses.
+- [x] Admin Dashboard: Specialized dashboard for admins to approve new properties, bids, and perform other admin tasks. 
+- [x] Notifications: Displays user notifications about bids, property approvals, etc.
 - [ ] Settings: Allows users to change account settings.
 
 
@@ -146,20 +233,3 @@ This project is a comprehensive real estate bidding platform where users can lis
 - [x] About Us:Information about the platform and the team.
 - [x] Terms of Service:Legal information and terms of use.
 - [x] Privacy Policy:Information about data privacy and user rights.
-
-## API Endpoints
-
-- /user/register
-- /user/sign-in
-- user/me 
-
-- /seller/register
-- /seller/${seller_id}
-- /seller/${seller_id}/add-property
-- /seller/:seller_id/remove-property/:property_id
-
-- /property/
-- /property/get-all
-- /property/${property_id}
-- /property/set-buyer/${property_id}
-- /property/change-status/${property_id}

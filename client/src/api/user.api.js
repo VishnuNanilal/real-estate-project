@@ -1,5 +1,6 @@
 import axiosInstance from ".";
 
+//README api updated
 export const registerUserAPI = async (payload)=>{
     try{
         const response = await axiosInstance.post('/user/register', payload)
@@ -9,7 +10,7 @@ export const registerUserAPI = async (payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const signInUserAPI = async (payload)=>{
     try{
         const response = await axiosInstance.post('/user/sign-in', payload)
@@ -19,7 +20,7 @@ export const signInUserAPI = async (payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const getUserAPI = async ()=>{
     try{
         const response = await axiosInstance.get(`/user/me`)
@@ -29,7 +30,7 @@ export const getUserAPI = async ()=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const updateUserAPI = async (payload)=>{
     try{
         const response = await axiosInstance.patch(`/user/me`, payload)
@@ -39,7 +40,7 @@ export const updateUserAPI = async (payload)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const updateUserAddPropertyAPI = async (property_id)=>{
     // console.log("reached api")
     try{
@@ -50,7 +51,7 @@ export const updateUserAddPropertyAPI = async (property_id)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const getAllUsers = async ()=>{
     console.log("reached api")
     try{
@@ -61,7 +62,7 @@ export const getAllUsers = async ()=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const pushNotificationAPI = async (notification)=>{
     console.log("Notification data", notification)
     try{
@@ -72,7 +73,7 @@ export const pushNotificationAPI = async (notification)=>{
         return err.response.data;
     }
 }
-
+//README api updated
 export const popNotificationAPI = async (notification_id)=>{
     try{
         const response = await axiosInstance.patch(`/user/notification/pop`, {notification_id})
