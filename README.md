@@ -4,27 +4,6 @@
 
 This project is a comprehensive real estate bidding platform where users can list their properties for sale, mark their land on a map, and manage bids from potential buyers. Sellers can set a closing time for each property, and admins can approve new property listings and bid results.
 
-## Features
-1. Authorization and Authentication.
-- Registration and Sign in.
-- User and Admin authentication.
-
-2. Map display
-- Marking and viewing properties
-- Differently colors and shades based on property status.
-
-3. Bidding - platform for bidding
-
-4. Admin privileges - Admin authorizes properties before and after bid.
-
-5. Recent Feed - Recently accepted properties displayed on recent feed.
----
-
-## Future Features
-1. Different components for:
-- Payment option using Sprite which only finalizes when the bidding is done.
-- Payment to the platform for flying the bid from both seller and buyer.
-
 ## Table of Contents
 
 1. [Project Title and Description](#project-title-and-description)
@@ -35,7 +14,6 @@ This project is a comprehensive real estate bidding platform where users can lis
 6. [Contributing](#contributing)
 7. [License](#license)
 8. [Contact Information](#contact-information)
-
 ---
 
 ## Installation Instructions
@@ -169,7 +147,92 @@ This project is a comprehensive real estate bidding platform where users can lis
     method: patch
     payload: {status: ""}
 
-## Features to implement
+## Usage Instructions
+
+### User Registration and Authentication
+
+1. **Sign Up**
+    - Navigate to the Sign Up page.
+    - Fill in your details: name, email, phone number, and password.
+    - Submit the form to create your account.
+
+2. **Sign In**
+    - Navigate to the Sign In page.
+    - Enter your email/phone number and password.
+    - Submit the form to log in to your account.
+
+### User Dashboard
+
+- Once signed in, you will be redirected to the user dashboard.
+- Here, you can see an overview of your activities, such as active bids, listed properties, and recent notifications.
+
+### Listing a Property (For Sellers)
+
+1. **Add New Property**
+    - Go to the 'Add Property' section in the seller dashboard.
+    - Fill in the details of your property, such as name, price, description, location, boundary points, area, minimum increment, closing time, and closing date.
+    - Submit the form to list your property for sale.
+
+2. **Property Approval**
+    - After listing, your property will be in a 'pending' status.
+    - An admin will review and approve the property, changing its status to 'approved'.
+    - You can then publish the property for bidding.
+
+### Bidding on Properties (For Buyers)
+
+1. **View Properties**
+    - Browse through the listed properties on the home page or in the 'Recent Properties' section.
+    - Click on a property to view its details.
+
+2. **Place a Bid**
+    - Enter your bid amount, which must be higher than the current highest bid by at least the minimum increment.
+    - Submit your bid.
+
+3. **Monitor Bids**
+    - Keep track of your bids in the 'My Bids' section.
+    - You will receive notifications if you are outbid.
+
+### Admin Functions
+
+1. **Approve Properties**
+    - Navigate to the admin dashboard.
+    - Review the properties listed in the 'pending' status.
+    - Approve or reject properties based on your criteria.
+
+2. **Manage Bids**
+    - Approve or reject bid results once the bidding time is over.
+    - Change the status of properties from 'bidPending' to 'sold'.
+
+### Notifications
+
+- You will receive notifications about important events such as property approvals, new bids, and bid results.
+- Check the 'Notifications' section for updates.
+
+### Account Settings
+
+- Go to the 'Settings' section to update your account information, such as your email, phone number, and password.
+
+### Logging Out
+
+- Click on the 'Logout' button to securely sign out of your account.
+
+## Features
+1. Authorization and Authentication.
+- Registration and Sign in.
+- User and Admin authentication.
+
+2. Map display
+- Marking and viewing properties
+- Differently colors and shades based on property status.
+
+3. Bidding - platform for bidding
+
+4. Admin privileges - Admin authorizes properties before and after bid.
+
+5. Recent Feed - Recently accepted properties displayed on recent feed.
+---
+
+## Future to implement
 //BACK END
 - [x] seller should be able to create property. Default status: "pending"
 - [x] All pending property should be visible by admin for approval. status: pending->approved
